@@ -52,7 +52,7 @@ export default function EventRegistrationScreen() {
   if (!event) {
     return (
       <View style={styles.container}>
-        <Text>Event not found!</Text>
+        <Text style={styles.errorText}>Event not found!</Text>
       </View>
     );
   }
@@ -72,14 +72,17 @@ export default function EventRegistrationScreen() {
         <View style={styles.content}>
           <View style={styles.detailsContainer}>
             <Text style={styles.sectionTitle}>Event Details</Text>
+            
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Date:</Text>
               <Text style={styles.detailValue}>{event.date}</Text>
             </View>
+            
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Time:</Text>
               <Text style={styles.detailValue}>{event.time}</Text>
             </View>
+            
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Price:</Text>
               <Text style={styles.detailValue}>{event.price}</Text>
@@ -87,20 +90,22 @@ export default function EventRegistrationScreen() {
             
             <Text style={styles.sectionTitle}>Description</Text>
             <Text style={styles.description}>{event.description}</Text>
-            
-            <TouchableOpacity 
-              style={styles.joinButton}
-              onPress={() => router.push({ 
-                pathname: '/ConfirmationScreen', 
-                params: { eventId: event.id } 
-              })}
-            >
-              <Text style={styles.joinButtonText}>Confirm Join</Text>
-            </TouchableOpacity>
           </View>
           
-          <Image source={event.image} style={styles.poster} />
+          <View style={styles.posterContainer}>
+            <Image source={event.image} style={styles.poster} />
+          </View>
         </View>
+        
+        <TouchableOpacity 
+          style={styles.joinButton}
+          onPress={() => router.push({ 
+            pathname: '/ConfirmationScreen', 
+            params: { eventId: event.id } 
+          })}
+        >
+          <Text style={styles.joinButtonText}>Confirm Join</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -114,69 +119,104 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    padding: 20,
+    padding: 30,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 30,
   },
   title: {
-    fontSize: 24,
+    fontSize: 36,
     fontWeight: 'bold',
     color: '#2c3e50',
   },
   closeButton: {
-    fontSize: 24,
+    fontSize: 32,
     color: '#555',
+    padding: 10,
   },
   content: {
     flexDirection: 'row',
-    gap: 20,
+    gap: 40,
+    alignItems: 'flex-start',
+    marginBottom: 40,
   },
   detailsContainer: {
     flex: 1,
   },
+  posterContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   poster: {
-    width: 150,
-    height: 200,
-    borderRadius: 10,
+    width: '100%',
+    height: 500,
+    borderRadius: 15,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 12,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginTop: 15,
-    marginBottom: 10,
+    marginTop: 20,
+    marginBottom: 20,
     color: '#2c3e50',
   },
   detailRow: {
     flexDirection: 'row',
-    marginBottom: 8,
+    marginBottom: 15,
+    alignItems: 'center',
   },
   detailLabel: {
     fontWeight: 'bold',
-    width: 80,
+    width: 120,
+    fontSize: 22,
     color: '#555',
   },
   detailValue: {
     flex: 1,
+    fontSize: 22,
     color: '#555',
   },
   description: {
+    fontSize: 20,
     color: '#555',
-    lineHeight: 22,
+    lineHeight: 32,
+    marginBottom: 20,
   },
   joinButton: {
-    marginTop: 30,
     backgroundColor: '#4CAF50',
-    borderRadius: 8,
-    padding: 16,
+    borderRadius: 15,
+    padding: 30,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 12,
+    marginHorizontal: 50,
   },
   joinButtonText: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 28,
+  },
+  errorText: {
+    fontSize: 24,
+    color: '#e74c3c',
+    textAlign: 'center',
+    margin: 20,
   },
 });

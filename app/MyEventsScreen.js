@@ -26,35 +26,13 @@ export default function MyEventsScreen() {
   const [registeredEvents, setRegisteredEvents] = useState(registeredEventsGlobal);
   const router = useRouter();
 
-  // const handleWithdraw = (id, title) => {
-  //   Alert.alert(
-  //     'Withdraw from Event',
-  //     'Are you sure you want to withdraw from this event?',
-  //     [
-  //       { text: 'Cancel', style: 'cancel' },
-  //       {
-  //         text: 'Withdraw',
-  //         style: 'destructive',
-  //         onPress: () => {
-  //           // Update global storage
-  //           registeredEventsGlobal = registeredEventsGlobal.filter(event => event.id !== id);
-  //           // Update local state
-  //           setRegisteredEvents(registeredEventsGlobal);
-  //           // Navigate to confirmation
-  //           router.push(`/WithdrawnScreen?eventTitle=${encodeURIComponent(title)}`);
-  //         }
-  //       },
-  //     ]
-  //   );
-  // };
-
   const handleWithdraw = (id, title) => {
-  if (window.confirm('Are you sure you want to withdraw from this event?')) {
-    registeredEventsGlobal = registeredEventsGlobal.filter(event => event.id !== id);
-    setRegisteredEvents(registeredEventsGlobal);
-    router.push(`/WithdrawnScreen?eventTitle=${encodeURIComponent(title)}`);
-  }
-};
+    if (window.confirm('Are you sure you want to withdraw from this event?')) {
+      registeredEventsGlobal = registeredEventsGlobal.filter(event => event.id !== id);
+      setRegisteredEvents(registeredEventsGlobal);
+      router.push(`/WithdrawnScreen?eventTitle=${encodeURIComponent(title)}`);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -102,109 +80,135 @@ export default function MyEventsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, flexDirection: 'row', backgroundColor: '#f8f9fa' },
-  content: { flex: 1, padding: 24, position: 'relative' },
+  container: { 
+    flex: 1, 
+    flexDirection: 'row', 
+    backgroundColor: '#f8f9fa' 
+  },
+  content: { 
+    flex: 1, 
+    padding: 32, 
+    position: 'relative' 
+  },
   header: {
-    fontSize: 28,
+    fontSize: 36,
     fontWeight: 'bold',
-    marginBottom: 18,
+    marginBottom: 30,
     letterSpacing: 2,
     textAlign: 'center',
+    color: '#2c3e50',
   },
   eventsList: {
-    paddingBottom: 30,
+    paddingBottom: 40,
   },
   eventBox: {
-    marginBottom: 28,
+    marginBottom: 35,
   },
   eventDate: {
-    fontSize: 22,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 15,
     letterSpacing: 1,
+    color: '#2c3e50',
   },
   eventDetailsBox: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 18,
-    borderWidth: 1,
-    borderColor: '#222',
-    marginBottom: 8,
+    backgroundColor: 'rgba(173, 216, 230, 0.3)',
+    borderRadius: 15,
+    padding: 25,
+    borderWidth: 2,
+    borderColor: 'rgba(173, 216, 230, 0.5)',
+    marginBottom: 12,
     position: 'relative',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 6,
   },
   eventTitle: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#008080',
-    marginBottom: 6,
+    marginBottom: 12,
   },
   eventDetails: {
-    fontSize: 16,
-    marginBottom: 10,
-    color: '#222',
+    fontSize: 20,
+    marginBottom: 15,
+    color: '#2c3e50',
     fontWeight: '500',
-    lineHeight: 22,
+    lineHeight: 28,
   },
   paymentStatus: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#222',
-    marginBottom: 8,
+    color: '#2c3e50',
+    marginBottom: 15,
   },
   withdrawBtn: {
     position: 'absolute',
-    right: 16,
-    top: 16,
-    backgroundColor: '#fff',
+    right: 20,
+    top: 20,
+    backgroundColor: 'rgba(220, 53, 69, 0.8)',
     borderWidth: 2,
-    borderColor: '#222',
-    borderRadius: 6,
-    paddingHorizontal: 18,
-    paddingVertical: 6,
+    borderColor: 'rgba(220, 53, 69, 1)',
+    borderRadius: 10,
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 5,
   },
   withdrawText: {
     fontWeight: 'bold',
-    fontSize: 15,
-    color: '#222',
+    fontSize: 18,
+    color: '#ffffff',
     letterSpacing: 1,
   },
   noEvents: {
-    fontSize: 17,
+    fontSize: 22,
     color: '#888',
     textAlign: 'center',
-    marginTop: 32,
+    marginTop: 50,
   },
   pagination: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
-    gap: 8,
+    marginTop: 20,
+    gap: 12,
   },
   disabledBtn: {
     color: '#aaa',
     fontWeight: 'bold',
-    fontSize: 16,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
+    fontSize: 20,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
     backgroundColor: '#f5f5f5',
-    borderRadius: 6,
+    borderRadius: 8,
   },
   pageNum: {
-    fontSize: 16,
-    color: '#222',
-    marginHorizontal: 8,
+    fontSize: 20,
+    color: '#2c3e50',
+    marginHorizontal: 12,
   },
   currentPage: {
     color: '#008080',
     fontWeight: 'bold',
-    fontSize: 17,
+    fontSize: 22,
   },
   helpIcon: {
     position: 'absolute',
-    bottom: 16,
-    right: 16,
-    fontSize: 24,
+    bottom: 20,
+    right: 20,
+    fontSize: 32,
     color: '#555',
   },
 });

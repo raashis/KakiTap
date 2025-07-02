@@ -14,7 +14,7 @@ export default function HelpScreen() {
         <View style={styles.divider} />
         <View style={styles.optionsRow}>
           <TouchableOpacity
-            style={styles.optionBox}
+            style={[styles.optionBox, styles.optionBoxBlue]}
             onPress={() => router.push('/HelpRequestScreen')}
           >
             <Text style={styles.optionText}>
@@ -22,7 +22,7 @@ export default function HelpScreen() {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.optionBox}
+            style={[styles.optionBox, styles.optionBoxGreen]}
             onPress={() => router.push('/HelpAIBotScreen')}
           >
             <Text style={styles.optionText}>Talk To our{'\n'}AI Friend!</Text>
@@ -34,85 +34,120 @@ export default function HelpScreen() {
         >
           <Text style={styles.backBtnText}>Go Back to Homepage</Text>
         </TouchableOpacity>
-        <Text style={styles.helpIcon}>?</Text>
+        <View style={styles.helpIconContainer}>
+          <Text style={styles.helpIcon}>?</Text>
+        </View>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, flexDirection: 'row', backgroundColor: '#f8f9fa' },
+  container: { 
+    flex: 1, 
+    flexDirection: 'row', 
+    backgroundColor: '#f8f9fa' 
+  },
   content: {
     flex: 1,
-    padding: 36,
+    padding: 48,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
   },
   header: {
-    fontSize: 28,
+    fontSize: 42,
     fontWeight: 'bold',
-    fontFamily: 'System', // swap for a handwritten font if available
-    marginBottom: 10,
+    fontFamily: 'System',
+    marginBottom: 24,
     textAlign: 'center',
+    color: '#222',
   },
   divider: {
-    height: 2,
+    height: 6,
     backgroundColor: '#222',
     width: '100%',
-    marginVertical: 14,
+    marginVertical: 32,
+    borderRadius: 3,
   },
   optionsRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 32,
-    marginBottom: 30,
+    gap: 48,
+    marginBottom: 48,
+    width: '100%',
   },
   optionBox: {
     flex: 1,
-    backgroundColor: '#fff',
-    borderRadius: 16,
-    borderWidth: 2,
+    borderRadius: 24,
+    borderWidth: 4,
     borderColor: '#222',
-    padding: 28,
-    marginHorizontal: 10,
+    padding: 48,
+    marginHorizontal: 12,
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOpacity: 0.06,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 7,
-    elevation: 2,
-    minHeight: 140,
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 12,
+    elevation: 8,
+    minHeight: 220,
     justifyContent: 'center',
+    maxWidth: 400,
+  },
+  optionBoxBlue: {
+    backgroundColor: '#dbeafe', // light blue
+  },
+  optionBoxGreen: {
+    backgroundColor: '#dcfce7', // light green
   },
   optionText: {
-    fontSize: 20,
+    fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
-    lineHeight: 28,
-    fontFamily: 'System', // swap for a handwritten font if available
+    lineHeight: 36,
+    fontFamily: 'System',
+    color: '#222',
   },
   backBtn: {
-    borderWidth: 2,
+    borderWidth: 4,
     borderColor: '#222',
-    borderRadius: 8,
-    paddingHorizontal: 28,
-    paddingVertical: 12,
-    backgroundColor: '#fff',
-    marginTop: 16,
+    borderRadius: 16,
+    paddingHorizontal: 48,
+    paddingVertical: 20,
+    backgroundColor: '#fecaca', // light red shade
+    marginTop: 24,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 8,
+    elevation: 4,
   },
   backBtnText: {
-    fontSize: 20,
+    fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
     letterSpacing: 1,
+    color: '#222',
+  },
+  helpIconContainer: {
+    position: 'absolute',
+    bottom: 32,
+    right: 32,
+    width: 64,
+    height: 64,
+    backgroundColor: '#6b7280',
+    borderRadius: 32,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
+    elevation: 6,
   },
   helpIcon: {
-    position: 'absolute',
-    bottom: 20,
-    right: 24,
-    fontSize: 28,
-    color: '#555',
+    fontSize: 32,
+    color: '#fff',
     fontWeight: 'bold',
   },
 });
