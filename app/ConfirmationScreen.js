@@ -1,3 +1,4 @@
+// app/ConfirmationScreen.js
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Sidebar from './Sidebar';
@@ -43,7 +44,7 @@ export default function ConfirmationScreen() {
   if (!event) {
     return (
       <View style={styles.container}>
-        <Text>Event not found!</Text>
+        <Text style={styles.errorText}>Event not found!</Text>
       </View>
     );
   }
@@ -53,29 +54,30 @@ export default function ConfirmationScreen() {
       <Sidebar active="events" />
       
       <View style={styles.contentContainer}>
-        <Text style={styles.title}>5. CONFIRMATION OF REGISTRATION</Text>
+        <Text style={styles.title}>CONFIRMATION OF REGISTRATION</Text>
         
-        <View style={styles.confirmationContent}>
-          <Text style={styles.confirmationText}>
-            You have just signed up for the{'\n'}{event.title} outing!
-          </Text>
-          
-          <View style={styles.iconContainer}>
-            <Text style={styles.thumbsUpIcon}>👍</Text>
-            <Text style={styles.sparkleIcon}>✨</Text>
+        <View style={styles.confirmationCard}>
+          <View style={styles.confirmationContent}>
+            <Text style={styles.confirmationText}>
+              You have just signed up for the
+            </Text>
+            <Text style={styles.eventTitle}>{event.title} outing!</Text>
+            
+            <View style={styles.iconContainer}>
+              <Text style={styles.thumbsUpIcon}>👍</Text>
+              <Text style={styles.sparkleIcon}>✨</Text>
+            </View>
+            
+            <Text style={styles.seeYouText}>SEE YOU THERE!</Text>
+            
+            <TouchableOpacity 
+              style={styles.backButton}
+              onPress={() => router.push('/AllEventsScreen')}
+            >
+              <Text style={styles.backButtonText}>Go back to All Events</Text>
+            </TouchableOpacity>
           </View>
-          
-          <Text style={styles.seeYouText}>SEE YOU THERE!</Text>
-          
-          <TouchableOpacity 
-            style={styles.backButton}
-            onPress={() => router.push('/AllEventsScreen')}
-          >
-            <Text style={styles.backButtonText}>Go back to All Events</Text>
-          </TouchableOpacity>
         </View>
-        
-        <Text style={styles.helpIcon}>❔</Text>
       </View>
     </View>
   );
@@ -89,67 +91,102 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    padding: 24,
-    position: 'relative',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#000',
-    marginBottom: 40,
-    textAlign: 'center',
-    textDecorationLine: 'underline',
-  },
-  confirmationContent: {
-    flex: 1,
+    padding: 40,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 40,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#2c3e50',
+    marginBottom: 60,
+    textAlign: 'center',
+    textDecorationLine: 'underline',
+    letterSpacing: 1,
+  },
+  confirmationCard: {
+    backgroundColor: 'rgba(220, 53, 69, 0.08)',
+    borderRadius: 20,
+    padding: 50,
+    width: '90%',
+    maxWidth: 700,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 10,
+    borderWidth: 2,
+    borderColor: 'rgba(220, 53, 69, 0.2)',
+  },
+  confirmationContent: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   confirmationText: {
-    fontSize: 18,
+    fontSize: 28,
     fontWeight: '600',
     color: '#2c3e50',
     textAlign: 'center',
-    marginBottom: 30,
-    lineHeight: 24,
+    marginBottom: 15,
+    lineHeight: 36,
+  },
+  eventTitle: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#dc3545',
+    textAlign: 'center',
+    marginBottom: 40,
+    lineHeight: 40,
   },
   iconContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 30,
+    justifyContent: 'center',
+    marginBottom: 40,
   },
   thumbsUpIcon: {
-    fontSize: 48,
-    marginRight: 10,
+    fontSize: 72,
+    marginRight: 20,
   },
   sparkleIcon: {
-    fontSize: 24,
-    marginLeft: 5,
+    fontSize: 48,
+    marginLeft: 10,
   },
   seeYouText: {
-    fontSize: 22,
+    fontSize: 36,
     fontWeight: 'bold',
     color: '#2c3e50',
-    marginBottom: 40,
+    marginBottom: 50,
     textAlign: 'center',
+    letterSpacing: 2,
   },
   backButton: {
     backgroundColor: '#2c3e50',
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 8,
+    paddingHorizontal: 40,
+    paddingVertical: 20,
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 8,
   },
   backButtonText: {
     color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  helpIcon: {
-    position: 'absolute',
-    bottom: 16,
-    right: 16,
     fontSize: 24,
-    color: '#555',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  errorText: {
+    fontSize: 28,
+    color: '#e74c3c',
+    textAlign: 'center',
+    margin: 20,
   },
 });

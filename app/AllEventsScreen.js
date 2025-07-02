@@ -1,10 +1,12 @@
 import { useRouter } from 'expo-router';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Sidebar from './Sidebar';
 
 const screenWidth = Dimensions.get('window').width;
-const CARD_WIDTH = screenWidth * 0.6;
+const CARD_WIDTH = screenWidth * 0.25; // Much narrower for A4 portrait ratio
+const CARD_HEIGHT = CARD_WIDTH * 1.4; // A4-like ratio (height = 1.4 * width)
+const CARD_SPACING = 30;
 
 const events = [
   {
@@ -44,32 +46,75 @@ const events = [
 export default function AllEventsScreen() {
   const router = useRouter();
   const flatListRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const [scrollX, setScrollX] = useState(0);
 
   const scrollToIndex = (direction) => {
+    const newOffset = direction === 'left' 
+      ? Math.max(0, scrollX - (CARD_WIDTH + CARD_SPACING))
+      : scrollX + (CARD_WIDTH + CARD_SPACING);
+    
     flatListRef.current?.scrollToOffset({
-      offset: direction === 'left' ? 0 : CARD_WIDTH,
+      offset: newOffset,
       animated: true,
     });
   };
 
-  const renderItem = ({ item }) => (
-    <View style={styles.card}>
-      <Image source={item.image} style={styles.image} />
-      <Text style={styles.eventTitle}>{item.title}</Text>
-      <Text style={styles.eventDetails}>{item.date}</Text>
-      <Text style={styles.eventDetails}>{item.time} | {item.price}</Text>
-      
-      <TouchableOpacity 
-        style={styles.moreButton}
-        onPress={() => router.push({ 
-          pathname: '/EventRegistrationScreen', 
-          params: { eventId: item.id } 
-        })}
-      >
-        <Text style={styles.moreButtonText}>See More</Text>
-      </TouchableOpacity>
-    </View>
-  );
+  const onScroll = (event) => {
+    const newScrollX = event.nativeEvent.contentOffset.x;
+    setScrollX(newScrollX);
+  };
+
+  const getItemLayout = (data, index) => ({
+    length: CARD_WIDTH + CARD_SPACING,
+    offset: (CARD_WIDTH + CARD_SPACING) * index,
+    index,
+  });
+
+  const renderItem = ({ item, index }) => {
+    // Calculate distance from center of screen
+    const inputRange = [
+      (index - 1) * (CARD_WIDTH + CARD_SPACING),
+      index * (CARD_WIDTH + CARD_SPACING),
+      (index + 1) * (CARD_WIDTH + CARD_SPACING),
+    ];
+    
+    // Calculate how close this item is to center
+    const centerOffset = scrollX - (index * (CARD_WIDTH + CARD_SPACING));
+    const distance = Math.abs(centerOffset);
+    const maxDistance = CARD_WIDTH + CARD_SPACING;
+    
+    // Scale and opacity based on distance from center
+    const scale = Math.max(0.7, 1 - (distance / maxDistance) * 0.3);
+    const opacity = Math.max(0.3, 1 - (distance / maxDistance) * 0.7);
+    
+    return (
+      <View style={[
+        styles.card,
+        {
+          transform: [{ scale }],
+          opacity,
+          marginHorizontal: CARD_SPACING / 2,
+        }
+      ]}>
+        <Image source={item.image} style={styles.image} />
+        <Text style={styles.eventTitle}>{item.title}</Text>
+        <Text style={styles.eventDetails}>{item.date}</Text>
+        <Text style={styles.eventDetails}>{item.time} | {item.price}</Text>
+        
+        <TouchableOpacity 
+          style={styles.moreButton}
+          onPress={() => router.push({ 
+            pathname: '/EventRegistrationScreen', 
+            params: { eventId: item.id } 
+          })}
+        >
+          <Text style={styles.moreButtonText}>See More</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -81,20 +126,51 @@ export default function AllEventsScreen() {
             <Text style={styles.arrowText}>◀</Text>
           </TouchableOpacity>
 
-          <FlatList
-            ref={flatListRef}
-            data={events}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ gap: 12 }}
-          />
+          <View style={styles.flatListContainer}>
+            <FlatList
+              ref={flatListRef}
+              data={events}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{
+                paddingHorizontal: (screenWidth - CARD_WIDTH) / 2,
+                paddingVertical: 20,
+              }}
+              onScroll={onScroll}
+              scrollEventThrottle={16}
+            />
+          </View>
 
           <TouchableOpacity onPress={() => scrollToIndex('right')} style={styles.arrow}>
             <Text style={styles.arrowText}>▶</Text>
           </TouchableOpacity>
         </View>
+        
+        {/* Page indicators */}
+        <View style={styles.indicators}>
+          {events.map((_, index) => {
+            const centerIndex = Math.round(scrollX / (CARD_WIDTH + CARD_SPACING));
+            return (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.indicator,
+                  { backgroundColor: index === centerIndex ? '#2c3e50' : '#bdc3c7' }
+                ]}
+                onPress={() => {
+                  const targetOffset = index * (CARD_WIDTH + CARD_SPACING);
+                  flatListRef.current?.scrollToOffset({
+                    offset: targetOffset,
+                    animated: true,
+                  });
+                }}
+              />
+            );
+          })}
+        </View>
+        
         <Text style={styles.helpIcon}>❔</Text>
       </View>
     </View>
@@ -116,55 +192,82 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    flex: 1,
+  },
+  flatListContainer: {
+    flex: 1,
+    height: CARD_HEIGHT + 80, // Extra space for poster height
   },
   arrow: {
-    width: 30,
-    height: 120,
+    width: 40,
+    height: 40,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(44, 62, 80, 0.1)',
+    borderRadius: 20,
+    marginHorizontal: 10,
   },
   arrowText: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#2c3e50',
   },
   card: {
     width: CARD_WIDTH,
+    height: CARD_HEIGHT,
     backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 16,
+    borderRadius: 8,
+    padding: 8,
     shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    elevation: 5,
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
+    elevation: 8,
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   image: {
     width: '100%',
-    height: 120,
-    borderRadius: 8,
-    marginBottom: 12,
+    height: '70%', // Takes up most of the card for poster effect
+    borderRadius: 6,
+    resizeMode: 'cover',
   },
   eventTitle: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: 'bold',
     color: '#2c3e50',
-    marginBottom: 4,
+    textAlign: 'center',
+    marginBottom: 2,
   },
   eventDetails: {
-    fontSize: 14,
+    fontSize: 10,
     color: '#555',
+    textAlign: 'center',
+    lineHeight: 12,
   },
   moreButton: {
-    marginTop: 12,
-    padding: 10,
+    marginTop: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
     backgroundColor: '#2c3e50',
-    borderRadius: 6,
+    borderRadius: 4,
   },
   moreButtonText: {
     color: '#fff',
     fontWeight: 'bold',
+    fontSize: 10,
+  },
+  indicators: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+    gap: 8,
+  },
+  indicator: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
   },
   helpIcon: {
     position: 'absolute',

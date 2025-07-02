@@ -105,7 +105,7 @@ export default function RewardsScreen() {
         {activeTab === 'journey' ? (
           <>
             <View style={styles.historyBox}>
-              <Text style={styles.sectionTitle}>Journey History</Text>
+              <Text style={styles.sectionTitle}>Life Journey History</Text>
               <ScrollView>
                 {pageData.map((item, idx) => (
                   <View key={idx} style={styles.historyItem}>
