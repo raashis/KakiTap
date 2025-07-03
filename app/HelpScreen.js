@@ -14,7 +14,7 @@ export default function HelpScreen() {
         <View style={styles.divider} />
         <View style={styles.optionsRow}>
           <TouchableOpacity
-            style={[styles.optionBox, styles.optionBoxBlue]}
+            style={[styles.optionBox, styles.optionBoxYellow]}
             onPress={() => router.push('/HelpRequestScreen')}
           >
             <Text style={styles.optionText}>
@@ -22,10 +22,10 @@ export default function HelpScreen() {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.optionBox, styles.optionBoxGreen]}
+            style={[styles.optionBox, styles.optionBoxYellow]}
             onPress={() => router.push('/HelpAIBotScreen')}
           >
-            <Text style={styles.optionText}>Talk To our{'\n'}AI Friend!</Text>
+            <Text style={styles.optionText}>Talk To Our{'\n'}AI Friend!</Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity
@@ -50,80 +50,78 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 48,
+    padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
   },
   header: {
-    fontSize: 42,
+    fontSize: 52,
     fontWeight: 'bold',
     fontFamily: 'System',
-    marginBottom: 24,
+    marginBottom: 20,
     textAlign: 'center',
     color: '#222',
   },
   divider: {
-    height: 6,
+    height: 8,
     backgroundColor: '#222',
     width: '100%',
-    marginVertical: 32,
-    borderRadius: 3,
+    marginVertical: 24,
+    borderRadius: 4,
   },
   optionsRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 48,
-    marginBottom: 48,
+    gap: 32,
+    marginBottom: 32,
     width: '100%',
+    flex: 1,
   },
   optionBox: {
     flex: 1,
-    borderRadius: 24,
-    borderWidth: 4,
+    borderRadius: 32,
+    borderWidth: 6,
     borderColor: '#222',
-    padding: 48,
-    marginHorizontal: 12,
+    padding: 60,
+    marginHorizontal: 16,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOpacity: 0.15,
-    shadowOffset: { width: 0, height: 4 },
-    shadowRadius: 12,
-    elevation: 8,
-    minHeight: 220,
+    shadowOffset: { width: 0, height: 6 },
+    shadowRadius: 16,
+    elevation: 10,
     justifyContent: 'center',
-    maxWidth: 400,
+    maxWidth: 500,
+    minHeight: 300,
   },
-  optionBoxBlue: {
-    backgroundColor: '#dbeafe', // light blue
-  },
-  optionBoxGreen: {
-    backgroundColor: '#dcfce7', // light green
+  optionBoxYellow: {
+    backgroundColor: '#fef3c7', // Same light yellow for both cards
   },
   optionText: {
-    fontSize: 28,
+    fontSize: 36,
     fontWeight: 'bold',
     textAlign: 'center',
-    lineHeight: 36,
+    lineHeight: 44,
     fontFamily: 'System',
     color: '#222',
   },
   backBtn: {
-    borderWidth: 4,
+    borderWidth: 6,
     borderColor: '#222',
-    borderRadius: 16,
-    paddingHorizontal: 48,
-    paddingVertical: 20,
-    backgroundColor: '#fecaca', // light red shade
-    marginTop: 24,
+    borderRadius: 20,
+    paddingHorizontal: 64,
+    paddingVertical: 28,
+    backgroundColor: '#fecaca',
+    marginTop: 16,
     shadowColor: '#000',
     shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 8,
-    elevation: 4,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 12,
+    elevation: 6,
   },
   backBtnText: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 'bold',
     textAlign: 'center',
     letterSpacing: 1,
@@ -131,22 +129,22 @@ const styles = StyleSheet.create({
   },
   helpIconContainer: {
     position: 'absolute',
-    bottom: 32,
-    right: 32,
-    width: 64,
-    height: 64,
+    bottom: 24,
+    right: 24,
+    width: 80,
+    height: 80,
     backgroundColor: '#6b7280',
-    borderRadius: 32,
+    borderRadius: 40,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
     shadowOpacity: 0.2,
     shadowOffset: { width: 0, height: 4 },
-    shadowRadius: 8,
-    elevation: 6,
+    shadowRadius: 10,
+    elevation: 8,
   },
   helpIcon: {
-    fontSize: 32,
+    fontSize: 40,
     color: '#fff',
     fontWeight: 'bold',
   },

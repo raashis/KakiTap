@@ -9,12 +9,14 @@ export default function HelpAIBotScreen() {
     <View style={styles.container}>
       <Sidebar active="help" />
       <View style={styles.content}>
-        <Text style={styles.question}>What Do You Need Help With?</Text>
-        <View style={styles.divider} />
-        <Text style={styles.info}>PRESS THIS TO TALK TO AH BOT</Text>
-        <TouchableOpacity style={styles.micCircle} onPress={() => alert('Voicebot coming soon!')}>
-          <Text style={styles.micIcon}>🎤</Text>
-        </TouchableOpacity>
+        <View style={styles.card}>
+          <Text style={styles.question}>We Want to Hear You!</Text>
+          <View style={styles.divider} />
+          <Text style={styles.info}>PRESS THIS TO TALK TO AH BOT</Text>
+          <TouchableOpacity style={styles.micCircle} onPress={() => alert('Voicebot coming soon!')}>
+            <Text style={styles.micIcon}>🎤</Text>
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity
           style={styles.backBtn}
           onPress={() => router.push('/HelpScreen')}
@@ -28,69 +30,118 @@ export default function HelpAIBotScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, flexDirection: 'row', backgroundColor: '#f8f9fa' },
+  container: { 
+    flex: 1, 
+    flexDirection: 'row', 
+    backgroundColor: '#fef3c7' // Same faded yellow as the other screens
+  },
   content: {
     flex: 1,
-    padding: 36,
+    padding: 24,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
   },
+  card: {
+    backgroundColor: 'rgba(255, 255, 255, 0.85)', // Faded white with transparency
+    borderRadius: 32,
+    padding: 60,
+    marginBottom: 40,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 8 },
+    shadowRadius: 24,
+    elevation: 8,
+    borderWidth: 2,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+    width: '90%',
+    maxWidth: 800,
+    backdropFilter: 'blur(10px)', // Blurred effect
+    alignItems: 'center',
+  },
   question: {
-    fontSize: 28,
+    fontSize: 48,
     fontWeight: 'bold',
-    marginBottom: 12,
+    marginBottom: 24,
     textAlign: 'center',
+    color: '#222',
+    fontFamily: 'System',
   },
   divider: {
-    height: 2,
+    height: 6,
     backgroundColor: '#222',
     width: '100%',
-    marginVertical: 12,
+    marginVertical: 32,
+    borderRadius: 3,
   },
   info: {
-    fontSize: 22,
+    fontSize: 32,
     textAlign: 'center',
-    marginBottom: 30,
-    fontWeight: '500',
-    lineHeight: 34,
+    marginBottom: 40,
+    fontWeight: '600',
+    lineHeight: 42,
+    color: '#222',
+    fontFamily: 'System',
+    letterSpacing: 1,
   },
   micCircle: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: '#fff',
-    borderWidth: 2,
+    width: 140,
+    height: 140,
+    borderRadius: 70,
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderWidth: 4,
     borderColor: '#222',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 32,
+    shadowColor: '#000',
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 6 },
+    shadowRadius: 16,
+    elevation: 8,
   },
   micIcon: {
-    fontSize: 54,
+    fontSize: 72,
     color: '#222',
   },
   backBtn: {
-    borderWidth: 2,
+    borderWidth: 4,
     borderColor: '#222',
-    borderRadius: 8,
-    paddingHorizontal: 28,
-    paddingVertical: 12,
-    backgroundColor: '#fff',
-    marginTop: 12,
+    borderRadius: 20,
+    paddingHorizontal: 48,
+    paddingVertical: 20,
+    backgroundColor: '#f59e0b', // Nice darker yellow (amber-500)
+    marginTop: 24,
+    shadowColor: '#000',
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 12,
+    elevation: 6,
   },
   backBtnText: {
-    fontSize: 20,
+    fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
     letterSpacing: 1,
+    color: '#222',
+    fontFamily: 'System',
   },
   helpIcon: {
     position: 'absolute',
-    bottom: 20,
-    right: 24,
-    fontSize: 28,
-    color: '#555',
+    bottom: 32,
+    right: 32,
+    fontSize: 40,
+    color: '#6b7280',
     fontWeight: 'bold',
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    textAlign: 'center',
+    lineHeight: 80,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
+    elevation: 4,
   },
 });
