@@ -25,7 +25,7 @@ export default function MainScreen() {
               <Text style={styles.iconText}>📅</Text>
             </View>
             <Text style={styles.buttonText}>See All Events</Text>
-            <Text style={styles.buttonSubtext}>Happening NOW</Text>
+            <Text style={styles.buttonSubtext}>Happening NOW in your area</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -46,8 +46,8 @@ export default function MainScreen() {
             <View style={styles.buttonIcon}>
               <Text style={styles.iconText}>🎁</Text>
             </View>
-            <Text style={styles.buttonText}>Redeem</Text>
-            <Text style={styles.buttonSubtext}>Rewards</Text>
+            <Text style={styles.buttonText}>Points & Rewards</Text>
+            <Text style={styles.buttonSubtext}>Redeem Your Rewards</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -57,8 +57,8 @@ export default function MainScreen() {
             <View style={styles.buttonIcon}>
               <Text style={styles.iconText}>💬</Text>
             </View>
-            <Text style={styles.buttonText}>Help &</Text>
-            <Text style={styles.buttonSubtext}>Support</Text>
+            <Text style={styles.buttonText}>Help & Support</Text>
+            <Text style={styles.buttonSubtext}>Request for our Help & Support</Text>
           </TouchableOpacity>
         </View>
       </View>

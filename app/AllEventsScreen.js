@@ -73,17 +73,17 @@ export default function AllEventsScreen() {
   });
 
   const renderItem = ({ item, index }) => {
-    // Calculate distance from center of screen
-    const inputRange = [
-      (index - 1) * (CARD_WIDTH + CARD_SPACING),
-      index * (CARD_WIDTH + CARD_SPACING),
-      (index + 1) * (CARD_WIDTH + CARD_SPACING),
-    ];
+    // Calculate the center position of the screen
+    const screenCenter = screenWidth / 2;
     
-    // Calculate how close this item is to center
-    const centerOffset = scrollX - (index * (CARD_WIDTH + CARD_SPACING));
-    const distance = Math.abs(centerOffset);
-    const maxDistance = CARD_WIDTH + CARD_SPACING;
+    // Calculate the center position of this card
+    const cardCenter = (CARD_WIDTH + CARD_SPACING) * index + CARD_WIDTH / 2 - scrollX + (screenWidth - CARD_WIDTH) / 2;
+    
+    // Calculate distance from screen center
+    const distance = Math.abs(cardCenter - screenCenter);
+    
+    // Maximum distance for scaling calculations
+    const maxDistance = (CARD_WIDTH + CARD_SPACING) * 1.5;
     
     // Scale and opacity based on distance from center
     const scale = Math.max(0.7, 1 - (distance / maxDistance) * 0.3);
@@ -140,6 +140,9 @@ export default function AllEventsScreen() {
               }}
               onScroll={onScroll}
               scrollEventThrottle={16}
+              decelerationRate="fast"
+              snapToInterval={CARD_WIDTH + CARD_SPACING}
+              snapToAlignment="center"
             />
           </View>
 

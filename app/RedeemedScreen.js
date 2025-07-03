@@ -14,7 +14,7 @@ export default function RedeemedScreen() {
       <View style={styles.content}>
         {/* Tabs */}
         <View style={styles.tabs}>
-          <Text style={[styles.tab, styles.activeTab]}>My Journey</Text>
+          <Text style={styles.tab}>My Journey</Text>
           <Text style={[styles.tab, styles.activeTab]}>Redeem Rewards</Text>
         </View>
 
@@ -41,7 +41,9 @@ export default function RedeemedScreen() {
             <Text style={styles.backBtnText}>Go Back To Rewards</Text>
           </TouchableOpacity>
         </View>
-        <Text style={styles.helpIcon}>❔</Text>
+        <View style={styles.helpIconContainer}>
+          <Text style={styles.helpIcon}>?</Text>
+        </View>
         {/* For now, but we can link to Singpass etc. */}
         {/* <Text style={styles.note}>
           For now :( but we can link to Singpass etc.
@@ -53,112 +55,130 @@ export default function RedeemedScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, flexDirection: 'row', backgroundColor: '#f8f9fa' },
-  content: { flex: 1, padding: 24, position: 'relative' },
-  tabs: { flexDirection: 'row', marginBottom: 16 },
+  content: { flex: 1, padding: 32, position: 'relative' },
+  tabs: { flexDirection: 'row', marginBottom: 24 },
   tab: {
-    fontSize: 20,
+    fontSize: 26,
     fontWeight: 'bold',
-    marginRight: 32,
+    marginRight: 40,
     color: '#aaa',
-    borderBottomWidth: 3,
+    borderBottomWidth: 4,
     borderBottomColor: 'transparent',
-    paddingBottom: 8,
+    paddingBottom: 12,
   },
   activeTab: {
     color: '#008080',
     borderBottomColor: '#008080',
   },
   pointsLabel: {
-    fontSize: 18,
+    fontSize: 24,
     color: '#555',
-    marginTop: 8,
-    marginBottom: 2,
+    marginTop: 12,
+    marginBottom: 8,
     textAlign: 'center',
+    fontWeight: '600',
   },
   points: {
-    fontSize: 40,
+    fontSize: 52,
     fontWeight: 'bold',
     color: '#008080',
     textAlign: 'center',
-    marginBottom: 24,
+    marginBottom: 32,
   },
   card: {
-    backgroundColor: '#fff',
-    borderRadius: 18,
-    padding: 28,
+    backgroundColor: 'rgba(144, 238, 144, 0.3)', // Light green faded opacity
+    borderRadius: 20,
+    padding: 40,
     borderWidth: 2,
     borderColor: '#222',
-    marginBottom: 32,
+    marginBottom: 40,
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOpacity: 0.07,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 7,
-    elevation: 2,
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 10,
+    elevation: 3,
   },
   cardHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
-    gap: 10,
+    marginBottom: 16,
+    gap: 16,
   },
   brand: {
     fontWeight: 'bold',
-    fontSize: 22,
+    fontSize: 28,
     color: '#222',
-    marginRight: 12,
+    marginRight: 16,
   },
   reward: {
-    fontSize: 18,
+    fontSize: 24,
     color: '#333',
+    fontWeight: '600',
   },
   redeemedBox: {
     backgroundColor: '#222',
-    borderRadius: 6,
-    paddingHorizontal: 18,
-    paddingVertical: 8,
-    marginVertical: 16,
+    borderRadius: 8,
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    marginVertical: 20,
   },
   redeemedText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 18,
-    letterSpacing: 2,
+    fontSize: 24,
+    letterSpacing: 3,
     textAlign: 'center',
   },
   instructions: {
-    fontSize: 17,
+    fontSize: 22,
     color: '#222',
     fontWeight: 'bold',
-    marginBottom: 24,
+    marginBottom: 32,
     textAlign: 'center',
+    lineHeight: 28,
   },
   backBtn: {
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(243, 128, 67, 0.75)', // Deep orange faded opacity
     borderWidth: 2,
     borderColor: '#222',
-    borderRadius: 8,
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    marginTop: 6,
+    borderRadius: 10,
+    paddingHorizontal: 32,
+    paddingVertical: 16,
+    marginTop: 8,
   },
   backBtnText: {
     color: '#222',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 20,
     textAlign: 'center',
   },
-  helpIcon: {
+  // Question Mark Button - exactly the same as RewardsScreen
+  helpIconContainer: {
     position: 'absolute',
-    bottom: 16,
-    right: 16,
-    fontSize: 24,
-    color: '#555',
+    bottom: 32,
+    right: 32,
+    width: 64,
+    height: 64,
+    backgroundColor: '#6b7280',
+    borderRadius: 32,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
+    elevation: 6,
+  },
+  helpIcon: {
+    fontSize: 32,
+    color: '#fff',
+    fontWeight: 'bold',
   },
   note: {
     color: '#800080',
-    fontSize: 15,
-    marginTop: 24,
+    fontSize: 18,
+    marginTop: 32,
     fontStyle: 'italic',
     textAlign: 'left',
   },
