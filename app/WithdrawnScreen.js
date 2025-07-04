@@ -16,7 +16,7 @@ export default function WithdrawnScreen() {
           YOU HAVE JUST WITHDRAWN FROM THE{"\n"}
           <Text style={styles.eventTitle}>{eventTitle.toUpperCase()} OUTING!</Text>
         </Text>
-        <Text style={styles.emoji}>👎✨</Text>
+        <Text style={styles.emoji}>👍✨</Text>
         <Text style={styles.seeYou}>WE HOPE TO SEE YOU NEXT TIME!</Text>
         <TouchableOpacity
           style={styles.backBtn}
@@ -31,50 +31,56 @@ export default function WithdrawnScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, flexDirection: 'row', backgroundColor: '#f8f9fa' },
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: '#e0f4ff', // light blue
+  },
   content: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 24,
-    position: 'relative',
+    padding: 32,
+    backgroundColor: 'rgba(255, 255, 255, 0.85)', // white with slight transparency
+    margin: 48,
+    borderRadius: 20,
   },
   message: {
-    fontSize: 22,
+    fontSize: 36,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 16,
+    marginBottom: 24,
+    color: '#000',
   },
   eventTitle: {
-    fontSize: 24,
+    fontSize: 40,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 4,
-    marginBottom: 4,
+    color: '#000',
   },
   emoji: {
-    fontSize: 48,
+    fontSize: 60,
     textAlign: 'center',
-    marginVertical: 16,
+    marginVertical: 24,
   },
   seeYou: {
-    fontSize: 28,
+    fontSize: 34,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginVertical: 8,
+    marginVertical: 16,
+    color: '#000',
   },
   backBtn: {
-    marginTop: 24,
-    borderWidth: 2,
-    borderColor: '#222',
-    borderRadius: 8,
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    backgroundColor: '#fff',
+    marginTop: 32,
+    backgroundColor: '#0077b6', // dark blue (darker than background)
+    borderRadius: 12,
+    paddingHorizontal: 32,
+    paddingVertical: 16,
   },
   backBtnText: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: 'bold',
+    color: '#fff',
     textAlign: 'center',
     letterSpacing: 1,
   },
@@ -82,7 +88,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 16,
     right: 16,
-    fontSize: 24,
+    fontSize: 30,
     color: '#555',
   },
 });
