@@ -135,7 +135,8 @@ export default function AllEventsScreen() {
               horizontal
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={{
-                paddingHorizontal: (screenWidth - CARD_WIDTH) / 2,
+                paddingLeft: 24, // or CARD_SPACING, or any value you prefer
+                paddingRight: (screenWidth - CARD_WIDTH) / 2,
                 paddingVertical: 20,
               }}
               onScroll={onScroll}
