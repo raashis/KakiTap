@@ -1,6 +1,7 @@
-// app/ConfirmationScreen.js
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { addRegisteredEvent } from './registeredEventsStore';
 import Sidebar from './Sidebar';
 
 const events = [
@@ -40,6 +41,19 @@ export default function ConfirmationScreen() {
   const eventId = params.eventId;
   
   const event = events.find(e => e.id === eventId);
+
+  // Add event to "My Events" when this screen loads
+  useEffect(() => {
+    if (event) {
+      addRegisteredEvent({
+        id: event.id,
+        date: event.date,
+        title: event.title,
+        details: `${event.date} ${event.time} @ ${event.title}`,
+        paid: false,
+      });
+    }
+  }, [event]);
 
   if (!event) {
     return (

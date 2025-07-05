@@ -1,37 +1,37 @@
-// app/MyEventsScreen.js
-import { useRouter } from 'expo-router';
-import { useState } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useFocusEffect, useRouter } from 'expo-router';
+import { useCallback, useState } from 'react';
+import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Sidebar from './Sidebar';
-
-// Persistent events storage (survives navigation)
-let registeredEventsGlobal = [
-  {
-    id: '1',
-    date: '15 March 2025',
-    title: 'Science Centre',
-    details: 'Saturday 10AM - 1PM @ Science Centre\nPick up @ Pek Kio CC',
-    paid: false,
-  },
-  {
-    id: '2',
-    date: '5 May 2025',
-    title: 'Spring Carnival',
-    details: 'Sunday 12PM - 4PM @ Community Park',
-    paid: true,
-  },
-];
+import { registeredEventsGlobal, removeRegisteredEvent } from './registeredEventsStore';
 
 export default function MyEventsScreen() {
-  const [registeredEvents, setRegisteredEvents] = useState(registeredEventsGlobal);
+  const [registeredEvents, setRegisteredEvents] = useState([...registeredEventsGlobal]);
   const router = useRouter();
 
+  // Refresh the list whenever the screen is focused
+  useFocusEffect(
+    useCallback(() => {
+      setRegisteredEvents([...registeredEventsGlobal]);
+    }, [])
+  );
+
   const handleWithdraw = (id, title) => {
-    if (window.confirm('Are you sure you want to withdraw from this event?')) {
-      registeredEventsGlobal = registeredEventsGlobal.filter(event => event.id !== id);
-      setRegisteredEvents(registeredEventsGlobal);
-      router.push(`/WithdrawnScreen?eventTitle=${encodeURIComponent(title)}`);
-    }
+    Alert.alert(
+      'Withdraw from event',
+      'Are you sure you want to withdraw from this event?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Withdraw',
+          style: 'destructive',
+          onPress: () => {
+            removeRegisteredEvent(id);
+            setRegisteredEvents([...registeredEventsGlobal]);
+            router.push(`/WithdrawnScreen?eventTitle=${encodeURIComponent(title)}`);
+          }
+        }
+      ]
+    );
   };
 
   return (

@@ -1,4 +1,3 @@
-// app/EventRegistrationScreen.js
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Sidebar from './Sidebar';
@@ -57,6 +56,11 @@ export default function EventRegistrationScreen() {
     );
   }
 
+  const handleConfirmJoin = () => {
+    // Only navigate to confirmation screen, don't add to MyEvents yet
+    router.push({ pathname: '/ConfirmationScreen', params: { eventId: event.id } });
+  };
+
   return (
     <View style={styles.container}>
       <Sidebar active="events" />
@@ -99,10 +103,7 @@ export default function EventRegistrationScreen() {
         
         <TouchableOpacity 
           style={styles.joinButton}
-          onPress={() => router.push({ 
-            pathname: '/ConfirmationScreen', 
-            params: { eventId: event.id } 
-          })}
+          onPress={handleConfirmJoin}
         >
           <Text style={styles.joinButtonText}>Confirm Join</Text>
         </TouchableOpacity>
