@@ -1,8 +1,8 @@
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import store, { removeRegisteredEvent } from './registeredEventsStore'; // adjust path as needed
 import Sidebar from './Sidebar';
-import store, { removeRegisteredEvent } from './registeredEventsStore';
 
 export default function MyEventsScreen() {
   const [registeredEvents, setRegisteredEvents] = useState([...store.registeredEventsGlobal]);
