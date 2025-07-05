@@ -1,31 +1,35 @@
-// app/registeredEventsStore.js
+const store = {
+  registeredEventsGlobal: [
+    {
+      id: '1',
+      date: '15 March 2025',
+      title: 'Science Centre',
+      details: 'Saturday 10AM - 1PM @ Science Centre\nPick up @ Pek Kio CC',
+      paid: false,
+    },
+    // DO NOT include Durian Fiesta here if you want to test adding it!
+  ],
+};
 
-// Start with initial events, or use an empty array if you want
-export let registeredEventsGlobal = [
-  {
-    id: '1',
-    date: '15 March 2025',
-    title: 'Science Centre',
-    details: 'Saturday 10AM - 1PM @ Science Centre\nPick up @ Pek Kio CC',
-    paid: false,
-  },
-  {
-    id: '2',
-    date: '5 May 2025',
-    title: 'Spring Carnival',
-    details: 'Sunday 12PM - 4PM @ Community Park',
-    paid: true,
-  },
-];
 
-// Add an event (if not already present)
+
 export function addRegisteredEvent(event) {
-  if (!registeredEventsGlobal.some(e => e.id === event.id)) {
-    registeredEventsGlobal.push(event);
+  console.log('Trying to add event:', event);
+  if (!store.registeredEventsGlobal.some(e => String(e.id) === String(event.id))) {
+    store.registeredEventsGlobal.push(event);
+    console.log('Event added:', event);
+  } else {
+    console.log('Event already exists:', event.id);
+  }
+  console.log('Current store:', store.registeredEventsGlobal);
+}
+
+
+export function removeRegisteredEvent(eventId) {
+  const idx = store.registeredEventsGlobal.findIndex(e => String(e.id) === String(eventId));
+  if (idx !== -1) {
+    store.registeredEventsGlobal.splice(idx, 1);
   }
 }
 
-// Remove an event by id
-export function removeRegisteredEvent(eventId) {
-  registeredEventsGlobal = registeredEventsGlobal.filter(e => e.id !== eventId);
-}
+export default store;

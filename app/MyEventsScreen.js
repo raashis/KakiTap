@@ -2,16 +2,15 @@ import { useFocusEffect, useRouter } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Sidebar from './Sidebar';
-import { registeredEventsGlobal, removeRegisteredEvent } from './registeredEventsStore';
+import store, { removeRegisteredEvent } from './registeredEventsStore';
 
 export default function MyEventsScreen() {
-  const [registeredEvents, setRegisteredEvents] = useState([...registeredEventsGlobal]);
+  const [registeredEvents, setRegisteredEvents] = useState([...store.registeredEventsGlobal]);
   const router = useRouter();
 
-  // Refresh the list whenever the screen is focused
   useFocusEffect(
     useCallback(() => {
-      setRegisteredEvents([...registeredEventsGlobal]);
+      setRegisteredEvents([...store.registeredEventsGlobal]);
     }, [])
   );
 
@@ -26,7 +25,7 @@ export default function MyEventsScreen() {
           style: 'destructive',
           onPress: () => {
             removeRegisteredEvent(id);
-            setRegisteredEvents([...registeredEventsGlobal]);
+            setRegisteredEvents([...store.registeredEventsGlobal]);
             router.push(`/WithdrawnScreen?eventTitle=${encodeURIComponent(title)}`);
           }
         }
@@ -37,7 +36,6 @@ export default function MyEventsScreen() {
   return (
     <View style={styles.container}>
       <Sidebar active="myevents" />
-
       <View style={styles.content}>
         <Text style={styles.header}>MY EVENTS</Text>
         <ScrollView contentContainerStyle={styles.eventsList}>
@@ -80,16 +78,8 @@ export default function MyEventsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    flexDirection: 'row', 
-    backgroundColor: '#f8f9fa' 
-  },
-  content: { 
-    flex: 1, 
-    padding: 32, 
-    position: 'relative' 
-  },
+  container: { flex: 1, flexDirection: 'row', backgroundColor: '#f8f9fa' },
+  content: { flex: 1, padding: 32, position: 'relative' },
   header: {
     fontSize: 36,
     fontWeight: 'bold',
@@ -98,12 +88,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#2c3e50',
   },
-  eventsList: {
-    paddingBottom: 40,
-  },
-  eventBox: {
-    marginBottom: 35,
-  },
+  eventsList: { paddingBottom: 40 },
+  eventBox: { marginBottom: 35 },
   eventDate: {
     fontSize: 28,
     fontWeight: 'bold',
@@ -120,10 +106,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     position: 'relative',
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 6,
@@ -158,10 +141,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 12,
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.2,
     shadowRadius: 5,
     elevation: 5,
@@ -194,16 +174,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
     borderRadius: 8,
   },
-  pageNum: {
-    fontSize: 20,
-    color: '#2c3e50',
-    marginHorizontal: 12,
-  },
-  currentPage: {
-    color: '#008080',
-    fontWeight: 'bold',
-    fontSize: 22,
-  },
+  pageNum: { fontSize: 20, color: '#2c3e50', marginHorizontal: 12 },
+  currentPage: { color: '#008080', fontWeight: 'bold', fontSize: 22 },
   helpIcon: {
     position: 'absolute',
     bottom: 20,

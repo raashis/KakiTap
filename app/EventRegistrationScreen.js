@@ -44,10 +44,9 @@ const events = [
 export default function EventRegistrationScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
-  const eventId = params.eventId;
+  const eventId = String(params.eventId);
+  const event = events.find(e => String(e.id) === eventId);
   
-  const event = events.find(e => e.id === eventId);
-
   if (!event) {
     return (
       <View style={styles.container}>

@@ -38,11 +38,14 @@ const events = [
 export default function ConfirmationScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
-  const eventId = params.eventId;
-  
-  const event = events.find(e => e.id === eventId);
+  const eventId = String(params.eventId);
+  const event = events.find(e => String(e.id) === eventId);
 
-  // Add event to "My Events" when this screen loads
+  // Debug logs (inside the function, after variables are defined)
+  console.log('eventId param:', eventId);
+  console.log('events array:', events);
+  console.log('event found:', event);
+
   useEffect(() => {
     if (event) {
       addRegisteredEvent({
@@ -66,24 +69,19 @@ export default function ConfirmationScreen() {
   return (
     <View style={styles.container}>
       <Sidebar active="events" />
-      
       <View style={styles.contentContainer}>
         <Text style={styles.title}>CONFIRMATION OF REGISTRATION</Text>
-        
         <View style={styles.confirmationCard}>
           <View style={styles.confirmationContent}>
             <Text style={styles.confirmationText}>
               You have just signed up for the
             </Text>
             <Text style={styles.eventTitle}>{event.title} outing!</Text>
-            
             <View style={styles.iconContainer}>
               <Text style={styles.thumbsUpIcon}>👍</Text>
               <Text style={styles.sparkleIcon}>✨</Text>
             </View>
-            
             <Text style={styles.seeYouText}>SEE YOU THERE!</Text>
-            
             <TouchableOpacity 
               style={styles.backButton}
               onPress={() => router.push('/AllEventsScreen')}
@@ -98,17 +96,8 @@ export default function ConfirmationScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: '#f8f9fa',
-  },
-  contentContainer: {
-    flex: 1,
-    padding: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  container: { flex: 1, flexDirection: 'row', backgroundColor: '#f8f9fa' },
+  contentContainer: { flex: 1, padding: 40, justifyContent: 'center', alignItems: 'center' },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
@@ -125,20 +114,14 @@ const styles = StyleSheet.create({
     width: '90%',
     maxWidth: 700,
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
+    shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.1,
     shadowRadius: 10,
     elevation: 10,
     borderWidth: 2,
     borderColor: 'rgba(220, 53, 69, 0.2)',
   },
-  confirmationContent: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  confirmationContent: { alignItems: 'center', justifyContent: 'center' },
   confirmationText: {
     fontSize: 28,
     fontWeight: '600',
@@ -161,14 +144,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 40,
   },
-  thumbsUpIcon: {
-    fontSize: 72,
-    marginRight: 20,
-  },
-  sparkleIcon: {
-    fontSize: 48,
-    marginLeft: 10,
-  },
+  thumbsUpIcon: { fontSize: 72, marginRight: 20 },
+  sparkleIcon: { fontSize: 48, marginLeft: 10 },
   seeYouText: {
     fontSize: 36,
     fontWeight: 'bold',
@@ -183,10 +160,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     borderRadius: 12,
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 6,
     elevation: 8,
