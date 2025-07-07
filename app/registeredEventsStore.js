@@ -26,10 +26,10 @@ export function addRegisteredEvent(event) {
 
 
 export function removeRegisteredEvent(eventId) {
-  const idx = store.registeredEventsGlobal.findIndex(e => String(e.id) === String(eventId));
-  if (idx !== -1) {
-    store.registeredEventsGlobal.splice(idx, 1);
-  }
+  store.registeredEventsGlobal = store.registeredEventsGlobal.filter(
+    e => String(e.id) !== String(eventId)
+  );
 }
+
 
 export default store;

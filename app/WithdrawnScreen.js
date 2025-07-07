@@ -32,29 +32,36 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#e0f4ff', // light blue
+    backgroundColor: '#e0f4ff',
   },
   content: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 32,
-    backgroundColor: 'rgba(255, 255, 255, 0.85)', // white with slight transparency
+    backgroundColor: 'rgba(255, 255, 255, 0.85)',
     margin: 48,
     borderRadius: 20,
   },
+  header: {
+    fontSize: 38,
+    fontWeight: 'bold',
+    marginBottom: 24,
+    color: '#008080',
+    textAlign: 'center',
+  },
   message: {
-    fontSize: 36,
+    fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 24,
     color: '#000',
   },
   eventTitle: {
-    fontSize: 40,
+    fontSize: 32,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#000',
+    color: '#008080',
   },
   emoji: {
     fontSize: 60,
@@ -62,32 +69,24 @@ const styles = StyleSheet.create({
     marginVertical: 24,
   },
   seeYou: {
-    fontSize: 34,
+    fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: 16,
     color: '#000',
   },
-  backBtn: {
+  button: {
     marginTop: 32,
-    backgroundColor: '#0077b6', // dark blue (darker than background)
+    backgroundColor: '#0077b6',
     borderRadius: 12,
     paddingHorizontal: 32,
     paddingVertical: 16,
   },
-  backBtnText: {
+  buttonText: {
     fontSize: 22,
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
     letterSpacing: 1,
   },
-  helpIcon: {
-    position: 'absolute',
-    bottom: 16,
-    right: 16,
-    fontSize: 30,
-    color: '#555',
-  },
-  buttonText: { color: '#fff', fontWeight: 'bold', fontSize: 18 },
 });

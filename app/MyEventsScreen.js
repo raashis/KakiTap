@@ -1,36 +1,57 @@
 import { useFocusEffect, useRouter } from 'expo-router';
-import { useCallback, useState } from 'react';
-import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { Alert, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import store, { removeRegisteredEvent } from './registeredEventsStore'; // adjust path as needed
 import Sidebar from './Sidebar';
 
 export default function MyEventsScreen() {
   const [registeredEvents, setRegisteredEvents] = useState([...store.registeredEventsGlobal]);
+  const [justWithdrew, setJustWithdrew] = useState(false);
+  const [lastWithdrawnTitle, setLastWithdrawnTitle] = useState('');
   const router = useRouter();
 
+  // Refresh the events list every time the screen is focused
   useFocusEffect(
     useCallback(() => {
       setRegisteredEvents([...store.registeredEventsGlobal]);
     }, [])
   );
 
+  // Navigate to WithdrawnScreen after withdrawal
+  useEffect(() => {
+    if (justWithdrew) {
+      router.push(`/WithdrawnScreen?eventTitle=${encodeURIComponent(lastWithdrawnTitle)}`);
+      setJustWithdrew(false);
+    }
+  }, [registeredEvents, justWithdrew]);
+
+  // Cross-platform withdraw handler
   const handleWithdraw = (id, title) => {
-    Alert.alert(
-      'Withdraw from event',
-      'Are you sure you want to withdraw from this event?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Withdraw',
-          style: 'destructive',
-          onPress: () => {
-            removeRegisteredEvent(id);
-            setRegisteredEvents([...store.registeredEventsGlobal]);
-            router.push(`/WithdrawnScreen?eventTitle=${encodeURIComponent(title)}`);
+    if (Platform.OS === 'web') {
+      if (!window.confirm('Are you sure you want to withdraw from this event?')) return;
+      removeRegisteredEvent(id);
+      setRegisteredEvents([...store.registeredEventsGlobal]);
+      setLastWithdrawnTitle(title);
+      setJustWithdrew(true);
+    } else {
+      Alert.alert(
+        'Withdraw from event',
+        'Are you sure you want to withdraw from this event?',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          {
+            text: 'Withdraw',
+            style: 'destructive',
+            onPress: () => {
+              removeRegisteredEvent(id);
+              setRegisteredEvents([...store.registeredEventsGlobal]);
+              setLastWithdrawnTitle(title);
+              setJustWithdrew(true);
+            }
           }
-        }
-      ]
-    );
+        ]
+      );
+    }
   };
 
   return (
@@ -66,9 +87,12 @@ export default function MyEventsScreen() {
             ))
           )}
         </ScrollView>
+
         <View style={styles.pagination}>
           <Text style={styles.disabledBtn}>back</Text>
-          <Text style={styles.pageNum}>&lt; PAGE <Text style={styles.currentPage}>1</Text>/1 &gt;</Text>
+          <Text style={styles.pageNum}>
+            &lt; PAGE <Text style={styles.currentPage}>1</Text>/1 &gt;
+          </Text>
           <Text style={styles.disabledBtn}>next</Text>
         </View>
         <Text style={styles.helpIcon}>❔</Text>
