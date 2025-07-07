@@ -15,11 +15,8 @@ export default function WithdrawnScreen() {
           You have successfully withdrawn from:{"\n"}
           <Text style={styles.eventTitle}>{eventTitle}</Text>
         </Text>
-<<<<<<< HEAD
-=======
         <Text style={styles.emoji}>👍✨</Text>
         <Text style={styles.seeYou}>WE HOPE TO SEE YOU NEXT TIME!</Text>
->>>>>>> 28d785dc52d281921c1d4068edbee39fb5f328a6
         <TouchableOpacity
           style={styles.button}
           onPress={() => router.replace('/MyEventsScreen')}
@@ -32,18 +29,6 @@ export default function WithdrawnScreen() {
 }
 
 const styles = StyleSheet.create({
-<<<<<<< HEAD
-  container: { flex: 1, flexDirection: 'row', backgroundColor: '#f8f9fa' },
-  content: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  header: { fontSize: 28, fontWeight: 'bold', marginBottom: 20, color: '#008080' },
-  message: { fontSize: 20, marginBottom: 40, textAlign: 'center', color: '#2c3e50' },
-  eventTitle: { fontWeight: 'bold', color: '#d9534f', fontSize: 22 },
-  button: {
-    backgroundColor: '#008080',
-    paddingHorizontal: 30,
-    paddingVertical: 14,
-    borderRadius: 10,
-=======
   container: {
     flex: 1,
     flexDirection: 'row',
@@ -103,7 +88,6 @@ const styles = StyleSheet.create({
     right: 16,
     fontSize: 30,
     color: '#555',
->>>>>>> 28d785dc52d281921c1d4068edbee39fb5f328a6
   },
   buttonText: { color: '#fff', fontWeight: 'bold', fontSize: 18 },
 });
