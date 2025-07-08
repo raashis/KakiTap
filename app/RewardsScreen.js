@@ -1,4 +1,3 @@
-// app/RewardsScreen.js
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -82,11 +81,26 @@ export default function RewardsScreen() {
     }
   };
 
+  // Logout handler
+  const handleLogout = () => {
+    // TODO: Replace with your logout logic
+    alert('Logged out!');
+  };
+
   return (
     <View style={styles.container}>
       <Sidebar active="rewards" />
 
       <View style={styles.content}>
+        {/* Logout Button */}
+        <TouchableOpacity
+          style={styles.logoutButton}
+          onPress={handleLogout}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.logoutButtonText}>Logout</Text>
+        </TouchableOpacity>
+
         {/* Tabs */}
         <View style={styles.tabs}>
           <TouchableOpacity onPress={() => setActiveTab('journey')}>
@@ -179,6 +193,25 @@ const styles = StyleSheet.create({
   container: { flex: 1, flexDirection: 'row', backgroundColor: '#f8f9fa' },
   content: { flex: 1, padding: 32, position: 'relative' },
 
+
+  logoutButton: {
+    position: 'absolute',
+    top: 20,
+    right: 12,
+    backgroundColor: '#e74c3c',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 16,
+    zIndex: 10,
+    elevation: 10,
+  },
+  logoutButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 14,
+    letterSpacing: 1,
+  },
+
   tabs: { flexDirection: 'row', marginBottom: 24, marginTop: 12 },
   tab: {
     fontSize: 26,
@@ -210,7 +243,7 @@ const styles = StyleSheet.create({
   },
 
   historyBox: {
-    backgroundColor: '#fed7aa', // light orange with faded opacity
+    backgroundColor: '#fed7aa', 
     borderRadius: 24,
     padding: 36,
     marginBottom: 36,
@@ -264,7 +297,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   rewardCard: {
-    backgroundColor: '#fed7aa', // light orange with faded opacity
+    backgroundColor: '#fed7aa', 
     borderRadius: 20,
     padding: 28,
     marginBottom: 28,
@@ -347,8 +380,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 22,
   },
-  
-  // Question Mark Button - exactly the same as HelpScreen
   helpIconContainer: {
     position: 'absolute',
     bottom: 32,
