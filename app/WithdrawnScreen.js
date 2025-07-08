@@ -6,10 +6,23 @@ export default function WithdrawnScreen() {
   const router = useRouter();
   const { eventTitle } = useLocalSearchParams();
 
+  const handleLogout = () => {
+    alert('Logged out!');
+  };
+
   return (
     <View style={styles.container}>
       <Sidebar active="myevents" />
       <View style={styles.content}>
+        {/* Logout Button */}
+        <TouchableOpacity
+          style={styles.logoutButton}
+          onPress={handleLogout}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.logoutButtonText}>Logout</Text>
+        </TouchableOpacity>
+
         <Text style={styles.header}>Withdrawn from Event</Text>
         <Text style={styles.message}>
           You have successfully withdrawn from:{"\n"}
@@ -42,6 +55,24 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.85)',
     margin: 48,
     borderRadius: 20,
+    position: 'relative', 
+  },
+  logoutButton: {
+    position: 'absolute',
+    top: 20,
+    right: 12,
+    backgroundColor: '#e74c3c',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 16,
+    zIndex: 10,
+    elevation: 10,
+  },
+  logoutButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 14,
+    letterSpacing: 1,
   },
   header: {
     fontSize: 38,
@@ -90,3 +121,4 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
 });
+
