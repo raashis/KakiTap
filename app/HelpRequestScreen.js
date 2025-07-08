@@ -5,10 +5,23 @@ import Sidebar from './Sidebar';
 export default function HelpRequestScreen() {
   const router = useRouter();
 
+  const handleLogout = () => {
+    alert('Logged out!');
+  };
+
   return (
     <View style={styles.container}>
       <Sidebar active="help" />
       <View style={styles.content}>
+        {/* Logout Button */}
+        <TouchableOpacity
+          style={styles.logoutButton}
+          onPress={handleLogout}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.logoutButtonText}>Logout</Text>
+        </TouchableOpacity>
+
         <View style={styles.card}>
           <Text style={styles.question}>We Want to Help You!</Text>
           <View style={styles.divider} />
@@ -34,7 +47,7 @@ const styles = StyleSheet.create({
   container: { 
     flex: 1, 
     flexDirection: 'row', 
-    backgroundColor: '#fef3c7' // Same faded yellow as the cards
+    backgroundColor: '#fef3c7'
   },
   content: {
     flex: 1,
@@ -43,8 +56,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative',
   },
+  logoutButton: {
+    position: 'absolute',
+    top: 20,
+    right: 12,
+    backgroundColor: '#e74c3c',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 16,
+    zIndex: 10,
+    elevation: 10,
+  },
+  logoutButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 14,
+    letterSpacing: 1,
+  },
   card: {
-    backgroundColor: 'rgba(255, 255, 255, 0.85)', // Faded white with transparency
+    backgroundColor: 'rgba(255, 255, 255, 0.85)',
     borderRadius: 32,
     padding: 60,
     marginBottom: 40,
@@ -57,7 +87,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255, 255, 255, 0.3)',
     width: '90%',
     maxWidth: 800,
-    backdropFilter: 'blur(10px)', // Blurred effect (works on some platforms)
+
   },
   question: {
     fontSize: 48,
@@ -93,7 +123,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 48,
     paddingVertical: 20,
-    backgroundColor: '#f59e0b', // Nice darker yellow (amber-500)
+    backgroundColor: '#f59e0b',
     marginTop: 24,
     shadowColor: '#000',
     shadowOpacity: 0.15,
