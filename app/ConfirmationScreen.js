@@ -58,6 +58,11 @@ export default function ConfirmationScreen() {
     }
   }, [event]);
 
+  const handleLogout = () => {
+    // TODO: Replace with your logout logic
+    alert('Logged out!');
+  };
+
   if (!event) {
     return (
       <View style={styles.container}>
@@ -70,6 +75,15 @@ export default function ConfirmationScreen() {
     <View style={styles.container}>
       <Sidebar active="events" />
       <View style={styles.contentContainer}>
+        {/* Logout Button */}
+        <TouchableOpacity 
+          style={styles.logoutButton}
+          onPress={handleLogout}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.logoutButtonText}>Logout</Text>
+        </TouchableOpacity>
+
         <Text style={styles.title}>CONFIRMATION OF REGISTRATION</Text>
         <View style={styles.confirmationCard}>
           <View style={styles.confirmationContent}>
@@ -97,7 +111,25 @@ export default function ConfirmationScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, flexDirection: 'row', backgroundColor: '#f8f9fa' },
-  contentContainer: { flex: 1, padding: 40, justifyContent: 'center', alignItems: 'center' },
+  contentContainer: { flex: 1, padding: 40, justifyContent: 'center', alignItems: 'center', position: 'relative' },
+
+  logoutButton: {
+    position: 'absolute',
+    top: 20,                
+    right: 12,
+    backgroundColor: '#e74c3c',
+    paddingHorizontal: 20,  
+    paddingVertical: 10,    
+    borderRadius: 16,
+    zIndex: 10,
+    elevation: 10,
+  },
+  logoutButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 14,           
+    letterSpacing: 1,
+  },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
@@ -178,3 +210,4 @@ const styles = StyleSheet.create({
     margin: 20,
   },
 });
+
