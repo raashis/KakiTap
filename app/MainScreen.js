@@ -1,4 +1,3 @@
-// app/MainScreen.js
 import { useRouter } from 'expo-router';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Sidebar from './Sidebar';
@@ -6,11 +5,24 @@ import Sidebar from './Sidebar';
 export default function MainScreen() {
   const router = useRouter();
 
+  const handleLogout = () => {
+    alert('Logged out!');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Sidebar active="home" />
 
       <View style={styles.mainContent}>
+        {/* Logout Button */}
+        <TouchableOpacity
+          style={styles.logoutButton}
+          onPress={handleLogout}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.logoutButtonText}>Logout</Text>
+        </TouchableOpacity>
+
         <View style={styles.headerSection}>
           <Text style={styles.welcome}>Welcome, Tan!</Text>
           <Text style={styles.subtitle}>What do you want to do today?</Text>
@@ -77,6 +89,24 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 40,
     justifyContent: 'flex-start',
+    position: 'relative',
+  },
+  logoutButton: {
+    position: 'absolute',
+    top: 20,
+    right: 12,
+    backgroundColor: '#e74c3c',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 16,
+    zIndex: 10,
+    elevation: 10,
+  },
+  logoutButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 14,
+    letterSpacing: 1,
   },
   headerSection: {
     marginBottom: 60,
