@@ -1,4 +1,3 @@
-// app/HelpScreen.js
 import { useRouter } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Sidebar from './Sidebar';
@@ -6,10 +5,24 @@ import Sidebar from './Sidebar';
 export default function HelpScreen() {
   const router = useRouter();
 
+  const handleLogout = () => {
+    // TODO: Replace with your logout logic
+    alert('Logged out!');
+  };
+
   return (
     <View style={styles.container}>
       <Sidebar active="help" />
       <View style={styles.content}>
+        {/* Logout Button */}
+        <TouchableOpacity
+          style={styles.logoutButton}
+          onPress={handleLogout}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.logoutButtonText}>Logout</Text>
+        </TouchableOpacity>
+
         <Text style={styles.header}>What Do You Need Help With?</Text>
         <View style={styles.divider} />
         <View style={styles.optionsRow}>
@@ -55,6 +68,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative',
   },
+  // Logout button styles (consistent with other screens)
+  logoutButton: {
+    position: 'absolute',
+    top: 20,
+    right: 12,
+    backgroundColor: '#e74c3c',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 16,
+    zIndex: 10,
+    elevation: 10,
+  },
+  logoutButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 14,
+    letterSpacing: 1,
+  },
   header: {
     fontSize: 52,
     fontWeight: 'bold',
@@ -96,7 +127,7 @@ const styles = StyleSheet.create({
     minHeight: 300,
   },
   optionBoxYellow: {
-    backgroundColor: '#fef3c7', // Same light yellow for both cards
+    backgroundColor: '#fef3c7',
   },
   optionText: {
     fontSize: 36,
@@ -149,3 +180,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
