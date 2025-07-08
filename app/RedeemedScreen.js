@@ -5,13 +5,25 @@ import Sidebar from './Sidebar';
 export default function RedeemedScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
-  // You can pass points and reward info as params if needed
   const { points = 40, brand = "FairPrice", reward = "$5 FairPrice eVoucher" } = params;
+
+  const handleLogout = () => {
+    alert('Logged out!');
+  };
 
   return (
     <View style={styles.container}>
       <Sidebar active="rewards" />
       <View style={styles.content}>
+        {/* Logout Button */}
+        <TouchableOpacity
+          style={styles.logoutButton}
+          onPress={handleLogout}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.logoutButtonText}>Logout</Text>
+        </TouchableOpacity>
+
         {/* Tabs */}
         <View style={styles.tabs}>
           <Text style={styles.tab}>My Journey</Text>
@@ -56,6 +68,24 @@ export default function RedeemedScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, flexDirection: 'row', backgroundColor: '#f8f9fa' },
   content: { flex: 1, padding: 32, position: 'relative' },
+
+  logoutButton: {
+    position: 'absolute',
+    top: 20,
+    right: 12,
+    backgroundColor: '#e74c3c',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 16,
+    zIndex: 10,
+    elevation: 10,
+  },
+  logoutButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 14,
+    letterSpacing: 1,
+  },
   tabs: { flexDirection: 'row', marginBottom: 24 },
   tab: {
     fontSize: 26,
@@ -86,7 +116,7 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   card: {
-    backgroundColor: 'rgba(144, 238, 144, 0.3)', // Light green faded opacity
+    backgroundColor: 'rgba(144, 238, 144, 0.3)', 
     borderRadius: 20,
     padding: 40,
     borderWidth: 2,
@@ -139,7 +169,7 @@ const styles = StyleSheet.create({
     lineHeight: 28,
   },
   backBtn: {
-    backgroundColor: 'rgba(243, 128, 67, 0.75)', // Deep orange faded opacity
+    backgroundColor: 'rgba(243, 128, 67, 0.75)', 
     borderWidth: 2,
     borderColor: '#222',
     borderRadius: 10,
@@ -153,7 +183,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
   },
-  // Question Mark Button - exactly the same as RewardsScreen
+
   helpIconContainer: {
     position: 'absolute',
     bottom: 32,
