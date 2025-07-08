@@ -4,8 +4,8 @@ import { Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View }
 import Sidebar from './Sidebar';
 
 const screenWidth = Dimensions.get('window').width;
-const CARD_WIDTH = screenWidth * 0.25; // Much narrower for A4 portrait ratio
-const CARD_HEIGHT = CARD_WIDTH * 1.4; // A4-like ratio (height = 1.4 * width)
+const CARD_WIDTH = screenWidth * 0.25; 
+const CARD_HEIGHT = CARD_WIDTH * 1.4;
 const CARD_SPACING = 30;
 
 const events = [
@@ -47,7 +47,6 @@ export default function AllEventsScreen() {
   const router = useRouter();
   const flatListRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-
   const [scrollX, setScrollX] = useState(0);
 
   const scrollToIndex = (direction) => {
@@ -135,7 +134,7 @@ export default function AllEventsScreen() {
               horizontal
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={{
-                paddingLeft: 24, // or CARD_SPACING, or any value you prefer
+                paddingLeft: (screenWidth - CARD_WIDTH) / 2,
                 paddingRight: (screenWidth - CARD_WIDTH) / 2,
                 paddingVertical: 20,
               }}
@@ -144,6 +143,7 @@ export default function AllEventsScreen() {
               decelerationRate="fast"
               snapToInterval={CARD_WIDTH + CARD_SPACING}
               snapToAlignment="center"
+              getItemLayout={getItemLayout}  // Added for performance and reliability
             />
           </View>
 
