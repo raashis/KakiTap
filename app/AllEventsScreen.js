@@ -4,7 +4,7 @@ import { Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View }
 import Sidebar from './Sidebar';
 
 const screenWidth = Dimensions.get('window').width;
-const CARD_WIDTH = screenWidth * 0.25; 
+const CARD_WIDTH = screenWidth * 0.3; 
 const CARD_HEIGHT = CARD_WIDTH * 1.4;
 const CARD_SPACING = 30;
 
@@ -48,6 +48,10 @@ export default function AllEventsScreen() {
   const flatListRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [scrollX, setScrollX] = useState(0);
+
+  const handleLogout = () => {
+    alert('Logged out!');
+  };
 
   const scrollToIndex = (direction) => {
     const newOffset = direction === 'left' 
@@ -120,6 +124,15 @@ export default function AllEventsScreen() {
       <Sidebar active="events" />
       
       <View style={styles.main}>
+        {/* Logout Button */}
+        <TouchableOpacity 
+          style={styles.logoutButton}
+          onPress={handleLogout}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.logoutButtonText}>Logout</Text>
+        </TouchableOpacity>
+
         <View style={styles.carouselContainer}>
           <TouchableOpacity onPress={() => scrollToIndex('left')} style={styles.arrow}>
             <Text style={styles.arrowText}>◀</Text>
@@ -143,7 +156,7 @@ export default function AllEventsScreen() {
               decelerationRate="fast"
               snapToInterval={CARD_WIDTH + CARD_SPACING}
               snapToAlignment="center"
-              getItemLayout={getItemLayout}  // Added for performance and reliability
+              getItemLayout={getItemLayout}
             />
           </View>
 
@@ -192,6 +205,23 @@ const styles = StyleSheet.create({
     padding: 24, 
     position: 'relative' 
   },
+  logoutButton: {
+    position: 'absolute',
+    top: 20,                
+    right: 12,
+    backgroundColor: '#e74c3c',
+    paddingHorizontal: 20,  
+    paddingVertical: 10,    
+    borderRadius: 16,
+    zIndex: 10,
+    elevation: 10,
+  },
+  logoutButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 14,           
+    letterSpacing: 1,
+  },
   carouselContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -200,7 +230,7 @@ const styles = StyleSheet.create({
   },
   flatListContainer: {
     flex: 1,
-    height: CARD_HEIGHT + 80, // Extra space for poster height
+    height: CARD_HEIGHT + 80, 
   },
   arrow: {
     width: 40,
@@ -232,34 +262,34 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: '70%', // Takes up most of the card for poster effect
+    height: '70%',
     borderRadius: 6,
     resizeMode: 'cover',
   },
   eventTitle: {
-    fontSize: 14,
+    fontSize: 16,           
     fontWeight: 'bold',
     color: '#2c3e50',
     textAlign: 'center',
     marginBottom: 2,
   },
   eventDetails: {
-    fontSize: 10,
+    fontSize: 12,     
     color: '#555',
     textAlign: 'center',
-    lineHeight: 12,
+    lineHeight: 14,
   },
   moreButton: {
     marginTop: 4,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
     backgroundColor: '#2c3e50',
     borderRadius: 4,
   },
   moreButtonText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 10,
+    fontSize: 12,
   },
   indicators: {
     flexDirection: 'row',
