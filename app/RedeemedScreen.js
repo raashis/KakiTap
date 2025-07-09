@@ -8,7 +8,7 @@ export default function RedeemedScreen() {
   const { points = 40, brand = "FairPrice", reward = "$5 FairPrice eVoucher" } = params;
 
   const handleLogout = () => {
-    alert('Logged out!');
+  router.replace('/KakiTapScreen');
   };
 
   return (

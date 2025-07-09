@@ -60,9 +60,8 @@ export default function RewardsScreen() {
     }
   };
 
-  // Logout handler
   const handleLogout = () => {
-    alert('Logged out!');
+  router.replace('/KakiTapScreen');
   };
 
   // For measuring the redeem button position

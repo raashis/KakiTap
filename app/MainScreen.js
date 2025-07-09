@@ -1,3 +1,4 @@
+// app/MainScreen.js
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -8,7 +9,7 @@ export default function MainScreen() {
   const [showHelp, setShowHelp] = useState(false);
 
   const handleLogout = () => {
-    alert('Logged out!');
+    router.replace('/KakiTapScreen'); 
   };
 
   return (

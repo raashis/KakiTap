@@ -6,8 +6,7 @@ export default function HelpAIBotScreen() {
   const router = useRouter();
 
   const handleLogout = () => {
-    // TODO: Replace with your logout logic
-    alert('Logged out!');
+  router.replace('/KakiTapScreen');
   };
 
   return (
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative',
   },
-  // Logout button styles (consistent with other screens)
+
   logoutButton: {
     position: 'absolute',
     top: 20,

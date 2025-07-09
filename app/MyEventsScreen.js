@@ -95,7 +95,7 @@ export default function MyEventsScreen() {
   };
 
   const handleLogout = () => {
-    alert('Logged out!');
+  router.replace('/KakiTapScreen');
   };
 
   return (

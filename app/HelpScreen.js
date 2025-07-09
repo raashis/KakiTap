@@ -1,3 +1,4 @@
+// app/HelpScreen.js
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -8,7 +9,11 @@ export default function HelpScreen() {
   const [showHelp, setShowHelp] = useState(false);
 
   const handleLogout = () => {
-    alert('Logged out!');
+    router.replace('/KakiTapScreen');
+  };
+
+  const handleGoBackToHomepage = () => {
+    router.push('/MainScreen');
   };
 
   return (
@@ -44,9 +49,11 @@ export default function HelpScreen() {
             <Text style={styles.optionText}>Talk To Our{'\n'}AI Friend!</Text>
           </TouchableOpacity>
         </View>
+        
+        {/* Fixed: Go Back to Homepage now goes to MainScreen */}
         <TouchableOpacity
           style={styles.backBtn}
-          onPress={() => router.push('/')}
+          onPress={handleGoBackToHomepage}
         >
           <Text style={styles.backBtnText}>Go Back to Homepage</Text>
         </TouchableOpacity>

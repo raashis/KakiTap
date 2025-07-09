@@ -7,7 +7,7 @@ export default function WithdrawnScreen() {
   const { eventTitle } = useLocalSearchParams();
 
   const handleLogout = () => {
-    alert('Logged out!');
+  router.replace('/KakiTapScreen');
   };
 
   return (
