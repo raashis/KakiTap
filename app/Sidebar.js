@@ -9,7 +9,7 @@ export default function Sidebar({ active }) {
     { 
       key: 'home', 
       label: '🏠 Homepage', 
-      route: '/',
+      route: '/MainScreen', // Changed from '/' to '/MainScreen'
       color: '#d31a38',
       activeColor: '#90021f'
     },
@@ -61,7 +61,13 @@ export default function Sidebar({ active }) {
                 { backgroundColor: isActive ? item.activeColor : item.color },
                 isActive && styles.activeMenuCard
               ]}
-              onPress={() => router.push(item.route)}
+              onPress={() => {
+                // If it's the homepage and we're already on it, just stay
+                if (item.key === 'home' && active === 'home') {
+                  return; // Don't navigate, just stay on current page
+                }
+                router.push(item.route);
+              }}
             >
               <Text style={[
                 styles.menuText,

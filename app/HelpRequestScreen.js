@@ -6,7 +6,7 @@ export default function HelpRequestScreen() {
   const router = useRouter();
 
   const handleLogout = () => {
-    alert('Logged out!');
+  router.replace('/KakiTapScreen');
   };
 
   return (

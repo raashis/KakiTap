@@ -72,7 +72,7 @@ export default function AllEventsScreen() {
   const seeMoreBtnRefs = useRef({});
 
   const handleLogout = () => {
-    alert('Logged out!');
+  router.replace('/KakiTapScreen');
   };
 
   const scrollToIndex = (direction) => {

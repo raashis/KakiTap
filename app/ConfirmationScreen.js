@@ -52,7 +52,7 @@ export default function ConfirmationScreen() {
   }, [showHelp]);
 
   const handleLogout = () => {
-    alert('Logged out!');
+  router.replace('/KakiTapScreen');
   };
 
   if (!event) {
