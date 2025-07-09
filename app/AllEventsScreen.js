@@ -4,10 +4,10 @@ import { Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View }
 import Sidebar from './Sidebar';
 
 const screenWidth = Dimensions.get('window').width;
-const SIDEBAR_WIDTH = 250; // Adjust this if your sidebar width differs
+const SIDEBAR_WIDTH = 250;
 const MAIN_CONTENT_WIDTH = screenWidth - SIDEBAR_WIDTH;
 
-const CARD_WIDTH = MAIN_CONTENT_WIDTH * 0.3; // Card width relative to main content
+const CARD_WIDTH = MAIN_CONTENT_WIDTH * 0.3;
 const CARD_HEIGHT = CARD_WIDTH * 1.4;
 const CARD_SPACING = 30;
 
@@ -46,10 +46,30 @@ const events = [
   },
 ];
 
+// Red ChatBox with pointer above the chatbox, shifted right and pointing up
+const RedChatBox = ({
+  style,
+  pointerDirection = 'up',
+  children,
+}) => (
+  <View style={[styles.redChatBoxContainer, style]}>
+    {pointerDirection === 'up' && (
+      <View style={styles.redPointerWrapperUp}>
+        <View style={styles.redChatBoxPointerFillUp} />
+      </View>
+    )}
+    <View style={styles.redChatBox}>
+      <Text style={styles.redChatBoxText}>{children}</Text>
+    </View>
+  </View>
+);
+
 export default function AllEventsScreen() {
   const router = useRouter();
   const flatListRef = useRef(null);
   const [scrollX, setScrollX] = useState(0);
+  const [showHelp, setShowHelp] = useState(false);
+  const seeMoreBtnRefs = useRef({});
 
   const handleLogout = () => {
     alert('Logged out!');
@@ -107,17 +127,37 @@ export default function AllEventsScreen() {
         <Text style={styles.eventDetails}>
           {item.time} | {item.price}
         </Text>
-        <TouchableOpacity
-          style={styles.moreButton}
-          onPress={() =>
-            router.push({
-              pathname: '/EventRegistrationScreen',
-              params: { eventId: item.id },
-            })
-          }
-        >
-          <Text style={styles.moreButtonText}>See More</Text>
-        </TouchableOpacity>
+        <View style={{ width: '100%', alignItems: 'flex-end', position: 'relative' }}>
+          <TouchableOpacity
+            ref={ref => (seeMoreBtnRefs.current[index] = ref)}
+            style={styles.moreButton}
+            onPress={() =>
+              router.push({
+                pathname: '/EventRegistrationScreen',
+                params: { eventId: item.id },
+              })
+            }
+          >
+            <Text style={styles.moreButtonText}>See More</Text>
+          </TouchableOpacity>
+          {/* Chatbox for See More button - pointer above the chatbox, minimal gap */}
+          {showHelp && (
+            <View
+              style={{
+                position: 'absolute',
+                right: 0,
+                top: 38, // Just below the button (adjust as needed)
+                width: 220,
+                alignItems: 'flex-end',
+                zIndex: 10,
+              }}
+            >
+              <RedChatBox pointerDirection="up" style={{ width: 220, minHeight: 32 }}>
+                Press here for event details
+              </RedChatBox>
+            </View>
+          )}
+        </View>
       </View>
     );
   };
@@ -201,7 +241,13 @@ export default function AllEventsScreen() {
           })}
         </View>
 
-        <Text style={styles.helpIcon}>❔</Text>
+        {/* Help Button to toggle chatboxes */}
+        <TouchableOpacity
+          style={styles.helpFab}
+          onPress={() => setShowHelp((prev) => !prev)}
+        >
+          <Text style={styles.helpFabText}>?</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -316,10 +362,76 @@ const styles = StyleSheet.create({
     height: 8,
     borderRadius: 4,
   },
-  helpIcon: {
+  helpFab: {
     position: 'absolute',
-    bottom: 16,
-    right: 16,
-    fontSize: 24,
+    bottom: 24,
+    right: 24,
+    backgroundColor: '#e53935',
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 100,
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+  },
+  helpFabText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 28,
+    marginBottom: 2,
+  },
+
+  
+  redChatBoxContainer: {
+    alignItems: 'center',
+    width: '100%',
+    maxWidth: 220,
+  },
+  redChatBox: {
+    backgroundColor: '#e53935',
+    borderColor: '#b71c1c',
+    borderWidth: 3,
+    borderRadius: 14,
+    paddingVertical: 6,
+    paddingHorizontal: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 4,
+    alignItems: 'center',
+    minWidth: 180,
+    maxWidth: 220,
+    minHeight: 32,
+    justifyContent: 'center',
+  },
+  redChatBoxText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 14,
+    textAlign: 'center',
+    letterSpacing: 0.5,
+  },
+  redPointerWrapperUp: {
+    width: '100%',
+    alignItems: 'flex-end', 
+    marginBottom: 15,
+    height: 0,
+    paddingRight: 28, 
+  },
+  redChatBoxPointerFillUp: {
+    width: 0,
+    height: 0,
+    borderLeftWidth: 12,
+    borderRightWidth: 12,
+    borderBottomWidth: 14, 
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderBottomColor: '#e53935',
   },
 });

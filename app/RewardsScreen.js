@@ -1,44 +1,18 @@
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useRef, useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Sidebar from './Sidebar';
 
 const journeyData = [
-  {
-    date: '10 March 2025',
-    description: 'Attended Mahjong Session',
-    points: 10,
-  },
-  {
-    date: '26 Feb 2025',
-    description: 'Attended Walkathon @ Bishan',
-    points: 10,
-  },
-  {
-    date: '14 Jan 2025',
-    description: 'Attended Art Jamming',
-    points: 20,
-  },
-  {
-    date: '2 Jan 2025',
-    description: 'Joined Cooking Class',
-    points: 20,
-  },
+  { date: '10 March 2025', description: 'Attended Mahjong Session', points: 10 },
+  { date: '26 Feb 2025', description: 'Attended Walkathon @ Bishan', points: 10 },
+  { date: '14 Jan 2025', description: 'Attended Art Jamming', points: 20 },
+  { date: '2 Jan 2025', description: 'Joined Cooking Class', points: 20 },
 ];
 
 const rewardsData = [
-  {
-    id: 1,
-    brand: "FairPrice",
-    description: "$5 FairPrice eVoucher",
-    points: 20,
-  },
-  {
-    id: 2,
-    brand: "SimplyGo",
-    description: "SimplyGo (EZ-Link Concession or NETS Flashpay Card)",
-    points: 20,
-  },
+  { id: 1, brand: "FairPrice", description: "$5 FairPrice eVoucher", points: 20 },
+  { id: 2, brand: "SimplyGo", description: "SimplyGo (EZ-Link Concession or NETS Flashpay Card)", points: 20 },
 ];
 
 const PAGE_SIZE = 2;
@@ -47,8 +21,13 @@ export default function RewardsScreen() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('journey');
   const [page, setPage] = useState(1);
-  const [userPoints, setUserPoints] = useState(60); // starting points
+  const [userPoints, setUserPoints] = useState(60);
   const [redeemedRewards, setRedeemedRewards] = useState([]);
+  const [showHelp, setShowHelp] = useState(false);
+
+  // For pointing to the first redeem button
+  const firstRedeemBtnRef = useRef(null);
+  const [redeemBtnPos, setRedeemBtnPos] = useState({ x: 0, y: 0 });
 
   // Pagination logic for journey
   const totalPages = Math.ceil(journeyData.length / PAGE_SIZE);
@@ -83,8 +62,13 @@ export default function RewardsScreen() {
 
   // Logout handler
   const handleLogout = () => {
-    // TODO: Replace with your logout logic
     alert('Logged out!');
+  };
+
+  // For measuring the redeem button position
+  const handleRedeemBtnLayout = (event) => {
+    const { x, y } = event.nativeEvent.layout;
+    setRedeemBtnPos({ x, y });
   };
 
   return (
@@ -104,16 +88,22 @@ export default function RewardsScreen() {
         {/* Tabs */}
         <View style={styles.tabs}>
           <TouchableOpacity onPress={() => setActiveTab('journey')}>
-            <Text style={[styles.tab, activeTab === 'journey' && styles.activeTab]}>My Journey</Text>
+            <Text style={[styles.tab, activeTab === 'journey' && styles.activeTab]}>
+              My Journey
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setActiveTab('redeem')}>
-            <Text style={[styles.tab, activeTab === 'redeem' && styles.activeTab]}>Redeem Rewards</Text>
+            <Text style={[styles.tab, activeTab === 'redeem' && styles.activeTab]}>
+              Redeem Rewards
+            </Text>
           </TouchableOpacity>
         </View>
 
         {/* Points */}
-        <Text style={styles.pointsLabel}>My KakiPoints</Text>
-        <Text style={styles.points}>{userPoints} ✧</Text>
+        <View style={{ alignItems: 'center', position: 'relative' }}>
+          <Text style={styles.pointsLabel}>My KakiPoints</Text>
+          <Text style={styles.points}>{userPoints} ✧</Text>
+        </View>
 
         {/* Tab Content */}
         {activeTab === 'journey' ? (
@@ -155,7 +145,7 @@ export default function RewardsScreen() {
           </>
         ) : (
           <View style={styles.redeemBox}>
-            {rewardsData.map(reward => {
+            {rewardsData.map((reward, idx) => {
               const isRedeemed = redeemedRewards.includes(reward.id);
               return (
                 <View key={reward.id} style={styles.rewardCard}>
@@ -164,6 +154,8 @@ export default function RewardsScreen() {
                   <View style={styles.rewardFooter}>
                     <Text style={styles.rewardPoints}>{reward.points}✧</Text>
                     <TouchableOpacity
+                      ref={idx === 0 ? firstRedeemBtnRef : null}
+                      onLayout={idx === 0 ? handleRedeemBtnLayout : undefined}
                       style={[styles.redeemBtn, isRedeemed && styles.redeemedBtn]}
                       onPress={() => handleRedeem(reward.id, reward.points)}
                       disabled={isRedeemed}
@@ -179,20 +171,72 @@ export default function RewardsScreen() {
           </View>
         )}
 
-        {/* Question Mark Button */}
-        <View style={styles.helpIconContainer}>
+        {/* Floating Help Button & Red Chatboxes */}
+        <TouchableOpacity
+          style={styles.helpIconContainer}
+          onPress={() => setShowHelp(!showHelp)}
+          activeOpacity={0.8}
+        >
           <Text style={styles.helpIcon}>?</Text>
-        </View>
+        </TouchableOpacity>
+
+        {showHelp && (
+          <Pressable
+            style={styles.helpOverlay}
+            onPress={() => setShowHelp(false)}
+          >
+            {activeTab === 'journey' && (
+              <>
+                {/* Chatbox 1: Points area (arrow now points right) */}
+                <View style={[styles.redChatBoxContainer, { position: 'absolute', left: 200, top: 150, maxWidth: 340 }]}>
+                  <View style={styles.redChatBox}>
+                    <Text style={styles.redChatBoxText}>
+                      The points you get from past events will be here
+                    </Text>
+                    <View style={styles.arrowRight} />
+                  </View>
+                </View>
+                {/* Chatbox 2: Redeem Rewards tab */}
+                <View style={[styles.redChatBoxContainer, { position: 'absolute', left: 475, top: 5, maxWidth: 260 }]}>
+                  <View style={styles.redChatBox}>
+                    <Text style={styles.redChatBoxText}>
+                      You can redeem your points for awesome rewards here!
+                    </Text>
+                    <View style={styles.arrowLeft} />
+                  </View>
+                </View>
+              </>
+            )}
+            {activeTab === 'redeem' && (
+              // Chatbox for the redeem button (points to the first redeem button)
+              <View style={[
+                styles.redChatBoxContainer,
+                {
+                  position: 'absolute',
+                  left: redeemBtnPos.x - 240,
+                  top: redeemBtnPos.y + 365,
+                  maxWidth: 260
+                }
+              ]}>
+                <View style={styles.redChatBox}>
+                  <Text style={styles.redChatBoxText}>
+                    Press here to redeem prizes with your points!
+                  </Text>
+                  <View style={styles.arrowRight} />
+                </View>
+              </View>
+            )}
+          </Pressable>
+        )}
       </View>
     </View>
   );
 }
 
-
+// --- Styles ---
 const styles = StyleSheet.create({
   container: { flex: 1, flexDirection: 'row', backgroundColor: '#f8f9fa' },
   content: { flex: 1, padding: 32, position: 'relative' },
-
 
   logoutButton: {
     position: 'absolute',
@@ -380,13 +424,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 22,
   },
+
+  // Floating Help Button
   helpIconContainer: {
     position: 'absolute',
     bottom: 32,
     right: 32,
     width: 64,
     height: 64,
-    backgroundColor: '#6b7280',
+    backgroundColor: '#e74c3c',
     borderRadius: 32,
     justifyContent: 'center',
     alignItems: 'center',
@@ -395,10 +441,78 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowRadius: 8,
     elevation: 6,
+    zIndex: 200,
   },
   helpIcon: {
     fontSize: 32,
     color: '#fff',
     fontWeight: 'bold',
+  },
+
+  // Help Overlay
+  helpOverlay: {
+    position: 'absolute',
+    top: 0, left: 0, right: 0, bottom: 0,
+    zIndex: 199,
+  },
+
+  // Red ChatBox Styles
+  redChatBoxContainer: {
+    alignItems: 'flex-start',
+    maxWidth: 340,
+  },
+  redChatBox: {
+    backgroundColor: '#e53935',
+    borderColor: '#b71c1c',
+    borderWidth: 4,
+    borderRadius: 16,
+    paddingVertical: 18,
+    paddingHorizontal: 26,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.15,
+    shadowRadius: 7,
+    elevation: 6,
+    alignItems: 'center',
+    minWidth: 140,
+    maxWidth: 320,
+    position: 'relative',
+  },
+  redChatBoxText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 18,
+    textAlign: 'center',
+    letterSpacing: 0.5,
+  },
+  // Right-pointing arrow for chatbox
+  arrowRight: {
+    position: 'absolute',
+    top: 28, 
+    right: -26,
+    width: 0,
+    height: 0,
+    borderTopWidth: 14,
+    borderBottomWidth: 14,
+    borderLeftWidth: 22,
+    borderTopColor: 'transparent',
+    borderBottomColor: 'transparent',
+    borderLeftColor: '#e53935',
+    zIndex: 2,
+  },
+  // Left-pointing arrow for chatbox
+  arrowLeft: {
+    position: 'absolute',
+    top: 28,
+    left: -26,
+    width: 0,
+    height: 0,
+    borderTopWidth: 14,
+    borderBottomWidth: 14,
+    borderRightWidth: 22,
+    borderTopColor: 'transparent',
+    borderBottomColor: 'transparent',
+    borderRightColor: '#e53935',
+    zIndex: 2,
   },
 });

@@ -1,12 +1,13 @@
 import { useRouter } from 'expo-router';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useState } from 'react';
+import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Sidebar from './Sidebar';
 
 export default function HelpScreen() {
   const router = useRouter();
+  const [showHelp, setShowHelp] = useState(false);
 
   const handleLogout = () => {
-    // TODO: Replace with your logout logic
     alert('Logged out!');
   };
 
@@ -25,6 +26,8 @@ export default function HelpScreen() {
 
         <Text style={styles.header}>What Do You Need Help With?</Text>
         <View style={styles.divider} />
+
+        {/* Options */}
         <View style={styles.optionsRow}>
           <TouchableOpacity
             style={[styles.optionBox, styles.optionBoxYellow]}
@@ -47,9 +50,35 @@ export default function HelpScreen() {
         >
           <Text style={styles.backBtnText}>Go Back to Homepage</Text>
         </TouchableOpacity>
-        <View style={styles.helpIconContainer}>
+
+        {/* Red Floating Help Button */}
+        <TouchableOpacity
+          style={styles.helpIconContainer}
+          onPress={() => setShowHelp(!showHelp)}
+          activeOpacity={0.8}
+        >
           <Text style={styles.helpIcon}>?</Text>
-        </View>
+        </TouchableOpacity>
+
+        {/* Red Chatbox with Two Downward Arrows */}
+        {showHelp && (
+          <Pressable
+            style={styles.helpOverlay}
+            onPress={() => setShowHelp(false)}
+          >
+            <View style={styles.redChatBoxContainer}>
+              <View style={styles.redChatBox}>
+                <Text style={styles.redChatBoxText}>
+                  Press one of these to get help!
+                </Text>
+                <View style={styles.arrowRow}>
+                  <View style={styles.arrowDownLeft} />
+                  <View style={styles.arrowDownRight} />
+                </View>
+              </View>
+            </View>
+          </Pressable>
+        )}
       </View>
     </View>
   );
@@ -68,7 +97,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative',
   },
-  // Logout button styles (consistent with other screens)
   logoutButton: {
     position: 'absolute',
     top: 20,
@@ -158,13 +186,14 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     color: '#222',
   },
+  // --- Red Help Button (Floating) ---
   helpIconContainer: {
     position: 'absolute',
     bottom: 24,
     right: 24,
     width: 80,
     height: 80,
-    backgroundColor: '#6b7280',
+    backgroundColor: '#e74c3c',
     borderRadius: 40,
     justifyContent: 'center',
     alignItems: 'center',
@@ -173,11 +202,79 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowRadius: 10,
     elevation: 8,
+    zIndex: 100,
   },
   helpIcon: {
     fontSize: 40,
     color: '#fff',
     fontWeight: 'bold',
   },
+  // --- Chatbox styles ---
+  helpOverlay: {
+    position: 'absolute',
+    top: 0, left: 0, right: 0, bottom: 0,
+    zIndex: 99,
+  },
+  redChatBoxContainer: {
+    position: 'absolute',
+    top: 195, // Adjust as needed for your layout
+    left: '25%',
+    width: 600,
+    alignItems: 'center',
+    zIndex: 100,
+  },
+  redChatBox: {
+    backgroundColor: '#e53935',
+    borderColor: '#b71c1c',
+    borderWidth: 4,
+    borderRadius: 18,
+    paddingVertical: 10,
+    paddingHorizontal: 38,
+    alignItems: 'center',
+    minWidth: 320,
+    maxWidth: 600,
+    position: 'relative',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.12,
+    shadowRadius: 8,
+    elevation: 6,
+  },
+  redChatBoxText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 26,
+    textAlign: 'center',
+    marginBottom: 6,
+    letterSpacing: 0.5,
+  },
+  arrowRow: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+    marginTop: 0,
+    position: 'relative',
+  },
+  arrowDownLeft: {
+    marginLeft: 60,
+    width: 0,
+    height: 0,
+    borderLeftWidth: 18,
+    borderRightWidth: 18,
+    borderTopWidth: 26,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderTopColor: '#e53935',
+  },
+  arrowDownRight: {
+    marginRight: 60,
+    width: 0,
+    height: 0,
+    borderLeftWidth: 18,
+    borderRightWidth: 18,
+    borderTopWidth: 26,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderTopColor: '#e53935',
+  },
 });
-

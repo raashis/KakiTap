@@ -1,9 +1,11 @@
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Sidebar from './Sidebar';
 
 export default function MainScreen() {
   const router = useRouter();
+  const [showHelp, setShowHelp] = useState(false);
 
   const handleLogout = () => {
     alert('Logged out!');
@@ -11,7 +13,22 @@ export default function MainScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Sidebar active="home" />
+      {/* Sidebar with chatbox below, shown only when showHelp is true */}
+      <View style={{ position: 'relative' }}>
+        <Sidebar active="home" />
+        {showHelp && (
+          <View style={styles.sidebarChatboxWrapper}>
+            <View style={styles.sidebarPointerWrapper}>
+              <View style={styles.sidebarPointer} />
+            </View>
+            <View style={styles.sidebarChatbox}>
+              <Text style={styles.sidebarChatboxText}>
+                You can also always go to these 4 pages from here!
+              </Text>
+            </View>
+          </View>
+        )}
+      </View>
 
       <View style={styles.mainContent}>
         {/* Logout Button */}
@@ -27,6 +44,21 @@ export default function MainScreen() {
           <Text style={styles.welcome}>Welcome, Tan!</Text>
           <Text style={styles.subtitle}>What do you want to do today?</Text>
         </View>
+
+        {/* Chatbox above the event grid, arrow points down toward buttons */}
+        {showHelp && (
+          <View style={styles.topChatboxWrapper}>
+            <View style={styles.topChatbox}>
+              <Text style={styles.topChatboxText}>
+                Press here to Explore {'\n'}
+                one of these 4 pages!
+              </Text>
+            </View>
+            <View style={styles.topPointerWrapper}>
+              <View style={styles.topPointer} />
+            </View>
+          </View>
+        )}
 
         <View style={styles.buttonGrid}>
           <TouchableOpacity
@@ -73,6 +105,15 @@ export default function MainScreen() {
             <Text style={styles.buttonSubtext}>Request for our Help & Support</Text>
           </TouchableOpacity>
         </View>
+
+        {/* Floating Help Button */}
+        <TouchableOpacity
+          style={styles.helpFab}
+          onPress={() => setShowHelp((prev) => !prev)}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.helpFabText}>?</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -193,5 +234,133 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'rgba(255, 255, 255, 0.9)',
     lineHeight: 24,
+  },
+
+  // Floating Help Button
+  helpFab: {
+    position: 'absolute',
+    bottom: 32,
+    right: 32,
+    backgroundColor: '#e53935',
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 100,
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.18,
+    shadowRadius: 6,
+  },
+  helpFabText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 32,
+    marginBottom: 2,
+  },
+
+  // Chatbox above event grid, arrow points down
+  topChatboxWrapper: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 180,
+    alignItems: 'center',
+    zIndex: 101,
+  },
+  topChatbox: {
+    backgroundColor: '#e53935',
+    borderColor: '#b71c1c',
+    borderWidth: 3,
+    borderRadius: 14,
+    paddingVertical: 14,
+    paddingHorizontal: 18,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 4,
+    alignItems: 'flex-start',
+    minWidth: 230,
+    maxWidth: 320,
+  },
+  topChatboxText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 15,
+    textAlign: 'left',
+    letterSpacing: 0.5,
+    lineHeight: 22,
+  },
+  topPointerWrapper: {
+    width: '100%',
+    alignItems: 'center',
+    marginTop: -2,
+    height: 0,
+    zIndex: 2,
+  },
+  topPointer: {
+    width: 0,
+    height: 0,
+    borderLeftWidth: 16,
+    borderRightWidth: 16,
+    borderTopWidth: 18,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderTopColor: '#e53935',
+  },
+
+  // Sidebar Chatbox below sidebar, arrow above and points up
+  sidebarChatboxWrapper: {
+    position: 'absolute',
+    left: 0,
+    top: 575, // Adjust for your sidebar height
+    flexDirection: 'column',
+    alignItems: 'center',
+    zIndex: 200,
+    width: 270,
+  },
+  sidebarPointerWrapper: {
+    width: '100%',
+    alignItems: 'flex-start',
+    marginLeft: 32, // Adjust to align arrow with sidebar edge
+    marginBottom: -2,
+    height: 0,
+    zIndex: 2,
+  },
+  sidebarPointer: {
+    width: 0,
+    height: 0,
+    borderLeftWidth: 12,
+    borderRightWidth: 12,
+    borderBottomWidth: 14, // Arrow points UP
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderBottomColor: '#e53935',
+  },
+  sidebarChatbox: {
+    backgroundColor: '#e53935',
+    borderColor: '#b71c1c',
+    borderWidth: 3,
+    borderRadius: 14,
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 4,
+    alignItems: 'center',
+    minWidth: 180,
+    maxWidth: 260,
+  },
+  sidebarChatboxText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 14,
+    textAlign: 'center',
+    letterSpacing: 0.5,
   },
 });
