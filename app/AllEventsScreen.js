@@ -4,7 +4,10 @@ import { Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View }
 import Sidebar from './Sidebar';
 
 const screenWidth = Dimensions.get('window').width;
-const CARD_WIDTH = screenWidth * 0.3; 
+const SIDEBAR_WIDTH = 250; // Adjust this if your sidebar width differs
+const MAIN_CONTENT_WIDTH = screenWidth - SIDEBAR_WIDTH;
+
+const CARD_WIDTH = MAIN_CONTENT_WIDTH * 0.3; // Card width relative to main content
 const CARD_HEIGHT = CARD_WIDTH * 1.4;
 const CARD_SPACING = 30;
 
@@ -46,7 +49,6 @@ const events = [
 export default function AllEventsScreen() {
   const router = useRouter();
   const flatListRef = useRef(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [scrollX, setScrollX] = useState(0);
 
   const handleLogout = () => {
@@ -54,10 +56,11 @@ export default function AllEventsScreen() {
   };
 
   const scrollToIndex = (direction) => {
-    const newOffset = direction === 'left' 
-      ? Math.max(0, scrollX - (CARD_WIDTH + CARD_SPACING))
-      : scrollX + (CARD_WIDTH + CARD_SPACING);
-    
+    const newOffset =
+      direction === 'left'
+        ? Math.max(0, scrollX - (CARD_WIDTH + CARD_SPACING))
+        : scrollX + (CARD_WIDTH + CARD_SPACING);
+
     flatListRef.current?.scrollToOffset({
       offset: newOffset,
       animated: true,
@@ -76,42 +79,42 @@ export default function AllEventsScreen() {
   });
 
   const renderItem = ({ item, index }) => {
-    // Calculate the center position of the screen
-    const screenCenter = screenWidth / 2;
-    
-    // Calculate the center position of this card
-    const cardCenter = (CARD_WIDTH + CARD_SPACING) * index + CARD_WIDTH / 2 - scrollX + (screenWidth - CARD_WIDTH) / 2;
-    
-    // Calculate distance from screen center
+    const screenCenter = MAIN_CONTENT_WIDTH / 2;
+    const cardCenter =
+      (CARD_WIDTH + CARD_SPACING) * index +
+      CARD_WIDTH / 2 -
+      scrollX +
+      (MAIN_CONTENT_WIDTH - CARD_WIDTH) / 2;
     const distance = Math.abs(cardCenter - screenCenter);
-    
-    // Maximum distance for scaling calculations
     const maxDistance = (CARD_WIDTH + CARD_SPACING) * 1.5;
-    
-    // Scale and opacity based on distance from center
     const scale = Math.max(0.7, 1 - (distance / maxDistance) * 0.3);
     const opacity = Math.max(0.3, 1 - (distance / maxDistance) * 0.7);
-    
+
     return (
-      <View style={[
-        styles.card,
-        {
-          transform: [{ scale }],
-          opacity,
-          marginHorizontal: CARD_SPACING / 2,
-        }
-      ]}>
+      <View
+        style={[
+          styles.card,
+          {
+            transform: [{ scale }],
+            opacity,
+            marginHorizontal: CARD_SPACING / 2,
+          },
+        ]}
+      >
         <Image source={item.image} style={styles.image} />
         <Text style={styles.eventTitle}>{item.title}</Text>
         <Text style={styles.eventDetails}>{item.date}</Text>
-        <Text style={styles.eventDetails}>{item.time} | {item.price}</Text>
-        
-        <TouchableOpacity 
+        <Text style={styles.eventDetails}>
+          {item.time} | {item.price}
+        </Text>
+        <TouchableOpacity
           style={styles.moreButton}
-          onPress={() => router.push({ 
-            pathname: '/EventRegistrationScreen', 
-            params: { eventId: item.id } 
-          })}
+          onPress={() =>
+            router.push({
+              pathname: '/EventRegistrationScreen',
+              params: { eventId: item.id },
+            })
+          }
         >
           <Text style={styles.moreButtonText}>See More</Text>
         </TouchableOpacity>
@@ -122,10 +125,10 @@ export default function AllEventsScreen() {
   return (
     <View style={styles.container}>
       <Sidebar active="events" />
-      
+
       <View style={styles.main}>
         {/* Logout Button */}
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.logoutButton}
           onPress={handleLogout}
           activeOpacity={0.8}
@@ -134,7 +137,10 @@ export default function AllEventsScreen() {
         </TouchableOpacity>
 
         <View style={styles.carouselContainer}>
-          <TouchableOpacity onPress={() => scrollToIndex('left')} style={styles.arrow}>
+          <TouchableOpacity
+            onPress={() => scrollToIndex('left')}
+            style={styles.arrow}
+          >
             <Text style={styles.arrowText}>◀</Text>
           </TouchableOpacity>
 
@@ -147,8 +153,8 @@ export default function AllEventsScreen() {
               horizontal
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={{
-                paddingLeft: (screenWidth - CARD_WIDTH) / 2,
-                paddingRight: (screenWidth - CARD_WIDTH) / 2,
+                paddingLeft: 8,
+                paddingRight: (MAIN_CONTENT_WIDTH - CARD_WIDTH) / 2,
                 paddingVertical: 20,
               }}
               onScroll={onScroll}
@@ -157,14 +163,18 @@ export default function AllEventsScreen() {
               snapToInterval={CARD_WIDTH + CARD_SPACING}
               snapToAlignment="center"
               getItemLayout={getItemLayout}
+              initialScrollIndex={0}
             />
           </View>
 
-          <TouchableOpacity onPress={() => scrollToIndex('right')} style={styles.arrow}>
+          <TouchableOpacity
+            onPress={() => scrollToIndex('right')}
+            style={styles.arrow}
+          >
             <Text style={styles.arrowText}>▶</Text>
           </TouchableOpacity>
         </View>
-        
+
         {/* Page indicators */}
         <View style={styles.indicators}>
           {events.map((_, index) => {
@@ -174,7 +184,10 @@ export default function AllEventsScreen() {
                 key={index}
                 style={[
                   styles.indicator,
-                  { backgroundColor: index === centerIndex ? '#2c3e50' : '#bdc3c7' }
+                  {
+                    backgroundColor:
+                      index === centerIndex ? '#2c3e50' : '#bdc3c7',
+                  },
                 ]}
                 onPress={() => {
                   const targetOffset = index * (CARD_WIDTH + CARD_SPACING);
@@ -187,7 +200,7 @@ export default function AllEventsScreen() {
             );
           })}
         </View>
-        
+
         <Text style={styles.helpIcon}>❔</Text>
       </View>
     </View>
@@ -195,23 +208,23 @@ export default function AllEventsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    flexDirection: 'row', 
-    backgroundColor: '#f8f9fa' 
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: '#f8f9fa',
   },
-  main: { 
-    flex: 1, 
-    padding: 24, 
-    position: 'relative' 
+  main: {
+    flex: 1,
+    padding: 24,
+    position: 'relative',
   },
   logoutButton: {
     position: 'absolute',
-    top: 20,                
+    top: 20,
     right: 12,
     backgroundColor: '#e74c3c',
-    paddingHorizontal: 20,  
-    paddingVertical: 10,    
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     borderRadius: 16,
     zIndex: 10,
     elevation: 10,
@@ -219,7 +232,7 @@ const styles = StyleSheet.create({
   logoutButtonText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 14,           
+    fontSize: 14,
     letterSpacing: 1,
   },
   carouselContainer: {
@@ -230,7 +243,7 @@ const styles = StyleSheet.create({
   },
   flatListContainer: {
     flex: 1,
-    height: CARD_HEIGHT + 80, 
+    height: CARD_HEIGHT + 80,
   },
   arrow: {
     width: 40,
@@ -267,14 +280,14 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   eventTitle: {
-    fontSize: 16,           
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#2c3e50',
     textAlign: 'center',
     marginBottom: 2,
   },
   eventDetails: {
-    fontSize: 12,     
+    fontSize: 12,
     color: '#555',
     textAlign: 'center',
     lineHeight: 14,
