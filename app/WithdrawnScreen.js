@@ -7,34 +7,33 @@ export default function WithdrawnScreen() {
   const { eventTitle } = useLocalSearchParams();
 
   const handleLogout = () => {
-  router.replace('/KakiTapScreen');
+    router.replace('/KakiTapScreen');
   };
 
   return (
     <View style={styles.container}>
       <Sidebar active="myevents" />
       <View style={styles.content}>
-        {/* Logout Button */}
         <TouchableOpacity
           style={styles.logoutButton}
           onPress={handleLogout}
           activeOpacity={0.8}
         >
-          <Text style={styles.logoutButtonText}>Logout</Text>
+          <Text style={styles.logoutButtonText}>退出登录</Text>
         </TouchableOpacity>
 
-        <Text style={styles.header}>Withdrawn from Event</Text>
+        <Text style={styles.header}>已退出活动</Text>
         <Text style={styles.message}>
-          You have successfully withdrawn from:{"\n"}
+          您已成功退出活动：{"\n"}
           <Text style={styles.eventTitle}>{eventTitle}</Text>
         </Text>
         <Text style={styles.emoji}>👍✨</Text>
-        <Text style={styles.seeYou}>WE HOPE TO SEE YOU NEXT TIME!</Text>
+        <Text style={styles.seeYou}>期待下次见到您！</Text>
         <TouchableOpacity
           style={styles.button}
           onPress={() => router.replace('/MyEventsScreen')}
         >
-          <Text style={styles.buttonText}>Back to My Events</Text>
+          <Text style={styles.buttonText}>返回我的活动</Text>
         </TouchableOpacity>
       </View>
     </View>
