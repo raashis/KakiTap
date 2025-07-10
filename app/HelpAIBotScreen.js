@@ -6,27 +6,26 @@ export default function HelpAIBotScreen() {
   const router = useRouter();
 
   const handleLogout = () => {
-  router.replace('/KakiTapScreen');
+    router.replace('/KakiTapScreen');
   };
 
   return (
     <View style={styles.container}>
       <Sidebar active="help" />
       <View style={styles.content}>
-        {/* Logout Button */}
         <TouchableOpacity
           style={styles.logoutButton}
           onPress={handleLogout}
           activeOpacity={0.8}
         >
-          <Text style={styles.logoutButtonText}>Logout</Text>
+          <Text style={styles.logoutButtonText}>Log Keluar</Text>
         </TouchableOpacity>
 
         <View style={styles.card}>
-          <Text style={styles.question}>We Want to Hear You!</Text>
+          <Text style={styles.question}>Kami ingin mendengar suara anda!</Text>
           <View style={styles.divider} />
-          <Text style={styles.info}>PRESS THIS TO TALK TO AH BOT</Text>
-          <TouchableOpacity style={styles.micCircle} onPress={() => alert('Voicebot coming soon!')}>
+          <Text style={styles.info}>Tekan di sini untuk bercakap dengan Ah Bot</Text>
+          <TouchableOpacity style={styles.micCircle} onPress={() => alert('Voicebot akan datang tidak lama lagi!')}>
             <Text style={styles.micIcon}>🎤</Text>
           </TouchableOpacity>
         </View>
@@ -34,9 +33,9 @@ export default function HelpAIBotScreen() {
           style={styles.backBtn}
           onPress={() => router.push('/HelpScreen')}
         >
-          <Text style={styles.backBtnText}>Go Back to HELP page</Text>
+          <Text style={styles.backBtnText}>Kembali ke halaman BANTUAN</Text>
         </TouchableOpacity>
-        {/* <Text style={styles.helpIcon}>?</Text> */}
+        <Text style={styles.helpIcon}>?</Text>
       </View>
     </View>
   );
@@ -87,7 +86,6 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255, 255, 255, 0.3)',
     width: '90%',
     maxWidth: 800,
-    // Note: backdropFilter is not supported in React Native, so it's ignored here
     alignItems: 'center',
   },
   question: {
