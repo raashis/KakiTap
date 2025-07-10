@@ -14,39 +14,38 @@ const CARD_SPACING = 30;
 const events = [
   {
     id: '1',
-    title: 'Science Centre',
-    date: '15 March 2025',
+    title: 'Pusat Sains',
+    date: '15 Mac 2025',
     time: '10AM - 1PM',
-    price: '$8',
+    price: 'RM8',
     image: require('../assets/posters/poster2.jpg'),
   },
   {
     id: '2',
-    title: 'Durian Fiesta',
-    date: '26 July 2025',
+    title: 'Fiesta Durian',
+    date: '26 Julai 2025',
     time: '5PM - 7PM',
-    price: '$15',
+    price: 'RM15',
     image: require('../assets/posters/poster5.jpg'),
   },
   {
     id: '3',
-    title: 'Spring Carnival',
+    title: 'Karnival Musim Bunga',
     date: '8 Feb 2025',
     time: '11:30AM - 3PM',
-    price: 'FREE',
+    price: 'PERCUMA',
     image: require('../assets/posters/poster3.jpg'),
   },
   {
     id: '4',
-    title: 'Movie Night',
+    title: 'Malam Wayang',
     date: '14 Jun 2025',
-    time: '4PM onwards',
-    price: '$5',
+    time: '4PM dan seterusnya',
+    price: 'RM5',
     image: require('../assets/posters/poster1.jpg'),
   },
 ];
 
-// Red ChatBox with pointer above the chatbox, shifted right and pointing up
 const RedChatBox = ({
   style,
   pointerDirection = 'up',
@@ -72,7 +71,7 @@ export default function AllEventsScreen() {
   const seeMoreBtnRefs = useRef({});
 
   const handleLogout = () => {
-  router.replace('/KakiTapScreen');
+    router.replace('/KakiTapScreen');
   };
 
   const scrollToIndex = (direction) => {
@@ -138,22 +137,21 @@ export default function AllEventsScreen() {
               })
             }
           >
-            <Text style={styles.moreButtonText}>See More</Text>
+            <Text style={styles.moreButtonText}>Lihat Butiran</Text>
           </TouchableOpacity>
-          {/* Chatbox for See More button - pointer above the chatbox, minimal gap */}
           {showHelp && (
             <View
               style={{
                 position: 'absolute',
                 right: 0,
-                top: 38, // Just below the button (adjust as needed)
+                top: 38,
                 width: 220,
                 alignItems: 'flex-end',
                 zIndex: 10,
               }}
             >
               <RedChatBox pointerDirection="up" style={{ width: 220, minHeight: 32 }}>
-                Press here for event details
+                Tekan di sini untuk melihat butiran acara
               </RedChatBox>
             </View>
           )}
@@ -167,13 +165,12 @@ export default function AllEventsScreen() {
       <Sidebar active="events" />
 
       <View style={styles.main}>
-        {/* Logout Button */}
         <TouchableOpacity
           style={styles.logoutButton}
           onPress={handleLogout}
           activeOpacity={0.8}
         >
-          <Text style={styles.logoutButtonText}>Logout</Text>
+          <Text style={styles.logoutButtonText}>Log Keluar</Text>
         </TouchableOpacity>
 
         <View style={styles.carouselContainer}>
@@ -215,7 +212,6 @@ export default function AllEventsScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* Page indicators */}
         <View style={styles.indicators}>
           {events.map((_, index) => {
             const centerIndex = Math.round(scrollX / (CARD_WIDTH + CARD_SPACING));
@@ -241,7 +237,6 @@ export default function AllEventsScreen() {
           })}
         </View>
 
-        {/* Help Button to toggle chatboxes */}
         <TouchableOpacity
           style={styles.helpFab}
           onPress={() => setShowHelp((prev) => !prev)}
@@ -386,7 +381,6 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
 
-  
   redChatBoxContainer: {
     alignItems: 'center',
     width: '100%',
@@ -419,19 +413,20 @@ const styles = StyleSheet.create({
   },
   redPointerWrapperUp: {
     width: '100%',
-    alignItems: 'flex-end', 
+    alignItems: 'flex-end',
     marginBottom: 15,
     height: 0,
-    paddingRight: 28, 
+    paddingRight: 28,
   },
   redChatBoxPointerFillUp: {
     width: 0,
     height: 0,
     borderLeftWidth: 12,
     borderRightWidth: 12,
-    borderBottomWidth: 14, 
+    borderBottomWidth: 14,
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
     borderBottomColor: '#e53935',
   },
 });
+
