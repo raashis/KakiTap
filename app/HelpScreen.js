@@ -1,4 +1,3 @@
-// app/HelpScreen.js
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -20,45 +19,41 @@ export default function HelpScreen() {
     <View style={styles.container}>
       <Sidebar active="help" />
       <View style={styles.content}>
-        {/* Logout Button */}
         <TouchableOpacity
           style={styles.logoutButton}
           onPress={handleLogout}
           activeOpacity={0.8}
         >
-          <Text style={styles.logoutButtonText}>Logout</Text>
+          <Text style={styles.logoutButtonText}>Log Keluar</Text>
         </TouchableOpacity>
 
-        <Text style={styles.header}>What Do You Need Help With?</Text>
+        <Text style={styles.header}>Apa bantuan yang anda perlukan?</Text>
         <View style={styles.divider} />
 
-        {/* Options */}
         <View style={styles.optionsRow}>
           <TouchableOpacity
             style={[styles.optionBox, styles.optionBoxYellow]}
             onPress={() => router.push('/HelpRequestScreen')}
           >
             <Text style={styles.optionText}>
-              Submit a request for{'\n'}a call from Pek Kio CC
+              Hantar permintaan panggilan{'\n'}(Pek Kio CC)
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.optionBox, styles.optionBoxYellow]}
             onPress={() => router.push('/HelpAIBotScreen')}
           >
-            <Text style={styles.optionText}>Talk To Our{'\n'}AI Friend!</Text>
+            <Text style={styles.optionText}>Bercakap dengan{'\n'}rakan AI kami!</Text>
           </TouchableOpacity>
         </View>
         
-        {/* Fixed: Go Back to Homepage now goes to MainScreen */}
         <TouchableOpacity
           style={styles.backBtn}
           onPress={handleGoBackToHomepage}
         >
-          <Text style={styles.backBtnText}>Go Back to Homepage</Text>
+          <Text style={styles.backBtnText}>Kembali ke Laman Utama</Text>
         </TouchableOpacity>
 
-        {/* Red Floating Help Button */}
         <TouchableOpacity
           style={styles.helpIconContainer}
           onPress={() => setShowHelp(!showHelp)}
@@ -67,7 +62,6 @@ export default function HelpScreen() {
           <Text style={styles.helpIcon}>?</Text>
         </TouchableOpacity>
 
-        {/* Red Chatbox with Two Downward Arrows */}
         {showHelp && (
           <Pressable
             style={styles.helpOverlay}
@@ -76,7 +70,7 @@ export default function HelpScreen() {
             <View style={styles.redChatBoxContainer}>
               <View style={styles.redChatBox}>
                 <Text style={styles.redChatBoxText}>
-                  Press one of these to get help!
+                  Tekan salah satu butang ini untuk mendapatkan bantuan!
                 </Text>
                 <View style={styles.arrowRow}>
                   <View style={styles.arrowDownLeft} />
@@ -193,31 +187,28 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     color: '#222',
   },
-  // --- Red Help Button (Floating) ---
   helpIconContainer: {
-  position: 'absolute',
-  bottom: 24,
-  right: 24,
-  backgroundColor: '#e53935',
-  width: 52,
-  height: 52,
-  borderRadius: 26,
-  alignItems: 'center',
-  justifyContent: 'center',
-  zIndex: 100,
-  elevation: 10,
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 3 },
-  shadowOpacity: 0.15,
-  shadowRadius: 6,
-},
-helpIcon: {
-  color: '#fff',
-  fontWeight: 'bold',
-  fontSize: 28,
-  marginBottom: 2,
-},
-  // --- Chatbox styles ---
+    position: 'absolute',
+    bottom: 24,
+    right: 24,
+    width: 80,
+    height: 80,
+    backgroundColor: '#e74c3c',
+    borderRadius: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 10,
+    elevation: 8,
+    zIndex: 100,
+  },
+  helpIcon: {
+    fontSize: 40,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
   helpOverlay: {
     position: 'absolute',
     top: 0, left: 0, right: 0, bottom: 0,
@@ -225,7 +216,7 @@ helpIcon: {
   },
   redChatBoxContainer: {
     position: 'absolute',
-    top: 195, // Adjust as needed for your layout
+    top: 195,
     left: '25%',
     width: 600,
     alignItems: 'center',
