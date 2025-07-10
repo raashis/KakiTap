@@ -4,15 +4,15 @@ import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 
 import Sidebar from './Sidebar';
 
 const journeyData = [
-  { date: '10 March 2025', description: 'Attended Mahjong Session', points: 10 },
-  { date: '26 Feb 2025', description: 'Attended Walkathon @ Bishan', points: 10 },
-  { date: '14 Jan 2025', description: 'Attended Art Jamming', points: 20 },
-  { date: '2 Jan 2025', description: 'Joined Cooking Class', points: 20 },
+  { date: '2025年3月10日', description: '参加麻将活动', points: 10 },
+  { date: '2025年2月26日', description: '参加碧山健步行', points: 10 },
+  { date: '2025年1月14日', description: '参加艺术涂鸦', points: 20 },
+  { date: '2025年1月2日', description: '报名烹饪班', points: 20 },
 ];
 
 const rewardsData = [
-  { id: 1, brand: "FairPrice", description: "$5 FairPrice eVoucher", points: 20 },
-  { id: 2, brand: "SimplyGo", description: "SimplyGo (EZ-Link Concession or NETS Flashpay Card)", points: 20 },
+  { id: 1, brand: "FairPrice", description: "¥5 FairPrice 电子券", points: 20 },
+  { id: 2, brand: "SimplyGo", description: "SimplyGo（EZ-Link 优惠卡或 NETS Flashpay 卡）", points: 20 },
 ];
 
 const PAGE_SIZE = 2;
@@ -25,11 +25,9 @@ export default function RewardsScreen() {
   const [redeemedRewards, setRedeemedRewards] = useState([]);
   const [showHelp, setShowHelp] = useState(false);
 
-  // For pointing to the first redeem button
   const firstRedeemBtnRef = useRef(null);
   const [redeemBtnPos, setRedeemBtnPos] = useState({ x: 0, y: 0 });
 
-  // Pagination logic for journey
   const totalPages = Math.ceil(journeyData.length / PAGE_SIZE);
   const startIdx = (page - 1) * PAGE_SIZE;
   const endIdx = startIdx + PAGE_SIZE;
@@ -37,7 +35,7 @@ export default function RewardsScreen() {
 
   const handleRedeem = (rewardId, points) => {
     if (redeemedRewards.includes(rewardId)) {
-      alert('You have already redeemed this reward!');
+      alert('您已兑换过此奖励！');
       return;
     }
     if (userPoints >= points) {
@@ -56,15 +54,14 @@ export default function RewardsScreen() {
         },
       });
     } else {
-      alert('Not enough points to redeem this reward!');
+      alert('积分不足，无法兑换该奖励！');
     }
   };
 
   const handleLogout = () => {
-  router.replace('/KakiTapScreen');
+    router.replace('/KakiTapScreen');
   };
 
-  // For measuring the redeem button position
   const handleRedeemBtnLayout = (event) => {
     const { x, y } = event.nativeEvent.layout;
     setRedeemBtnPos({ x, y });
@@ -75,40 +72,36 @@ export default function RewardsScreen() {
       <Sidebar active="rewards" />
 
       <View style={styles.content}>
-        {/* Logout Button */}
         <TouchableOpacity
           style={styles.logoutButton}
           onPress={handleLogout}
           activeOpacity={0.8}
         >
-          <Text style={styles.logoutButtonText}>Logout</Text>
+          <Text style={styles.logoutButtonText}>退出登录</Text>
         </TouchableOpacity>
 
-        {/* Tabs */}
         <View style={styles.tabs}>
           <TouchableOpacity onPress={() => setActiveTab('journey')}>
             <Text style={[styles.tab, activeTab === 'journey' && styles.activeTab]}>
-              My Journey
+              我的旅程
             </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setActiveTab('redeem')}>
             <Text style={[styles.tab, activeTab === 'redeem' && styles.activeTab]}>
-              Redeem Rewards
+              兑换奖励
             </Text>
           </TouchableOpacity>
         </View>
 
-        {/* Points */}
         <View style={{ alignItems: 'center', position: 'relative' }}>
-          <Text style={styles.pointsLabel}>My KakiPoints</Text>
+          <Text style={styles.pointsLabel}>我的 KakiPoints</Text>
           <Text style={styles.points}>{userPoints} ✧</Text>
         </View>
 
-        {/* Tab Content */}
         {activeTab === 'journey' ? (
           <>
             <View style={styles.historyBox}>
-              <Text style={styles.sectionTitle}>Life Journey History</Text>
+              <Text style={styles.sectionTitle}>人生旅程记录</Text>
               <ScrollView>
                 {pageData.map((item, idx) => (
                   <View key={idx} style={styles.historyItem}>
@@ -121,24 +114,23 @@ export default function RewardsScreen() {
                 ))}
               </ScrollView>
             </View>
-            {/* Pagination */}
             <View style={styles.pagination}>
               <TouchableOpacity
                 style={[styles.pageBtn, page === 1 && styles.disabledBtn]}
                 onPress={() => setPage(page - 1)}
                 disabled={page === 1}
               >
-                <Text style={[styles.pageBtnText, page === 1 && styles.disabledBtnText]}>back</Text>
+                <Text style={[styles.pageBtnText, page === 1 && styles.disabledBtnText]}>上一页</Text>
               </TouchableOpacity>
               <Text style={styles.pageNum}>
-                &lt; PAGE <Text style={styles.currentPage}>{page}</Text>/{totalPages} &gt;
+                &lt; 第 <Text style={styles.currentPage}>{page}</Text>/{totalPages} 页 &gt;
               </Text>
               <TouchableOpacity
                 style={[styles.pageBtn, page === totalPages && styles.disabledBtn]}
                 onPress={() => setPage(page + 1)}
                 disabled={page === totalPages}
               >
-                <Text style={[styles.pageBtnText, page === totalPages && styles.disabledBtnText]}>next</Text>
+                <Text style={[styles.pageBtnText, page === totalPages && styles.disabledBtnText]}>下一页</Text>
               </TouchableOpacity>
             </View>
           </>
@@ -160,7 +152,7 @@ export default function RewardsScreen() {
                       disabled={isRedeemed}
                     >
                       <Text style={styles.redeemBtnText}>
-                        {isRedeemed ? 'REDEEMED' : 'REDEEM'}
+                        {isRedeemed ? '已兑换' : '兑换'}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -170,13 +162,12 @@ export default function RewardsScreen() {
           </View>
         )}
 
-        {/* Floating Help Button & Red Chatboxes */}
         <TouchableOpacity
           style={styles.helpIconContainer}
           onPress={() => setShowHelp(!showHelp)}
           activeOpacity={0.8}
         >
-          <Text style={styles.helpIcon}>?</Text>
+          <Text style={styles.helpIcon}>？</Text>
         </TouchableOpacity>
 
         {showHelp && (
@@ -186,20 +177,18 @@ export default function RewardsScreen() {
           >
             {activeTab === 'journey' && (
               <>
-                {/* Chatbox 1: Points area (arrow now points right) */}
                 <View style={[styles.redChatBoxContainer, { position: 'absolute', left: 200, top: 150, maxWidth: 340 }]}>
                   <View style={styles.redChatBox}>
                     <Text style={styles.redChatBoxText}>
-                      The points you get from past events will be here
+                      您在过往活动获得的积分会显示在这里
                     </Text>
                     <View style={styles.arrowRight} />
                   </View>
                 </View>
-                {/* Chatbox 2: Redeem Rewards tab */}
                 <View style={[styles.redChatBoxContainer, { position: 'absolute', left: 475, top: 5, maxWidth: 260 }]}>
                   <View style={styles.redChatBox}>
                     <Text style={styles.redChatBoxText}>
-                      You can redeem your points for awesome rewards here!
+                      您可以在这里用积分兑换超值奖励！
                     </Text>
                     <View style={styles.arrowLeft} />
                   </View>
@@ -207,7 +196,6 @@ export default function RewardsScreen() {
               </>
             )}
             {activeTab === 'redeem' && (
-              // Chatbox for the redeem button (points to the first redeem button)
               <View style={[
                 styles.redChatBoxContainer,
                 {
@@ -219,7 +207,7 @@ export default function RewardsScreen() {
               ]}>
                 <View style={styles.redChatBox}>
                   <Text style={styles.redChatBoxText}>
-                    Press here to redeem prizes with your points!
+                    点击这里用积分兑换奖品！
                   </Text>
                   <View style={styles.arrowRight} />
                 </View>
@@ -232,7 +220,6 @@ export default function RewardsScreen() {
   );
 }
 
-// --- Styles ---
 const styles = StyleSheet.create({
   container: { flex: 1, flexDirection: 'row', backgroundColor: '#f8f9fa' },
   content: { flex: 1, padding: 32, position: 'relative' },
@@ -424,39 +411,35 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
 
-  // Floating Help Button
   helpIconContainer: {
-  position: 'absolute',
-  bottom: 24,
-  right: 24,
-  backgroundColor: '#e53935',
-  width: 52,
-  height: 52,
-  borderRadius: 26,
-  alignItems: 'center',
-  justifyContent: 'center',
-  zIndex: 100,
-  elevation: 10,
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 3 },
-  shadowOpacity: 0.15,
-  shadowRadius: 6,
-},
-helpIcon: {
-  color: '#fff',
-  fontWeight: 'bold',
-  fontSize: 28,
-  marginBottom: 2,
-},
+    position: 'absolute',
+    bottom: 32,
+    right: 32,
+    width: 64,
+    height: 64,
+    backgroundColor: '#e74c3c',
+    borderRadius: 32,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
+    elevation: 6,
+    zIndex: 200,
+  },
+  helpIcon: {
+    fontSize: 32,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
 
-  // Help Overlay
   helpOverlay: {
     position: 'absolute',
     top: 0, left: 0, right: 0, bottom: 0,
     zIndex: 199,
   },
 
-  // Red ChatBox Styles
   redChatBoxContainer: {
     alignItems: 'flex-start',
     maxWidth: 340,
@@ -485,7 +468,6 @@ helpIcon: {
     textAlign: 'center',
     letterSpacing: 0.5,
   },
-  // Right-pointing arrow for chatbox
   arrowRight: {
     position: 'absolute',
     top: 28, 
@@ -500,7 +482,6 @@ helpIcon: {
     borderLeftColor: '#e53935',
     zIndex: 2,
   },
-  // Left-pointing arrow for chatbox
   arrowLeft: {
     position: 'absolute',
     top: 28,
