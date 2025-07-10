@@ -37,7 +37,7 @@ export default function HelpRequestScreen() {
         >
           <Text style={styles.backBtnText}>Go Back to HELP page</Text>
         </TouchableOpacity>
-        <Text style={styles.helpIcon}>?</Text>
+        {/* <Text style={styles.helpIcon}>?</Text> */}
       </View>
     </View>
   );

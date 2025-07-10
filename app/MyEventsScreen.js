@@ -214,19 +214,22 @@ export default function MyEventsScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, flexDirection: 'row', backgroundColor: '#f8f9fa' },
-  content: { flex: 1, padding: 32, position: 'relative' },
+  content: { flex: 1, padding: 40, position: 'relative' },
   logoutButton: {
+    position: 'absolute',
+    top: 20,
+    right: 12,
     backgroundColor: '#e74c3c',
-    paddingHorizontal: 28,
-    paddingVertical: 14,
-    borderRadius: 18,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 16,
     zIndex: 10,
     elevation: 10,
   },
   logoutButtonText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 14,
     letterSpacing: 1,
   },
   header: {
@@ -328,27 +331,28 @@ const styles = StyleSheet.create({
 
   // Help Button Styles
   helpButton: {
-    position: 'absolute',
-    bottom: 30,
-    right: 30,
-    backgroundColor: '#e53935',
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 100,
-    elevation: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.18,
-    shadowRadius: 8,
-  },
-  helpButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 32,
-  },
+  position: 'absolute',
+  bottom: 24,
+  right: 24,
+  backgroundColor: '#e53935',
+  width: 52,
+  height: 52,
+  borderRadius: 26,
+  alignItems: 'center',
+  justifyContent: 'center',
+  zIndex: 100,
+  elevation: 10,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 3 },
+  shadowOpacity: 0.15,
+  shadowRadius: 6,
+},
+helpButtonText: {
+  color: '#fff',
+  fontWeight: 'bold',
+  fontSize: 28,
+  marginBottom: 2,
+},
 
   // Red ChatBox Styles for help bubbles
   redChatBoxContainer: {
