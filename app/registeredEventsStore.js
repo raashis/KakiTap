@@ -2,34 +2,30 @@ const store = {
   registeredEventsGlobal: [
     {
       id: '1',
-      date: '15 March 2025',
-      title: 'Science Centre',
-      details: 'Saturday 10AM - 1PM @ Science Centre\nPick up @ Pek Kio CC',
+      date: '15 Mac 2025',
+      title: 'Pusat Sains',
+      details: 'Sabtu 10AM - 1PM @ Pusat Sains\nAmbil di Pek Kio CC',
       paid: false,
     },
-    // DO NOT include Durian Fiesta here if you want to test adding it!
+    // Untuk menguji penambahan Fiesta Durian, jangan masukkan di sini!
   ],
 };
 
-
-
 export function addRegisteredEvent(event) {
-  console.log('Trying to add event:', event);
+  console.log('Cuba tambah acara:', event);
   if (!store.registeredEventsGlobal.some(e => String(e.id) === String(event.id))) {
     store.registeredEventsGlobal.push(event);
-    console.log('Event added:', event);
+    console.log('Acara telah ditambah:', event);
   } else {
-    console.log('Event already exists:', event.id);
+    console.log('Acara sudah wujud:', event.id);
   }
-  console.log('Current store:', store.registeredEventsGlobal);
+  console.log('Senarai acara semasa:', store.registeredEventsGlobal);
 }
-
 
 export function removeRegisteredEvent(eventId) {
   store.registeredEventsGlobal = store.registeredEventsGlobal.filter(
     e => String(e.id) !== String(eventId)
   );
 }
-
 
 export default store;
