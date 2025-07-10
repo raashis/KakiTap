@@ -5,61 +5,53 @@ import Sidebar from './Sidebar';
 export default function RedeemedScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
-  const { points = 40, brand = "FairPrice", reward = "$5 FairPrice eVoucher" } = params;
+  const { points = 40, brand = "FairPrice", reward = "Baucar e-FairPrice RM5" } = params;
 
   const handleLogout = () => {
-  router.replace('/KakiTapScreen');
+    router.replace('/KakiTapScreen');
   };
 
   return (
     <View style={styles.container}>
       <Sidebar active="rewards" />
       <View style={styles.content}>
-        {/* Logout Button */}
         <TouchableOpacity
           style={styles.logoutButton}
           onPress={handleLogout}
           activeOpacity={0.8}
         >
-          <Text style={styles.logoutButtonText}>Logout</Text>
+          <Text style={styles.logoutButtonText}>Log Keluar</Text>
         </TouchableOpacity>
 
-        {/* Tabs */}
         <View style={styles.tabs}>
-          <Text style={styles.tab}>My Journey</Text>
-          <Text style={[styles.tab, styles.activeTab]}>Redeem Rewards</Text>
+          <Text style={styles.tab}>Perjalanan Saya</Text>
+          <Text style={[styles.tab, styles.activeTab]}>Tebus Ganjaran</Text>
         </View>
 
-        {/* Points */}
-        <Text style={styles.pointsLabel}>My KakiPoints</Text>
+        <Text style={styles.pointsLabel}>KakiPoints Saya</Text>
         <Text style={styles.points}>{points} ✧</Text>
 
-        {/* Redeemed Card */}
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <Text style={styles.brand}>{brand}</Text>
             <Text style={styles.reward}>{reward}</Text>
           </View>
           <View style={styles.redeemedBox}>
-            <Text style={styles.redeemedText}>REDEEMED</Text>
+            <Text style={styles.redeemedText}>TELAH DITEBUS</Text>
           </View>
           <Text style={styles.instructions}>
-            HEAD TO PEK KIO CC TO GET YOUR VOUCHER!
+            Sila ke Pek Kio CC untuk mendapatkan baucar anda!
           </Text>
           <TouchableOpacity
             style={styles.backBtn}
             onPress={() => router.push('/RewardsScreen')}
           >
-            <Text style={styles.backBtnText}>Go Back To Rewards</Text>
+            <Text style={styles.backBtnText}>Kembali ke Ganjaran</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.helpIconContainer}>
           <Text style={styles.helpIcon}>?</Text>
         </View>
-        {/* For now, but we can link to Singpass etc. */}
-        {/* <Text style={styles.note}>
-          For now :( but we can link to Singpass etc.
-        </Text> */}
       </View>
     </View>
   );
@@ -185,28 +177,26 @@ const styles = StyleSheet.create({
   },
 
   helpIconContainer: {
-  position: 'absolute',
-  bottom: 24,
-  right: 24,
-  backgroundColor: '#e53935',
-  width: 52,
-  height: 52,
-  borderRadius: 26,
-  alignItems: 'center',
-  justifyContent: 'center',
-  zIndex: 100,
-  elevation: 10,
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 3 },
-  shadowOpacity: 0.15,
-  shadowRadius: 6,
-},
-helpIcon: {
-  color: '#fff',
-  fontWeight: 'bold',
-  fontSize: 28,
-  marginBottom: 2,
-},
+    position: 'absolute',
+    bottom: 32,
+    right: 32,
+    width: 64,
+    height: 64,
+    backgroundColor: '#6b7280',
+    borderRadius: 32,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
+    elevation: 6,
+  },
+  helpIcon: {
+    fontSize: 32,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
   note: {
     color: '#800080',
     fontSize: 18,
