@@ -5,10 +5,10 @@ import { addRegisteredEvent } from './registeredEventsStore';
 import Sidebar from './Sidebar';
 
 const events = [
-  { id: '1', title: 'Science Centre', date: '15 March 2025', time: '10AM - 1PM', price: '$8' },
-  { id: '2', title: 'Durian Fiesta', date: '26 July 2025', time: '5PM - 7PM', price: '$15' },
-  { id: '3', title: 'Spring Carnival', date: '8 Feb 2025', time: '11:30AM - 3PM', price: 'FREE' },
-  { id: '4', title: 'Movie Night', date: '14 Jun 2025', time: '4PM onwards', price: '$5' },
+  { id: '1', title: 'Pusat Sains', date: '15 Mac 2025', time: '10AM - 1PM', price: 'RM8' },
+  { id: '2', title: 'Fiesta Durian', date: '26 Julai 2025', time: '5PM - 7PM', price: 'RM15' },
+  { id: '3', title: 'Karnival Musim Bunga', date: '8 Feb 2025', time: '11:30AM - 3PM', price: 'PERCUMA' },
+  { id: '4', title: 'Malam Wayang', date: '14 Jun 2025', time: '4PM dan seterusnya', price: 'RM5' },
 ];
 
 export default function ConfirmationScreen() {
@@ -19,7 +19,6 @@ export default function ConfirmationScreen() {
 
   const [showHelp, setShowHelp] = useState(false);
 
-  // Refs and positions for chatboxes
   const thumbsUpRef = useRef(null);
   const backBtnRef = useRef(null);
   const [thumbsUpPos, setThumbsUpPos] = useState({ x: 0, y: 0 });
@@ -37,7 +36,6 @@ export default function ConfirmationScreen() {
     }
   }, [event]);
 
-  // Get positions for arrows
   useEffect(() => {
     if (showHelp && thumbsUpRef.current) {
       thumbsUpRef.current.measure((fx, fy, width, height, px, py) => {
@@ -52,13 +50,13 @@ export default function ConfirmationScreen() {
   }, [showHelp]);
 
   const handleLogout = () => {
-  router.replace('/KakiTapScreen');
+    router.replace('/KakiTapScreen');
   };
 
   if (!event) {
     return (
       <View style={styles.container}>
-        <Text style={styles.errorText}>Event not found!</Text>
+        <Text style={styles.errorText}>Acara tidak dijumpai!</Text>
       </View>
     );
   }
@@ -67,39 +65,37 @@ export default function ConfirmationScreen() {
     <View style={styles.container}>
       <Sidebar active="events" />
       <View style={styles.contentContainer}>
-        {/* Logout Button */}
         <TouchableOpacity 
           style={styles.logoutButton}
           onPress={handleLogout}
           activeOpacity={0.8}
         >
-          <Text style={styles.logoutButtonText}>Logout</Text>
+          <Text style={styles.logoutButtonText}>Log Keluar</Text>
         </TouchableOpacity>
 
-        <Text style={styles.title}>CONFIRMATION OF REGISTRATION</Text>
+        <Text style={styles.title}>Pengesahan Pendaftaran</Text>
         <View style={styles.confirmationCard}>
           <View style={styles.confirmationContent}>
             <Text style={styles.confirmationText}>
-              You have just signed up for the
+              Anda telah berjaya mendaftar untuk
             </Text>
-            <Text style={styles.eventTitle}>{event.title} outing!</Text>
+            <Text style={styles.eventTitle}>{event.title}!</Text>
             <View style={styles.iconContainer}>
               <Text style={styles.thumbsUpIcon} ref={thumbsUpRef}>👍</Text>
               <Text style={styles.sparkleIcon}>✨</Text>
             </View>
-            <Text style={styles.seeYouText}>SEE YOU THERE!</Text>
+            <Text style={styles.seeYouText}>Jumpa anda di sana!</Text>
             <TouchableOpacity 
               style={styles.backButton}
               onPress={() => router.push('/AllEventsScreen')}
               ref={backBtnRef}
             >
-              <Text style={styles.backButtonText}>Go back to All Events</Text>
+              <Text style={styles.backButtonText}>Kembali ke Semua Acara</Text>
             </TouchableOpacity>
           </View>
         </View>
       </View>
 
-      {/* Floating Question Mark Button */}
       <TouchableOpacity
         style={styles.helpButton}
         onPress={() => setShowHelp(!showHelp)}
@@ -108,13 +104,11 @@ export default function ConfirmationScreen() {
         <Text style={styles.helpButtonText}>?</Text>
       </TouchableOpacity>
 
-      {/* Show BOTH chatboxes at once when showHelp is true */}
       {showHelp && (
         <Pressable
           style={styles.overlay}
           onPress={() => setShowHelp(false)}
         >
-          {/* Chatbox 1: above thumbs up */}
           <View style={{
             position: 'absolute',
             left: thumbsUpPos.x - 80,
@@ -122,10 +116,9 @@ export default function ConfirmationScreen() {
             zIndex: 100,
           }}>
             <RedChatBox pointerDirection="down" pointerOffset={80}>
-              You have just signed up for an event!
+              Anda telah berjaya mendaftar untuk satu acara!
             </RedChatBox>
           </View>
-          {/* Chatbox 2: above back button */}
           <View style={{
             position: 'absolute',
             left: backBtnPos.x - 100,
@@ -133,7 +126,7 @@ export default function ConfirmationScreen() {
             zIndex: 100,
           }}>
             <RedChatBox pointerDirection="down" pointerOffset={100}>
-              Press here to go back to more events!
+              Tekan di sini untuk kembali dan lihat lebih banyak acara!
             </RedChatBox>
           </View>
         </Pressable>
@@ -142,7 +135,6 @@ export default function ConfirmationScreen() {
   );
 }
 
-// Chatbox component with downward arrow
 const RedChatBox = ({ children, pointerDirection = 'down', pointerOffset = 0 }) => (
   <View style={[styles.redChatBoxContainer]}>
     <View style={styles.redChatBox}>
@@ -209,39 +201,22 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: 28, color: '#e74c3c', textAlign: 'center', margin: 20,
   },
-
-  // Floating Help Button
   helpButton: {
-  position: 'absolute',
-  bottom: 24,
-  right: 24,
-  backgroundColor: '#e53935',
-  width: 52,
-  height: 52,
-  borderRadius: 26,
-  alignItems: 'center',
-  justifyContent: 'center',
-  zIndex: 100,
-  elevation: 10,
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 3 },
-  shadowOpacity: 0.15,
-  shadowRadius: 6,
-},
-helpButtonText: {
-  color: '#fff',
-  fontWeight: 'bold',
-  fontSize: 28,
-  marginBottom: 2,
-},
-
-  // Overlay for help chatbox
+    position: 'absolute', bottom: 30, right: 30,
+    backgroundColor: '#e74c3c',
+    width: 60, height: 60, borderRadius: 30,
+    alignItems: 'center', justifyContent: 'center',
+    zIndex: 100, elevation: 10,
+    shadowColor: '#000', shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.18, shadowRadius: 8,
+  },
+  helpButtonText: {
+    color: '#fff', fontWeight: 'bold', fontSize: 32,
+  },
   overlay: {
     position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
     zIndex: 99,
   },
-
-  // Red ChatBox Styles
   redChatBoxContainer: {
     alignItems: 'center', width: '100%', maxWidth: 350,
   },
