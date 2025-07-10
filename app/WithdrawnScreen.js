@@ -7,34 +7,33 @@ export default function WithdrawnScreen() {
   const { eventTitle } = useLocalSearchParams();
 
   const handleLogout = () => {
-  router.replace('/KakiTapScreen');
+    router.replace('/KakiTapScreen');
   };
 
   return (
     <View style={styles.container}>
       <Sidebar active="myevents" />
       <View style={styles.content}>
-        {/* Logout Button */}
         <TouchableOpacity
           style={styles.logoutButton}
           onPress={handleLogout}
           activeOpacity={0.8}
         >
-          <Text style={styles.logoutButtonText}>Logout</Text>
+          <Text style={styles.logoutButtonText}>Log Keluar</Text>
         </TouchableOpacity>
 
-        <Text style={styles.header}>Withdrawn from Event</Text>
+        <Text style={styles.header}>Telah Tarik Diri dari Acara</Text>
         <Text style={styles.message}>
-          You have successfully withdrawn from:{"\n"}
+          Anda telah berjaya menarik diri daripada acara:{"\n"}
           <Text style={styles.eventTitle}>{eventTitle}</Text>
         </Text>
         <Text style={styles.emoji}>👍✨</Text>
-        <Text style={styles.seeYou}>WE HOPE TO SEE YOU NEXT TIME!</Text>
+        <Text style={styles.seeYou}>Kami harap dapat jumpa anda lagi!</Text>
         <TouchableOpacity
           style={styles.button}
           onPress={() => router.replace('/MyEventsScreen')}
         >
-          <Text style={styles.buttonText}>Back to My Events</Text>
+          <Text style={styles.buttonText}>Kembali ke Acara Saya</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -121,4 +120,3 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
 });
-
