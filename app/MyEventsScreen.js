@@ -6,7 +6,6 @@ import Sidebar from './Sidebar';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-// Red ChatBox with outlined pointer (customizable direction)
 const RedChatBox = ({
   style,
   pointerDirection = 'down',
@@ -60,7 +59,6 @@ export default function MyEventsScreen() {
     }
   }, [registeredEvents, justWithdrew]);
 
-  // Find the X position of the withdraw button for precise alignment
   const handleWithdrawBtnLayout = (event) => {
     const { x, width } = event.nativeEvent.layout;
     setWithdrawBtnX(x + width / 2);
@@ -68,19 +66,19 @@ export default function MyEventsScreen() {
 
   const handleWithdraw = (id, title) => {
     if (Platform.OS === 'web') {
-      if (!window.confirm('Are you sure you want to withdraw from this event?')) return;
+      if (!window.confirm('Adakah anda pasti mahu menarik diri daripada acara ini?')) return;
       removeRegisteredEvent(id);
       setRegisteredEvents([...store.registeredEventsGlobal]);
       setLastWithdrawnTitle(title);
       setJustWithdrew(true);
     } else {
       Alert.alert(
-        'Withdraw from event',
-        'Are you sure you want to withdraw from this event?',
+        'Tarik diri dari acara',
+        'Adakah anda pasti mahu menarik diri daripada acara ini?',
         [
-          { text: 'Cancel', style: 'cancel' },
+          { text: 'Batal', style: 'cancel' },
           {
-            text: 'Withdraw',
+            text: 'Tarik Diri',
             style: 'destructive',
             onPress: () => {
               removeRegisteredEvent(id);
@@ -95,19 +93,18 @@ export default function MyEventsScreen() {
   };
 
   const handleLogout = () => {
-  router.replace('/KakiTapScreen');
+    router.replace('/KakiTapScreen');
   };
 
   return (
     <View style={styles.container}>
       <Sidebar active="myevents" />
       <View style={styles.content}>
-        {/* Logout Button with Red ChatBox pointing right */}
         <View style={{ position: 'absolute', top: 20, right: 12, flexDirection: 'row', alignItems: 'center' }}>
           {showHelp && (
             <View style={{ position: 'absolute', right: -230, top: 0, width: 210, alignItems: 'flex-end', zIndex: 100 }}>
               <RedChatBox pointerDirection="left">
-                Tap here to log out of your account.
+                Tekan di sini untuk log keluar dari akaun anda.
               </RedChatBox>
             </View>
           )}
@@ -116,16 +113,14 @@ export default function MyEventsScreen() {
             onPress={handleLogout}
             activeOpacity={0.8}
           >
-            <Text style={styles.logoutButtonText}>Logout</Text>
+            <Text style={styles.logoutButtonText}>Log Keluar</Text>
           </TouchableOpacity>
         </View>
 
-        {/* Header */}
         <View style={{ alignItems: 'center', marginBottom: 10, position: 'relative' }}>
-          <Text style={styles.header}>MY EVENTS</Text>
+          <Text style={styles.header}>Acara Saya</Text>
         </View>
 
-        {/* Help ChatBox for all events, above the events card, stretched horizontally */}
         {showHelp && (
           <View style={{
             width: '100%',
@@ -134,14 +129,14 @@ export default function MyEventsScreen() {
             zIndex: 100,
           }}>
             <RedChatBox pointerDirection="down" style={{ maxWidth: 700, width: '90%' }}>
-              All the events you have signed up for can be found here!
+              Semua acara yang anda telah daftar akan dipaparkan di sini!
             </RedChatBox>
           </View>
         )}
 
         <ScrollView contentContainerStyle={styles.eventsList}>
           {registeredEvents.length === 0 ? (
-            <Text style={styles.noEvents}>You have not registered for any events.</Text>
+            <Text style={styles.noEvents}>Anda belum mendaftar untuk sebarang acara.</Text>
           ) : (
             registeredEvents.map((event, idx) => (
               <View key={event.id} style={styles.eventBox}>
@@ -153,8 +148,8 @@ export default function MyEventsScreen() {
                   ) : null}
                   <Text style={styles.paymentStatus}>
                     {event.paid
-                      ? 'You HAVE PAID FOR THIS 🙂'
-                      : 'You HAVE NOT PAID FOR THIS'}
+                      ? 'Anda SUDAH BAYAR 🙂'
+                      : 'Anda BELUM BAYAR'}
                   </Text>
                   <TouchableOpacity
                     ref={idx === 0 ? withdrawBtnRef : null}
@@ -162,14 +157,13 @@ export default function MyEventsScreen() {
                     onPress={() => handleWithdraw(event.id, event.title)}
                     onLayout={idx === 0 ? handleWithdrawBtnLayout : undefined}
                   >
-                    <Text style={styles.withdrawText}>WITHDRAW</Text>
+                    <Text style={styles.withdrawText}>Tarik Diri</Text>
                   </TouchableOpacity>
-                  {/* Withdraw Button Red ChatBox (first only, just below and pointing up, fits within the card and under the button) */}
                   {showHelp && idx === 0 && withdrawBtnX !== null && (
                     <View
                       style={{
                         position: 'absolute',
-                        left: withdrawBtnX - 110, // Centered under the withdraw button, 110 is half the chatbox width (220)
+                        left: withdrawBtnX - 110,
                         top: 90,
                         width: 220,
                         alignItems: 'center',
@@ -177,10 +171,10 @@ export default function MyEventsScreen() {
                       }}
                     >
                       <RedChatBox pointerDirection="up" style={{ maxWidth: 220, width: 220 }}>
-                        Click this button below{'\n'}
-                        if you wish to withdraw{'\n'}
-                        from an event you{'\n'}
-                        don't want to go to anymore.
+                        Tekan butang ini di bawah{'\n'}
+                        jika anda ingin menarik diri{'\n'}
+                        daripada acara yang anda{'\n'}
+                        tidak mahu sertai lagi.
                       </RedChatBox>
                     </View>
                   )}
@@ -190,17 +184,15 @@ export default function MyEventsScreen() {
           )}
         </ScrollView>
 
-        {/* Pagination (NO bubble) */}
         <View style={styles.pagination}>
-          <Text style={styles.disabledBtn}>back</Text>
+          <Text style={styles.disabledBtn}>sebelum</Text>
           <Text style={styles.pageNum}>
-            &lt; PAGE <Text style={styles.currentPage}>1</Text>/1 &gt;
+            &lt; HALAMAN <Text style={styles.currentPage}>1</Text>/1 &gt;
           </Text>
-          <Text style={styles.disabledBtn}>next</Text>
+          <Text style={styles.disabledBtn}>seterusnya</Text>
         </View>
       </View>
 
-      {/* Floating Help Button */}
       <TouchableOpacity
         style={styles.helpButton}
         onPress={() => setShowHelp(!showHelp)}
@@ -214,22 +206,19 @@ export default function MyEventsScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, flexDirection: 'row', backgroundColor: '#f8f9fa' },
-  content: { flex: 1, padding: 40, position: 'relative' },
+  content: { flex: 1, padding: 32, position: 'relative' },
   logoutButton: {
-    position: 'absolute',
-    top: 20,
-    right: 12,
     backgroundColor: '#e74c3c',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 16,
+    paddingHorizontal: 28,
+    paddingVertical: 14,
+    borderRadius: 18,
     zIndex: 10,
     elevation: 10,
   },
   logoutButtonText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: 20,
     letterSpacing: 1,
   },
   header: {
@@ -329,32 +318,29 @@ const styles = StyleSheet.create({
   pageNum: { fontSize: 22, color: '#2c3e50', marginHorizontal: 12 },
   currentPage: { color: '#008080', fontWeight: 'bold', fontSize: 24 },
 
-  // Help Button Styles
   helpButton: {
-  position: 'absolute',
-  bottom: 24,
-  right: 24,
-  backgroundColor: '#e53935',
-  width: 52,
-  height: 52,
-  borderRadius: 26,
-  alignItems: 'center',
-  justifyContent: 'center',
-  zIndex: 100,
-  elevation: 10,
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 3 },
-  shadowOpacity: 0.15,
-  shadowRadius: 6,
-},
-helpButtonText: {
-  color: '#fff',
-  fontWeight: 'bold',
-  fontSize: 28,
-  marginBottom: 2,
-},
+    position: 'absolute',
+    bottom: 30,
+    right: 30,
+    backgroundColor: '#e53935',
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 100,
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.18,
+    shadowRadius: 8,
+  },
+  helpButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 32,
+  },
 
-  // Red ChatBox Styles for help bubbles
   redChatBoxContainer: {
     alignItems: 'center',
     width: '100%',
@@ -390,7 +376,6 @@ helpButtonText: {
     marginTop: -2,
     position: 'relative',
   },
-  // Downward pointer
   redChatBoxPointerBorder: {
     position: 'absolute',
     top: 0,
@@ -421,7 +406,6 @@ helpButtonText: {
     borderTopColor: '#e53935',
     zIndex: 2,
   },
-  // Upward pointer for withdraw
   redChatBoxPointerBorderUp: {
     position: 'absolute',
     bottom: 0,
@@ -452,7 +436,6 @@ helpButtonText: {
     borderBottomColor: '#e53935',
     zIndex: 2,
   },
-  // Leftward pointer for logout
   redChatBoxPointerBorderLeft: {
     position: 'absolute',
     left: 0,
@@ -481,8 +464,6 @@ helpButtonText: {
     borderRightColor: '#e53935',
     zIndex: 2,
   },
-
-  // Chat Bubble Styles (for other bubbles)
   chatBubble: {
     backgroundColor: '#fff',
     borderRadius: 18,
