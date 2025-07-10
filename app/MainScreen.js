@@ -65,8 +65,8 @@ export default function MainScreen() {
             <View style={styles.buttonIcon}>
               <Text style={styles.iconText}>📅</Text>
             </View>
-            <Text style={styles.buttonText}>查看所有活动</Text>
-            <Text style={styles.buttonSubtext}>正在您附近举行</Text>
+            <Text style={styles.buttonText}>附近活动</Text>
+            <Text style={styles.buttonSubtext}》查看您附近的活动</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
