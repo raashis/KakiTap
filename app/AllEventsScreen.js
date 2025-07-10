@@ -14,39 +14,39 @@ const CARD_SPACING = 30;
 const events = [
   {
     id: '1',
-    title: 'Science Centre',
-    date: '15 March 2025',
-    time: '10AM - 1PM',
-    price: '$8',
+    title: '科学中心',
+    date: '2025年3月15日',
+    time: '上午10点 - 下午1点',
+    price: '¥8',
     image: require('../assets/posters/poster2.jpg'),
   },
   {
     id: '2',
-    title: 'Durian Fiesta',
-    date: '26 July 2025',
-    time: '5PM - 7PM',
-    price: '$15',
+    title: '榴莲嘉年华',
+    date: '2025年7月26日',
+    time: '下午5点 - 7点',
+    price: '¥15',
     image: require('../assets/posters/poster5.jpg'),
   },
   {
     id: '3',
-    title: 'Spring Carnival',
-    date: '8 Feb 2025',
-    time: '11:30AM - 3PM',
-    price: 'FREE',
+    title: '春季嘉年华',
+    date: '2025年2月8日',
+    time: '上午11:30 - 下午3点',
+    price: '免费',
     image: require('../assets/posters/poster3.jpg'),
   },
   {
     id: '4',
-    title: 'Movie Night',
-    date: '14 Jun 2025',
-    time: '4PM onwards',
-    price: '$5',
+    title: '电影之夜',
+    date: '2025年6月14日',
+    time: '下午4点起',
+    price: '¥5',
     image: require('../assets/posters/poster1.jpg'),
   },
 ];
 
-// Red ChatBox with pointer above the chatbox, shifted right and pointing up
+// 红色气泡，带上方指针
 const RedChatBox = ({
   style,
   pointerDirection = 'up',
@@ -72,7 +72,7 @@ export default function AllEventsScreen() {
   const seeMoreBtnRefs = useRef({});
 
   const handleLogout = () => {
-  router.replace('/KakiTapScreen');
+    router.replace('/KakiTapScreen');
   };
 
   const scrollToIndex = (direction) => {
@@ -138,22 +138,22 @@ export default function AllEventsScreen() {
               })
             }
           >
-            <Text style={styles.moreButtonText}>See More</Text>
+            <Text style={styles.moreButtonText}>查看详情</Text>
           </TouchableOpacity>
-          {/* Chatbox for See More button - pointer above the chatbox, minimal gap */}
+          {/* 气泡提示 */}
           {showHelp && (
             <View
               style={{
                 position: 'absolute',
                 right: 0,
-                top: 38, // Just below the button (adjust as needed)
+                top: 38,
                 width: 220,
                 alignItems: 'flex-end',
                 zIndex: 10,
               }}
             >
               <RedChatBox pointerDirection="up" style={{ width: 220, minHeight: 32 }}>
-                Press here for event details
+                点击此处查看活动详情
               </RedChatBox>
             </View>
           )}
@@ -167,13 +167,13 @@ export default function AllEventsScreen() {
       <Sidebar active="events" />
 
       <View style={styles.main}>
-        {/* Logout Button */}
+        {/* 退出登录按钮 */}
         <TouchableOpacity
           style={styles.logoutButton}
           onPress={handleLogout}
           activeOpacity={0.8}
         >
-          <Text style={styles.logoutButtonText}>Logout</Text>
+          <Text style={styles.logoutButtonText}>退出登录</Text>
         </TouchableOpacity>
 
         <View style={styles.carouselContainer}>
@@ -215,7 +215,7 @@ export default function AllEventsScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* Page indicators */}
+        {/* 页面指示器 */}
         <View style={styles.indicators}>
           {events.map((_, index) => {
             const centerIndex = Math.round(scrollX / (CARD_WIDTH + CARD_SPACING));
@@ -241,12 +241,12 @@ export default function AllEventsScreen() {
           })}
         </View>
 
-        {/* Help Button to toggle chatboxes */}
+        {/* 帮助按钮 */}
         <TouchableOpacity
           style={styles.helpFab}
           onPress={() => setShowHelp((prev) => !prev)}
         >
-          <Text style={styles.helpFabText}>?</Text>
+          <Text style={styles.helpFabText}>？</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -386,7 +386,6 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
 
-  
   redChatBoxContainer: {
     alignItems: 'center',
     width: '100%',
@@ -419,17 +418,17 @@ const styles = StyleSheet.create({
   },
   redPointerWrapperUp: {
     width: '100%',
-    alignItems: 'flex-end', 
+    alignItems: 'flex-end',
     marginBottom: 15,
     height: 0,
-    paddingRight: 28, 
+    paddingRight: 28,
   },
   redChatBoxPointerFillUp: {
     width: 0,
     height: 0,
     borderLeftWidth: 12,
     borderRightWidth: 12,
-    borderBottomWidth: 14, 
+    borderBottomWidth: 14,
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
     borderBottomColor: '#e53935',
