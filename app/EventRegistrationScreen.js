@@ -6,38 +6,38 @@ import Sidebar from './Sidebar';
 const events = [
   {
     id: '1',
-    title: 'Science Centre',
-    date: '15 March 2025',
+    title: 'Pusat Sains',
+    date: '15 Mac 2025',
     time: '10AM - 1PM',
-    price: '$8',
-    description: 'Explore interactive science exhibits and live demonstrations at Singapore\'s premier science museum. Perfect for families and science enthusiasts!',
+    price: 'RM8',
+    description: 'Terokai pameran sains interaktif dan demonstrasi langsung di muzium sains utama Singapura. Sesuai untuk keluarga dan peminat sains!',
     image: require('../assets/posters/poster2.jpg'),
   },
   {
     id: '2',
-    title: 'Durian Fiesta',
-    date: '26 July 2025',
+    title: 'Fiesta Durian',
+    date: '26 Julai 2025',
     time: '5PM - 7PM',
-    price: '$15',
-    description: 'Join us for an exclusive durian tasting event featuring premium Mao Shan Wang and D24 varieties. Learn about durian cultivation from experts.',
+    price: 'RM15',
+    description: 'Sertai acara merasa durian eksklusif dengan varieti premium Mao Shan Wang dan D24. Ketahui tentang penanaman durian daripada pakar.',
     image: require('../assets/posters/poster5.jpg'),
   },
   {
     id: '3',
-    title: 'Spring Carnival',
+    title: 'Karnival Musim Bunga',
     date: '8 Feb 2025',
     time: '11:30AM - 3PM',
-    price: 'FREE',
-    description: 'Celebrate the arrival of spring with games, food stalls, and live performances at our annual carnival. Fun for all ages!',
+    price: 'PERCUMA',
+    description: 'Raikan kedatangan musim bunga dengan permainan, gerai makanan, dan persembahan langsung di karnival tahunan kami. Seronok untuk semua peringkat umur!',
     image: require('../assets/posters/poster3.jpg'),
   },
   {
     id: '4',
-    title: 'Movie Night',
+    title: 'Malam Wayang',
     date: '14 Jun 2025',
-    time: '4PM onwards',
-    price: '$5',
-    description: 'Enjoy classic films under the stars at our outdoor cinema. Bring your own blanket or rent chairs on site.',
+    time: '4PM dan seterusnya',
+    price: 'RM5',
+    description: 'Nikmati filem klasik di bawah bintang di pawagam luar. Bawa selimut sendiri atau sewa kerusi di lokasi.',
     image: require('../assets/posters/poster1.jpg'),
   },
 ];
@@ -53,7 +53,7 @@ export default function EventRegistrationScreen() {
   if (!event) {
     return (
       <View style={styles.container}>
-        <Text style={styles.errorText}>Event not found!</Text>
+        <Text style={styles.errorText}>Acara tidak dijumpai!</Text>
       </View>
     );
   }
@@ -76,24 +76,24 @@ export default function EventRegistrationScreen() {
 
         <View style={styles.content}>
           <View style={styles.detailsContainer}>
-            <Text style={styles.sectionTitle}>Event Details</Text>
+            <Text style={styles.sectionTitle}>Butiran Acara</Text>
 
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Date:</Text>
+              <Text style={styles.detailLabel}>Tarikh:</Text>
               <Text style={styles.detailValue}>{event.date}</Text>
             </View>
 
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Time:</Text>
+              <Text style={styles.detailLabel}>Masa:</Text>
               <Text style={styles.detailValue}>{event.time}</Text>
             </View>
 
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Price:</Text>
+              <Text style={styles.detailLabel}>Harga:</Text>
               <Text style={styles.detailValue}>{event.price}</Text>
             </View>
 
-            <Text style={styles.sectionTitle}>Description</Text>
+            <Text style={styles.sectionTitle}>Penerangan</Text>
             <Text style={styles.description}>{event.description}</Text>
           </View>
 
@@ -106,11 +106,10 @@ export default function EventRegistrationScreen() {
           style={styles.joinButton}
           onPress={handleConfirmJoin}
         >
-          <Text style={styles.joinButtonText}>Confirm Join</Text>
+          <Text style={styles.joinButtonText}>Sahkan Penyertaan</Text>
         </TouchableOpacity>
       </ScrollView>
 
-      {/* Floating Question Mark Button */}
       <View style={styles.fabContainer} pointerEvents="box-none">
         <TouchableOpacity
           style={styles.fab}
@@ -123,7 +122,7 @@ export default function EventRegistrationScreen() {
           <Pressable style={styles.overlay} onPress={() => setShowHelp(false)}>
             <View style={styles.helpBoxContainer} pointerEvents="box-none">
               <View style={styles.helpBox}>
-                <Text style={styles.helpText}>Press here to join the event!</Text>
+                <Text style={styles.helpText}>Tekan di sini untuk menyertai acara!</Text>
                 <View style={styles.arrowDown} />
               </View>
             </View>
@@ -242,7 +241,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 20,
   },
-  // Floating Action Button styles
   fabContainer: {
     position: 'absolute',
     right: 30,
@@ -254,28 +252,27 @@ const styles = StyleSheet.create({
     pointerEvents: 'box-none',
   },
   fab: {
-  position: 'absolute',
-  bottom: 24,
-  right: 24,
-  backgroundColor: '#e53935',
-  width: 52,
-  height: 52,
-  borderRadius: 26,
-  alignItems: 'center',
-  justifyContent: 'center',
-  zIndex: 100,
-  elevation: 10,
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 3 },
-  shadowOpacity: 0.15,
-  shadowRadius: 6,
-},
-fabText: {
-  color: '#fff',
-  fontWeight: 'bold',
-  fontSize: 28,
-  marginBottom: 2,
-},
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: '#e74c3c',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    elevation: 10,
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
+    zIndex: 20,
+  },
+  fabText: {
+    color: 'white',
+    fontSize: 36,
+    fontWeight: 'bold',
+  },
   overlay: {
     position: 'absolute',
     top: 0, left: 0, right: 0, bottom: 0,
@@ -312,7 +309,7 @@ fabText: {
   arrowDown: {
     position: 'absolute',
     bottom: -22,
-    left: 38, // move arrow further left for alignment
+    left: 38,
     width: 0,
     height: 0,
     borderLeftWidth: 18,
@@ -320,7 +317,7 @@ fabText: {
     borderTopWidth: 22,
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
-    borderTopColor: '#e74c3c', // white border for arrow
+    borderTopColor: '#e74c3c',
     zIndex: 21,
   },
 });
