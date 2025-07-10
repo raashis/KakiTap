@@ -6,38 +6,38 @@ import Sidebar from './Sidebar';
 const events = [
   {
     id: '1',
-    title: 'Science Centre',
-    date: '15 March 2025',
-    time: '10AM - 1PM',
-    price: '$8',
-    description: 'Explore interactive science exhibits and live demonstrations at Singapore\'s premier science museum. Perfect for families and science enthusiasts!',
+    title: '科学中心',
+    date: '2025年3月15日',
+    time: '上午10点 - 下午1点',
+    price: '¥8',
+    description: '在新加坡首屈一指的科学馆探索互动展览和现场演示。非常适合家庭和科学爱好者！',
     image: require('../assets/posters/poster2.jpg'),
   },
   {
     id: '2',
-    title: 'Durian Fiesta',
-    date: '26 July 2025',
-    time: '5PM - 7PM',
-    price: '$15',
-    description: 'Join us for an exclusive durian tasting event featuring premium Mao Shan Wang and D24 varieties. Learn about durian cultivation from experts.',
+    title: '榴莲嘉年华',
+    date: '2025年7月26日',
+    time: '下午5点 - 7点',
+    price: '¥15',
+    description: '参加专属榴莲品鉴会，品尝猫山王和D24等优质品种。向专家学习榴莲种植知识。',
     image: require('../assets/posters/poster5.jpg'),
   },
   {
     id: '3',
-    title: 'Spring Carnival',
-    date: '8 Feb 2025',
-    time: '11:30AM - 3PM',
-    price: 'FREE',
-    description: 'Celebrate the arrival of spring with games, food stalls, and live performances at our annual carnival. Fun for all ages!',
+    title: '春季嘉年华',
+    date: '2025年2月8日',
+    time: '上午11:30 - 下午3点',
+    price: '免费',
+    description: '在我们的年度嘉年华中，通过游戏、美食摊位和现场表演庆祝春天的到来。老少皆宜！',
     image: require('../assets/posters/poster3.jpg'),
   },
   {
     id: '4',
-    title: 'Movie Night',
-    date: '14 Jun 2025',
-    time: '4PM onwards',
-    price: '$5',
-    description: 'Enjoy classic films under the stars at our outdoor cinema. Bring your own blanket or rent chairs on site.',
+    title: '电影之夜',
+    date: '2025年6月14日',
+    time: '下午4点起',
+    price: '¥5',
+    description: '在户外影院享受经典电影。可自带毯子或现场租椅。',
     image: require('../assets/posters/poster1.jpg'),
   },
 ];
@@ -53,7 +53,7 @@ export default function EventRegistrationScreen() {
   if (!event) {
     return (
       <View style={styles.container}>
-        <Text style={styles.errorText}>Event not found!</Text>
+        <Text style={styles.errorText}>未找到活动！</Text>
       </View>
     );
   }
@@ -76,24 +76,24 @@ export default function EventRegistrationScreen() {
 
         <View style={styles.content}>
           <View style={styles.detailsContainer}>
-            <Text style={styles.sectionTitle}>Event Details</Text>
+            <Text style={styles.sectionTitle}>活动详情</Text>
 
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Date:</Text>
+              <Text style={styles.detailLabel}>日期：</Text>
               <Text style={styles.detailValue}>{event.date}</Text>
             </View>
 
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Time:</Text>
+              <Text style={styles.detailLabel}>时间：</Text>
               <Text style={styles.detailValue}>{event.time}</Text>
             </View>
 
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Price:</Text>
+              <Text style={styles.detailLabel}>价格：</Text>
               <Text style={styles.detailValue}>{event.price}</Text>
             </View>
 
-            <Text style={styles.sectionTitle}>Description</Text>
+            <Text style={styles.sectionTitle}>活动介绍</Text>
             <Text style={styles.description}>{event.description}</Text>
           </View>
 
@@ -106,24 +106,23 @@ export default function EventRegistrationScreen() {
           style={styles.joinButton}
           onPress={handleConfirmJoin}
         >
-          <Text style={styles.joinButtonText}>Confirm Join</Text>
+          <Text style={styles.joinButtonText}>确认报名</Text>
         </TouchableOpacity>
       </ScrollView>
 
-      {/* Floating Question Mark Button */}
       <View style={styles.fabContainer} pointerEvents="box-none">
         <TouchableOpacity
           style={styles.fab}
           onPress={() => setShowHelp(!showHelp)}
           activeOpacity={0.8}
         >
-          <Text style={styles.fabText}>?</Text>
+          <Text style={styles.fabText}>？</Text>
         </TouchableOpacity>
         {showHelp && (
           <Pressable style={styles.overlay} onPress={() => setShowHelp(false)}>
             <View style={styles.helpBoxContainer} pointerEvents="box-none">
               <View style={styles.helpBox}>
-                <Text style={styles.helpText}>Press here to join the event!</Text>
+                <Text style={styles.helpText}>点击这里报名参加活动！</Text>
                 <View style={styles.arrowDown} />
               </View>
             </View>
@@ -242,7 +241,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 20,
   },
-  // Floating Action Button styles
   fabContainer: {
     position: 'absolute',
     right: 30,
@@ -254,28 +252,27 @@ const styles = StyleSheet.create({
     pointerEvents: 'box-none',
   },
   fab: {
-  position: 'absolute',
-  bottom: 24,
-  right: 24,
-  backgroundColor: '#e53935',
-  width: 52,
-  height: 52,
-  borderRadius: 26,
-  alignItems: 'center',
-  justifyContent: 'center',
-  zIndex: 100,
-  elevation: 10,
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 3 },
-  shadowOpacity: 0.15,
-  shadowRadius: 6,
-},
-fabText: {
-  color: '#fff',
-  fontWeight: 'bold',
-  fontSize: 28,
-  marginBottom: 2,
-},
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: '#e74c3c',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    elevation: 10,
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
+    zIndex: 20,
+  },
+  fabText: {
+    color: 'white',
+    fontSize: 36,
+    fontWeight: 'bold',
+  },
   overlay: {
     position: 'absolute',
     top: 0, left: 0, right: 0, bottom: 0,
@@ -312,7 +309,7 @@ fabText: {
   arrowDown: {
     position: 'absolute',
     bottom: -22,
-    left: 38, // move arrow further left for alignment
+    left: 38,
     width: 0,
     height: 0,
     borderLeftWidth: 18,
@@ -320,7 +317,7 @@ fabText: {
     borderTopWidth: 22,
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
-    borderTopColor: '#e74c3c', // white border for arrow
+    borderTopColor: '#e74c3c',
     zIndex: 21,
   },
 });
