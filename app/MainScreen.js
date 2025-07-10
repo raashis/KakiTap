@@ -77,7 +77,6 @@ export default function MainScreen() {
               <Text style={styles.iconText}>⭐</Text>
             </View>
             <Text style={styles.buttonText}>查看我的活动</Text>
-            <Text style={styles.buttonSubtext}>即将举行</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
