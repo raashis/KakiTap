@@ -6,38 +6,37 @@ export default function HelpRequestScreen() {
   const router = useRouter();
 
   const handleLogout = () => {
-  router.replace('/KakiTapScreen');
+    router.replace('/KakiTapScreen');
   };
 
   return (
     <View style={styles.container}>
       <Sidebar active="help" />
       <View style={styles.content}>
-        {/* Logout Button */}
         <TouchableOpacity
           style={styles.logoutButton}
           onPress={handleLogout}
           activeOpacity={0.8}
         >
-          <Text style={styles.logoutButtonText}>Logout</Text>
+          <Text style={styles.logoutButtonText}>Log Keluar</Text>
         </TouchableOpacity>
 
         <View style={styles.card}>
-          <Text style={styles.question}>We Want to Help You!</Text>
+          <Text style={styles.question}>Kami ingin membantu anda!</Text>
           <View style={styles.divider} />
           <Text style={styles.info}>
-            Pek Kio CC will call you{'\n'}
-            shortly during our working hours.{'\n'}
-            Thank you for your patience <Text style={styles.heart}>♥</Text>
+            Pihak Pek Kio CC akan menghubungi anda<br />
+            secepat mungkin dalam waktu bekerja kami.<br />
+            Terima kasih atas kesabaran anda <Text style={styles.heart}>♥</Text>
           </Text>
         </View>
         <TouchableOpacity
           style={styles.backBtn}
           onPress={() => router.push('/HelpScreen')}
         >
-          <Text style={styles.backBtnText}>Go Back to HELP page</Text>
+          <Text style={styles.backBtnText}>Kembali ke halaman BANTUAN</Text>
         </TouchableOpacity>
-        {/* <Text style={styles.helpIcon}>?</Text> */}
+        <Text style={styles.helpIcon}>?</Text>
       </View>
     </View>
   );
@@ -87,7 +86,6 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255, 255, 255, 0.3)',
     width: '90%',
     maxWidth: 800,
-
   },
   question: {
     fontSize: 48,
