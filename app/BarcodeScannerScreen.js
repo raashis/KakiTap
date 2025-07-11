@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, Alert, TouchableOpacity } from 'react-native';
-import { CameraView, Camera } from 'expo-camera';
+import { Camera, CameraView } from 'expo-camera';
 import { useRouter } from 'expo-router';
+import React, { useEffect, useRef, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function BarcodeScannerScreen() {
   const router = useRouter();
@@ -18,92 +18,57 @@ export default function BarcodeScannerScreen() {
     })();
   }, []);
 
-  // Enhanced barcode handler that accepts ANY barcode
   const handleBarCodeScanned = ({ type, data }) => {
     if (scanned || isProcessing) return;
-    
     setScanned(true);
     setIsProcessing(true);
-    
-    console.log('Barcode detected:', { type, data });
-    
-    // Navigate immediately to language settings
     setTimeout(() => {
       router.push('/languages');
     }, 500);
   };
 
-  // Object detection function for black/white objects
   const detectBlackWhiteObjects = async () => {
     if (!cameraRef.current || scanned || isProcessing) return;
-
     try {
-      // Take a picture to analyze
       const photo = await cameraRef.current.takePictureAsync({
         quality: 0.3,
         base64: true,
         skipProcessing: true,
       });
-
       if (photo && photo.base64) {
-        // Simple color analysis - check for predominant black/white areas
         const hasBlackWhiteObject = analyzeImageForBlackWhite(photo.base64);
-        
         if (hasBlackWhiteObject) {
           setScanned(true);
           setIsProcessing(true);
-          
-          console.log('Black/white object detected');
-          
           setTimeout(() => {
             router.push('/languages');
           }, 500);
         }
       }
-    } catch (error) {
-      console.log('Object detection error:', error);
-    }
+    } catch (error) {}
   };
 
-  // Simple black/white detection algorithm
   const analyzeImageForBlackWhite = (base64Image) => {
     try {
-      // This is a simplified approach - in a real app, you'd use more sophisticated image processing
-      // For now, we'll use a timeout-based trigger as a demonstration
-      
-      // Create a canvas to analyze the image (web-based approach)
-      // Note: This is a simplified version - you might need expo-image-manipulator for better results
-      
-      // For demonstration, we'll trigger on any significant contrast
-      // You can enhance this with actual image processing libraries
-      
-      return Math.random() > 0.7; // Simulate detection for demo purposes
+      return Math.random() > 0.7;
     } catch (error) {
-      console.log('Image analysis error:', error);
       return false;
     }
   };
 
-  // Continuous object detection
   useEffect(() => {
     if (hasPermission && !scanned && !isProcessing) {
       const interval = setInterval(() => {
         detectBlackWhiteObjects();
-      }, 1000); // Check every second
-
+      }, 1000);
       return () => clearInterval(interval);
     }
   }, [hasPermission, scanned, isProcessing]);
 
-  // Alternative: Touch-based trigger for manual detection
   const handleManualDetection = () => {
     if (scanned || isProcessing) return;
-    
     setScanned(true);
     setIsProcessing(true);
-    
-    console.log('Manual detection triggered');
-    
     setTimeout(() => {
       router.push('/languages');
     }, 500);
@@ -120,7 +85,7 @@ export default function BarcodeScannerScreen() {
   if (hasPermission === null) {
     return (
       <View style={styles.container}>
-        <Text style={styles.message}>Requesting camera permission...</Text>
+        <Text style={styles.message}>கேமரா அனுமதியை கோருகிறது...</Text>
       </View>
     );
   }
@@ -128,12 +93,12 @@ export default function BarcodeScannerScreen() {
   if (hasPermission === false) {
     return (
       <View style={styles.container}>
-        <Text style={styles.message}>No access to camera</Text>
+        <Text style={styles.message}>கேமராவிற்கு அணுகல் இல்லை</Text>
         <TouchableOpacity
           style={styles.button}
           onPress={() => router.back()}
         >
-          <Text style={styles.buttonText}>Go Back</Text>
+          <Text style={styles.buttonText}>திரும்பிச் செல்லவும்</Text>
         </TouchableOpacity>
       </View>
     );
@@ -142,8 +107,8 @@ export default function BarcodeScannerScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>KAKI TAP</Text>
-        <Text style={styles.subtitle}>Scan Any Code or Object</Text>
+        <Text style={styles.title}>காக்கி டாப்</Text>
+        <Text style={styles.subtitle}>எந்த குறியீடு அல்லது பொருளையும் ஸ்கேன் செய்யவும்</Text>
       </View>
 
       <View style={styles.cameraContainer}>
@@ -184,10 +149,9 @@ export default function BarcodeScannerScreen() {
                   <View style={[styles.corner, styles.topRight]} />
                   <View style={[styles.corner, styles.bottomLeft]} />
                   <View style={[styles.corner, styles.bottomRight]} />
-                  
                   {isProcessing && (
                     <View style={styles.processingOverlay}>
-                      <Text style={styles.processingText}>Processing...</Text>
+                      <Text style={styles.processingText}>செயலாக்குகிறது...</Text>
                     </View>
                   )}
                 </TouchableOpacity>
@@ -196,10 +160,10 @@ export default function BarcodeScannerScreen() {
             </View>
             <View style={styles.unfocusedContainer}>
               <Text style={styles.scanText}>
-                Position the barcode on your card within the frame
+                உங்கள் கார்டில் உள்ள பார்கோடு இந்த பெட்டிக்குள் வருமாறு வைத்துப் பார்கோடு ஸ்கேன் செய்யவும்
               </Text>
               <Text style={styles.scanSubtext}>
-                Tap the frame to manually detect objects
+                பொருளை கைமுறையாக கண்டறிய பெட்டியை தட்டவும்
               </Text>
             </View>
           </View>
@@ -212,22 +176,20 @@ export default function BarcodeScannerScreen() {
             style={styles.button}
             onPress={resetScanner}
           >
-            <Text style={styles.buttonText}>Scan Again</Text>
+            <Text style={styles.buttonText}>மீண்டும் ஸ்கேன் செய்யவும்</Text>
           </TouchableOpacity>
         )}
-        
         <TouchableOpacity
           style={[styles.button, styles.detectButton]}
           onPress={handleManualDetection}
         >
-          <Text style={styles.buttonText}>Manual Detect</Text>
+          <Text style={styles.buttonText}>கைமுறை கண்டறிதல்</Text>
         </TouchableOpacity>
-        
         <TouchableOpacity
           style={[styles.button, styles.backButton]}
           onPress={() => router.back()}
         >
-          <Text style={styles.buttonText}>Back</Text>
+          <Text style={styles.buttonText}>திரும்பிச் செல்லவும்</Text>
         </TouchableOpacity>
       </View>
     </View>

@@ -1,4 +1,3 @@
-// app/MainScreen.js
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -24,7 +23,7 @@ export default function MainScreen() {
             </View>
             <View style={styles.sidebarChatbox}>
               <Text style={styles.sidebarChatboxText}>
-                You can also always go to these 4 pages from here!
+                இங்கிருந்து நீங்கள் எப்போதும் இந்த 4 பக்கங்களுக்கும் செல்லலாம்!
               </Text>
             </View>
           </View>
@@ -38,12 +37,12 @@ export default function MainScreen() {
           onPress={handleLogout}
           activeOpacity={0.8}
         >
-          <Text style={styles.logoutButtonText}>Logout</Text>
+          <Text style={styles.logoutButtonText}>வெளியேறு</Text>
         </TouchableOpacity>
 
         <View style={styles.headerSection}>
-          <Text style={styles.welcome}>Welcome, Tan!</Text>
-          <Text style={styles.subtitle}>What do you want to do today?</Text>
+          <Text style={styles.welcome}>வணக்கம், தன்!</Text>
+          <Text style={styles.subtitle}>இன்று நீங்கள் என்ன செய்ய விரும்புகிறீர்கள்?</Text>
         </View>
 
         {/* Chatbox above the event grid, arrow points down toward buttons */}
@@ -51,8 +50,8 @@ export default function MainScreen() {
           <View style={styles.topChatboxWrapper}>
             <View style={styles.topChatbox}>
               <Text style={styles.topChatboxText}>
-                Press here to Explore {'\n'}
-                one of these 4 pages!
+                இந்த 4 பக்கங்களில் ஒன்றை {'\n'}
+                ஆராய இங்கே அழுத்தவும்!
               </Text>
             </View>
             <View style={styles.topPointerWrapper}>
@@ -69,8 +68,8 @@ export default function MainScreen() {
             <View style={styles.buttonIcon}>
               <Text style={styles.iconText}>📅</Text>
             </View>
-            <Text style={styles.buttonText}>See All Events</Text>
-            <Text style={styles.buttonSubtext}>Happening NOW in your area</Text>
+            <Text style={styles.buttonText}>அனைத்து நிகழ்வுகளையும் பார்க்க</Text>
+            <Text style={styles.buttonSubtext}>உங்கள் பகுதியில் இப்போது நடைபெறுகிறது</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -80,8 +79,8 @@ export default function MainScreen() {
             <View style={styles.buttonIcon}>
               <Text style={styles.iconText}>⭐</Text>
             </View>
-            <Text style={styles.buttonText}>See My Events</Text>
-            <Text style={styles.buttonSubtext}>Happening Soon</Text>
+            <Text style={styles.buttonText}>என் நிகழ்வுகளை பார்க்க</Text>
+            <Text style={styles.buttonSubtext}>விரைவில் நடைபெறுகிறது</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -91,8 +90,8 @@ export default function MainScreen() {
             <View style={styles.buttonIcon}>
               <Text style={styles.iconText}>🎁</Text>
             </View>
-            <Text style={styles.buttonText}>Points & Rewards</Text>
-            <Text style={styles.buttonSubtext}>Redeem Your Rewards</Text>
+            <Text style={styles.buttonText}>புள்ளிகள் & பரிசுகள்</Text>
+            <Text style={styles.buttonSubtext}>உங்கள் பரிசுகளை பெற்றுக்கொள்ளுங்கள்</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -102,8 +101,8 @@ export default function MainScreen() {
             <View style={styles.buttonIcon}>
               <Text style={styles.iconText}>💬</Text>
             </View>
-            <Text style={styles.buttonText}>Help & Support</Text>
-            <Text style={styles.buttonSubtext}>Request for our Help & Support</Text>
+            <Text style={styles.buttonText}>உதவி & ஆதரவு</Text>
+            <Text style={styles.buttonSubtext}>உதவி மற்றும் ஆதரவுக்கு கோரிக்கை விடுக்கவும்</Text>
           </TouchableOpacity>
         </View>
 

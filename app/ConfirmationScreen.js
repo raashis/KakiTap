@@ -5,10 +5,10 @@ import { addRegisteredEvent } from './registeredEventsStore';
 import Sidebar from './Sidebar';
 
 const events = [
-  { id: '1', title: 'Science Centre', date: '15 March 2025', time: '10AM - 1PM', price: '$8' },
-  { id: '2', title: 'Durian Fiesta', date: '26 July 2025', time: '5PM - 7PM', price: '$15' },
-  { id: '3', title: 'Spring Carnival', date: '8 Feb 2025', time: '11:30AM - 3PM', price: 'FREE' },
-  { id: '4', title: 'Movie Night', date: '14 Jun 2025', time: '4PM onwards', price: '$5' },
+  { id: '1', title: 'அறிவியல் மையம்', date: '15 மார்ச் 2025', time: 'காலை 10 - 1', price: '₹8' },
+  { id: '2', title: 'டூரியன் திருவிழா', date: '26 ஜூலை 2025', time: 'மாலை 5 - 7', price: '₹15' },
+  { id: '3', title: 'வசந்த திருவிழா', date: '8 பிப்ரவரி 2025', time: 'மாலை 11:30 - 3', price: 'இலவசம்' },
+  { id: '4', title: 'திரைப்பட இரவு', date: '14 ஜூன் 2025', time: 'மாலை 4 மணி முதல்', price: '₹5' },
 ];
 
 export default function ConfirmationScreen() {
@@ -52,13 +52,13 @@ export default function ConfirmationScreen() {
   }, [showHelp]);
 
   const handleLogout = () => {
-  router.replace('/KakiTapScreen');
+    router.replace('/KakiTapScreen');
   };
 
   if (!event) {
     return (
       <View style={styles.container}>
-        <Text style={styles.errorText}>Event not found!</Text>
+        <Text style={styles.errorText}>நிகழ்வு கிடைக்கவில்லை!</Text>
       </View>
     );
   }
@@ -73,27 +73,27 @@ export default function ConfirmationScreen() {
           onPress={handleLogout}
           activeOpacity={0.8}
         >
-          <Text style={styles.logoutButtonText}>Logout</Text>
+          <Text style={styles.logoutButtonText}>வெளியேறு</Text>
         </TouchableOpacity>
 
-        <Text style={styles.title}>CONFIRMATION OF REGISTRATION</Text>
+        <Text style={styles.title}>பதிவை உறுதிப்படுத்தல்</Text>
         <View style={styles.confirmationCard}>
           <View style={styles.confirmationContent}>
             <Text style={styles.confirmationText}>
-              You have just signed up for the
+              நீங்கள் இப்போது இந்த நிகழ்வுக்கு பதிவு செய்துள்ளீர்கள்
             </Text>
-            <Text style={styles.eventTitle}>{event.title} outing!</Text>
+            <Text style={styles.eventTitle}>{event.title} - நிகழ்வு!</Text>
             <View style={styles.iconContainer}>
               <Text style={styles.thumbsUpIcon} ref={thumbsUpRef}>👍</Text>
               <Text style={styles.sparkleIcon}>✨</Text>
             </View>
-            <Text style={styles.seeYouText}>SEE YOU THERE!</Text>
+            <Text style={styles.seeYouText}>அங்கு சந்திப்போம்!</Text>
             <TouchableOpacity 
               style={styles.backButton}
               onPress={() => router.push('/AllEventsScreen')}
               ref={backBtnRef}
             >
-              <Text style={styles.backButtonText}>Go back to All Events</Text>
+              <Text style={styles.backButtonText}>மீண்டும் நிகழ்வுகளுக்கு செல்லவும்</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -122,7 +122,7 @@ export default function ConfirmationScreen() {
             zIndex: 100,
           }}>
             <RedChatBox pointerDirection="down" pointerOffset={80}>
-              You have just signed up for an event!
+              நீங்கள் ஒரு நிகழ்வில் வெற்றிகரமாக பதிவு செய்துள்ளீர்கள்!
             </RedChatBox>
           </View>
           {/* Chatbox 2: above back button */}
@@ -133,7 +133,7 @@ export default function ConfirmationScreen() {
             zIndex: 100,
           }}>
             <RedChatBox pointerDirection="down" pointerOffset={100}>
-              Press here to go back to more events!
+              மேலும் நிகழ்வுகளுக்கு செல்ல இங்கே அழுத்தவும்!
             </RedChatBox>
           </View>
         </Pressable>
@@ -212,28 +212,28 @@ const styles = StyleSheet.create({
 
   // Floating Help Button
   helpButton: {
-  position: 'absolute',
-  bottom: 24,
-  right: 24,
-  backgroundColor: '#e53935',
-  width: 52,
-  height: 52,
-  borderRadius: 26,
-  alignItems: 'center',
-  justifyContent: 'center',
-  zIndex: 100,
-  elevation: 10,
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 3 },
-  shadowOpacity: 0.15,
-  shadowRadius: 6,
-},
-helpButtonText: {
-  color: '#fff',
-  fontWeight: 'bold',
-  fontSize: 28,
-  marginBottom: 2,
-},
+    position: 'absolute',
+    bottom: 24,
+    right: 24,
+    backgroundColor: '#e53935',
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 100,
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+  },
+  helpButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 28,
+    marginBottom: 2,
+  },
 
   // Overlay for help chatbox
   overlay: {

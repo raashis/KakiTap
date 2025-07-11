@@ -2,13 +2,14 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Sidebar from './Sidebar';
 
+
 export default function RedeemedScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
   const { points = 40, brand = "FairPrice", reward = "$5 FairPrice eVoucher" } = params;
 
   const handleLogout = () => {
-  router.replace('/KakiTapScreen');
+    router.replace('/KakiTapScreen');
   };
 
   return (
@@ -21,17 +22,17 @@ export default function RedeemedScreen() {
           onPress={handleLogout}
           activeOpacity={0.8}
         >
-          <Text style={styles.logoutButtonText}>Logout</Text>
+          <Text style={styles.logoutButtonText}>வெளியேறு</Text>
         </TouchableOpacity>
 
         {/* Tabs */}
         <View style={styles.tabs}>
-          <Text style={styles.tab}>My Journey</Text>
-          <Text style={[styles.tab, styles.activeTab]}>Redeem Rewards</Text>
+          <Text style={styles.tab}>என் பயணம்</Text>
+          <Text style={[styles.tab, styles.activeTab]}>பரிசுகளை பெறுங்கள்</Text>
         </View>
 
         {/* Points */}
-        <Text style={styles.pointsLabel}>My KakiPoints</Text>
+        <Text style={styles.pointsLabel}>என் காக்கி பாயிண்ட்ஸ்</Text>
         <Text style={styles.points}>{points} ✧</Text>
 
         {/* Redeemed Card */}
@@ -41,22 +42,21 @@ export default function RedeemedScreen() {
             <Text style={styles.reward}>{reward}</Text>
           </View>
           <View style={styles.redeemedBox}>
-            <Text style={styles.redeemedText}>REDEEMED</Text>
+            <Text style={styles.redeemedText}>பெறப்பட்டது</Text>
           </View>
           <Text style={styles.instructions}>
-            HEAD TO PEK KIO CC TO GET YOUR VOUCHER!
+            உங்கள் வவுச்சரை பெற பெக் கியோ CC-க்கு செல்லவும்!
           </Text>
           <TouchableOpacity
             style={styles.backBtn}
             onPress={() => router.push('/RewardsScreen')}
           >
-            <Text style={styles.backBtnText}>Go Back To Rewards</Text>
+            <Text style={styles.backBtnText}>மீண்டும் பரிசுகளுக்கு செல்லவும்</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.helpIconContainer}>
           <Text style={styles.helpIcon}>?</Text>
         </View>
-        {/* For now, but we can link to Singpass etc. */}
         {/* <Text style={styles.note}>
           For now :( but we can link to Singpass etc.
         </Text> */}
@@ -185,28 +185,28 @@ const styles = StyleSheet.create({
   },
 
   helpIconContainer: {
-  position: 'absolute',
-  bottom: 24,
-  right: 24,
-  backgroundColor: '#e53935',
-  width: 52,
-  height: 52,
-  borderRadius: 26,
-  alignItems: 'center',
-  justifyContent: 'center',
-  zIndex: 100,
-  elevation: 10,
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 3 },
-  shadowOpacity: 0.15,
-  shadowRadius: 6,
-},
-helpIcon: {
-  color: '#fff',
-  fontWeight: 'bold',
-  fontSize: 28,
-  marginBottom: 2,
-},
+    position: 'absolute',
+    bottom: 24,
+    right: 24,
+    backgroundColor: '#e53935',
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 100,
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+  },
+  helpIcon: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 28,
+    marginBottom: 2,
+  },
   note: {
     color: '#800080',
     fontSize: 18,

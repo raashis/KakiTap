@@ -6,7 +6,7 @@ export default function HelpAIBotScreen() {
   const router = useRouter();
 
   const handleLogout = () => {
-  router.replace('/KakiTapScreen');
+    router.replace('/KakiTapScreen');
   };
 
   return (
@@ -19,14 +19,14 @@ export default function HelpAIBotScreen() {
           onPress={handleLogout}
           activeOpacity={0.8}
         >
-          <Text style={styles.logoutButtonText}>Logout</Text>
+          <Text style={styles.logoutButtonText}>வெளியேறு</Text>
         </TouchableOpacity>
 
         <View style={styles.card}>
-          <Text style={styles.question}>We Want to Hear You!</Text>
+          <Text style={styles.question}>உங்களது கருத்தை கேட்க விரும்புகிறோம்!</Text>
           <View style={styles.divider} />
-          <Text style={styles.info}>PRESS THIS TO TALK TO AH BOT</Text>
-          <TouchableOpacity style={styles.micCircle} onPress={() => alert('Voicebot coming soon!')}>
+          <Text style={styles.info}>அஹ் போட்-ஐ பேச இங்கே அழுத்தவும்</Text>
+          <TouchableOpacity style={styles.micCircle} onPress={() => alert('வாய்ஸ் போட் விரைவில் வருகிறது!')}>
             <Text style={styles.micIcon}>🎤</Text>
           </TouchableOpacity>
         </View>
@@ -34,7 +34,7 @@ export default function HelpAIBotScreen() {
           style={styles.backBtn}
           onPress={() => router.push('/HelpScreen')}
         >
-          <Text style={styles.backBtnText}>Go Back to HELP page</Text>
+          <Text style={styles.backBtnText}>மீண்டும் உதவி பக்கம் செல்லவும்</Text>
         </TouchableOpacity>
         {/* <Text style={styles.helpIcon}>?</Text> */}
       </View>
@@ -87,7 +87,6 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255, 255, 255, 0.3)',
     width: '90%',
     maxWidth: 800,
-    // Note: backdropFilter is not supported in React Native, so it's ignored here
     alignItems: 'center',
   },
   question: {

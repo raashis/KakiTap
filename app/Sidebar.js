@@ -1,4 +1,3 @@
-// app/Sidebar.js
 import { useRouter } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -8,35 +7,35 @@ export default function Sidebar({ active }) {
   const menuItems = [
     { 
       key: 'home', 
-      label: '🏠 Homepage', 
-      route: '/MainScreen', // Changed from '/' to '/MainScreen'
+      label: '🏠 முகப்பு பக்கம்', 
+      route: '/MainScreen',
       color: '#d31a38',
       activeColor: '#90021f'
     },
     { 
       key: 'events', 
-      label: '📅 All Events', 
+      label: '📅 அனைத்து நிகழ்வுகள்', 
       route: '/AllEventsScreen',
       color: '#469d8b',
       activeColor: '#2d6b5f'
     },
     { 
       key: 'myevents', 
-      label: '⭐ My Events', 
+      label: '⭐ என் நிகழ்வுகள்', 
       route: '/MyEventsScreen',
       color: '#73bad3',
       activeColor: '#4a9fc1'
     },
     { 
       key: 'rewards', 
-      label: '🎁 Rewards', 
+      label: '🎁 பரிசுகள்', 
       route: '/RewardsScreen',
       color: '#ea8933',
       activeColor: '#c8702a'
     },
     { 
       key: 'help', 
-      label: '💬 Help', 
+      label: '💬 உதவி', 
       route: '/HelpScreen',
       color: '#e8ae3c',
       activeColor: '#cc9429'
@@ -46,8 +45,8 @@ export default function Sidebar({ active }) {
   return (
     <View style={styles.sidebar}>
       <View style={styles.header}>
-        <Text style={styles.appTitle}>KakiTap</Text>
-        <Text style={styles.welcomeText}>Welcome, Tan!</Text>
+        <Text style={styles.appTitle}>காக்கி டாப்</Text>
+        <Text style={styles.welcomeText}>வணக்கம், தன்!</Text>
       </View>
       
       <View style={styles.menuContainer}>
@@ -62,9 +61,8 @@ export default function Sidebar({ active }) {
                 isActive && styles.activeMenuCard
               ]}
               onPress={() => {
-                // If it's the homepage and we're already on it, just stay
                 if (item.key === 'home' && active === 'home') {
-                  return; // Don't navigate, just stay on current page
+                  return;
                 }
                 router.push(item.route);
               }}

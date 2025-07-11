@@ -68,19 +68,19 @@ export default function MyEventsScreen() {
 
   const handleWithdraw = (id, title) => {
     if (Platform.OS === 'web') {
-      if (!window.confirm('Are you sure you want to withdraw from this event?')) return;
+      if (!window.confirm('நீங்கள் இந்த நிகழ்விலிருந்து விலக விரும்புகிறீர்களா?')) return;
       removeRegisteredEvent(id);
       setRegisteredEvents([...store.registeredEventsGlobal]);
       setLastWithdrawnTitle(title);
       setJustWithdrew(true);
     } else {
       Alert.alert(
-        'Withdraw from event',
-        'Are you sure you want to withdraw from this event?',
+        'நிகழ்விலிருந்து விலகு',
+        'நீங்கள் இந்த நிகழ்விலிருந்து விலக விரும்புகிறீர்களா?',
         [
-          { text: 'Cancel', style: 'cancel' },
+          { text: 'ரத்து செய்', style: 'cancel' },
           {
-            text: 'Withdraw',
+            text: 'விலகு',
             style: 'destructive',
             onPress: () => {
               removeRegisteredEvent(id);
@@ -95,7 +95,7 @@ export default function MyEventsScreen() {
   };
 
   const handleLogout = () => {
-  router.replace('/KakiTapScreen');
+    router.replace('/KakiTapScreen');
   };
 
   return (
@@ -107,7 +107,7 @@ export default function MyEventsScreen() {
           {showHelp && (
             <View style={{ position: 'absolute', right: -230, top: 0, width: 210, alignItems: 'flex-end', zIndex: 100 }}>
               <RedChatBox pointerDirection="left">
-                Tap here to log out of your account.
+                உங்கள் கணக்கிலிருந்து வெளியேற இங்கே அழுத்தவும்.
               </RedChatBox>
             </View>
           )}
@@ -116,13 +116,13 @@ export default function MyEventsScreen() {
             onPress={handleLogout}
             activeOpacity={0.8}
           >
-            <Text style={styles.logoutButtonText}>Logout</Text>
+            <Text style={styles.logoutButtonText}>வெளியேறு</Text>
           </TouchableOpacity>
         </View>
 
         {/* Header */}
         <View style={{ alignItems: 'center', marginBottom: 10, position: 'relative' }}>
-          <Text style={styles.header}>MY EVENTS</Text>
+          <Text style={styles.header}>என் நிகழ்வுகள்</Text>
         </View>
 
         {/* Help ChatBox for all events, above the events card, stretched horizontally */}
@@ -134,14 +134,14 @@ export default function MyEventsScreen() {
             zIndex: 100,
           }}>
             <RedChatBox pointerDirection="down" style={{ maxWidth: 700, width: '90%' }}>
-              All the events you have signed up for can be found here!
+              நீங்கள் பதிவு செய்த அனைத்து நிகழ்வுகளும் இங்கே காணலாம்!
             </RedChatBox>
           </View>
         )}
 
         <ScrollView contentContainerStyle={styles.eventsList}>
           {registeredEvents.length === 0 ? (
-            <Text style={styles.noEvents}>You have not registered for any events.</Text>
+            <Text style={styles.noEvents}>நீங்கள் எந்த நிகழ்விலும் பதிவு செய்யவில்லை.</Text>
           ) : (
             registeredEvents.map((event, idx) => (
               <View key={event.id} style={styles.eventBox}>
@@ -153,8 +153,8 @@ export default function MyEventsScreen() {
                   ) : null}
                   <Text style={styles.paymentStatus}>
                     {event.paid
-                      ? 'You HAVE PAID FOR THIS 🙂'
-                      : 'You HAVE NOT PAID FOR THIS'}
+                      ? 'நீங்கள் இதற்காக பணம் செலுத்தியுள்ளீர்கள் 🙂'
+                      : 'நீங்கள் இதற்காக பணம் செலுத்தவில்லை'}
                   </Text>
                   <TouchableOpacity
                     ref={idx === 0 ? withdrawBtnRef : null}
@@ -162,7 +162,7 @@ export default function MyEventsScreen() {
                     onPress={() => handleWithdraw(event.id, event.title)}
                     onLayout={idx === 0 ? handleWithdrawBtnLayout : undefined}
                   >
-                    <Text style={styles.withdrawText}>WITHDRAW</Text>
+                    <Text style={styles.withdrawText}>விலகு</Text>
                   </TouchableOpacity>
                   {/* Withdraw Button Red ChatBox (first only, just below and pointing up, fits within the card and under the button) */}
                   {showHelp && idx === 0 && withdrawBtnX !== null && (
@@ -177,10 +177,9 @@ export default function MyEventsScreen() {
                       }}
                     >
                       <RedChatBox pointerDirection="up" style={{ maxWidth: 220, width: 220 }}>
-                        Click this button below{'\n'}
-                        if you wish to withdraw{'\n'}
-                        from an event you{'\n'}
-                        don't want to go to anymore.
+                        கீழே உள்ள இந்த பொத்தானை அழுத்தவும்{'\n'}
+                        நீங்கள் விரும்பாத நிகழ்விலிருந்து{'\n'}
+                        விலக விரும்பினால்.
                       </RedChatBox>
                     </View>
                   )}
@@ -192,11 +191,11 @@ export default function MyEventsScreen() {
 
         {/* Pagination (NO bubble) */}
         <View style={styles.pagination}>
-          <Text style={styles.disabledBtn}>back</Text>
+          <Text style={styles.disabledBtn}>முந்தையது</Text>
           <Text style={styles.pageNum}>
-            &lt; PAGE <Text style={styles.currentPage}>1</Text>/1 &gt;
+            &lt; பக்கம் <Text style={styles.currentPage}>1</Text>/1 &gt;
           </Text>
-          <Text style={styles.disabledBtn}>next</Text>
+          <Text style={styles.disabledBtn}>அடுத்தது</Text>
         </View>
       </View>
 

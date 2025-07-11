@@ -4,15 +4,15 @@ import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 
 import Sidebar from './Sidebar';
 
 const journeyData = [
-  { date: '10 March 2025', description: 'Attended Mahjong Session', points: 10 },
-  { date: '26 Feb 2025', description: 'Attended Walkathon @ Bishan', points: 10 },
-  { date: '14 Jan 2025', description: 'Attended Art Jamming', points: 20 },
-  { date: '2 Jan 2025', description: 'Joined Cooking Class', points: 20 },
+  { date: '10 மார்ச் 2025', description: 'மாஜாங் அமர்வில் கலந்துகொண்டேன்', points: 10 },
+  { date: '26 பிப்ரவரி 2025', description: 'பிஷானில் நடந்த நடைப்போட்டியில் கலந்துகொண்டேன்', points: 10 },
+  { date: '14 ஜனவரி 2025', description: 'கலை ஜேமிங்கில் கலந்துகொண்டேன்', points: 20 },
+  { date: '2 ஜனவரி 2025', description: 'சமையல் வகுப்பில் சேர்ந்தேன்', points: 20 },
 ];
 
 const rewardsData = [
-  { id: 1, brand: "FairPrice", description: "$5 FairPrice eVoucher", points: 20 },
-  { id: 2, brand: "SimplyGo", description: "SimplyGo (EZ-Link Concession or NETS Flashpay Card)", points: 20 },
+  { id: 1, brand: "FairPrice", description: "$5 FairPrice eவவுச்சர்", points: 20 },
+  { id: 2, brand: "SimplyGo", description: "SimplyGo (EZ-Link Concession அல்லது NETS Flashpay கார்டு)", points: 20 },
 ];
 
 const PAGE_SIZE = 2;
@@ -37,7 +37,7 @@ export default function RewardsScreen() {
 
   const handleRedeem = (rewardId, points) => {
     if (redeemedRewards.includes(rewardId)) {
-      alert('You have already redeemed this reward!');
+      alert('நீங்கள் ஏற்கனவே இந்த பரிசை பெற்றுள்ளீர்கள்!');
       return;
     }
     if (userPoints >= points) {
@@ -56,12 +56,12 @@ export default function RewardsScreen() {
         },
       });
     } else {
-      alert('Not enough points to redeem this reward!');
+      alert('இந்த பரிசை பெற போதுமான பாயிண்ட்ஸ் இல்லை!');
     }
   };
 
   const handleLogout = () => {
-  router.replace('/KakiTapScreen');
+    router.replace('/KakiTapScreen');
   };
 
   // For measuring the redeem button position
@@ -81,26 +81,26 @@ export default function RewardsScreen() {
           onPress={handleLogout}
           activeOpacity={0.8}
         >
-          <Text style={styles.logoutButtonText}>Logout</Text>
+          <Text style={styles.logoutButtonText}>வெளியேறு</Text>
         </TouchableOpacity>
 
         {/* Tabs */}
         <View style={styles.tabs}>
           <TouchableOpacity onPress={() => setActiveTab('journey')}>
             <Text style={[styles.tab, activeTab === 'journey' && styles.activeTab]}>
-              My Journey
+              என் பயணம்
             </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setActiveTab('redeem')}>
             <Text style={[styles.tab, activeTab === 'redeem' && styles.activeTab]}>
-              Redeem Rewards
+              பரிசுகளை பெறுங்கள்
             </Text>
           </TouchableOpacity>
         </View>
 
         {/* Points */}
         <View style={{ alignItems: 'center', position: 'relative' }}>
-          <Text style={styles.pointsLabel}>My KakiPoints</Text>
+          <Text style={styles.pointsLabel}>என் காக்கி பாயிண்ட்ஸ்</Text>
           <Text style={styles.points}>{userPoints} ✧</Text>
         </View>
 
@@ -108,7 +108,7 @@ export default function RewardsScreen() {
         {activeTab === 'journey' ? (
           <>
             <View style={styles.historyBox}>
-              <Text style={styles.sectionTitle}>Life Journey History</Text>
+              <Text style={styles.sectionTitle}>வாழ்க்கை பயண வரலாறு</Text>
               <ScrollView>
                 {pageData.map((item, idx) => (
                   <View key={idx} style={styles.historyItem}>
@@ -128,17 +128,17 @@ export default function RewardsScreen() {
                 onPress={() => setPage(page - 1)}
                 disabled={page === 1}
               >
-                <Text style={[styles.pageBtnText, page === 1 && styles.disabledBtnText]}>back</Text>
+                <Text style={[styles.pageBtnText, page === 1 && styles.disabledBtnText]}>முந்தையது</Text>
               </TouchableOpacity>
               <Text style={styles.pageNum}>
-                &lt; PAGE <Text style={styles.currentPage}>{page}</Text>/{totalPages} &gt;
+                &lt; பக்கம் <Text style={styles.currentPage}>{page}</Text>/{totalPages} &gt;
               </Text>
               <TouchableOpacity
                 style={[styles.pageBtn, page === totalPages && styles.disabledBtn]}
                 onPress={() => setPage(page + 1)}
                 disabled={page === totalPages}
               >
-                <Text style={[styles.pageBtnText, page === totalPages && styles.disabledBtnText]}>next</Text>
+                <Text style={[styles.pageBtnText, page === totalPages && styles.disabledBtnText]}>அடுத்தது</Text>
               </TouchableOpacity>
             </View>
           </>
@@ -160,7 +160,7 @@ export default function RewardsScreen() {
                       disabled={isRedeemed}
                     >
                       <Text style={styles.redeemBtnText}>
-                        {isRedeemed ? 'REDEEMED' : 'REDEEM'}
+                        {isRedeemed ? 'பெறப்பட்டது' : 'பெறு'}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -190,7 +190,7 @@ export default function RewardsScreen() {
                 <View style={[styles.redChatBoxContainer, { position: 'absolute', left: 200, top: 150, maxWidth: 340 }]}>
                   <View style={styles.redChatBox}>
                     <Text style={styles.redChatBoxText}>
-                      The points you get from past events will be here
+                      கடந்த நிகழ்வுகளிலிருந்து நீங்கள் பெற்ற பாயிண்ட்ஸ் இங்கே காணலாம்
                     </Text>
                     <View style={styles.arrowRight} />
                   </View>
@@ -199,7 +199,7 @@ export default function RewardsScreen() {
                 <View style={[styles.redChatBoxContainer, { position: 'absolute', left: 475, top: 5, maxWidth: 260 }]}>
                   <View style={styles.redChatBox}>
                     <Text style={styles.redChatBoxText}>
-                      You can redeem your points for awesome rewards here!
+                      உங்கள் பாயிண்ட்ஸை அற்புதமான பரிசுகளுக்கு இங்கே பெறலாம்!
                     </Text>
                     <View style={styles.arrowLeft} />
                   </View>
@@ -219,7 +219,7 @@ export default function RewardsScreen() {
               ]}>
                 <View style={styles.redChatBox}>
                   <Text style={styles.redChatBoxText}>
-                    Press here to redeem prizes with your points!
+                    உங்கள் பாயிண்ட்ஸுடன் பரிசுகளை பெற இங்கே அழுத்தவும்!
                   </Text>
                   <View style={styles.arrowRight} />
                 </View>

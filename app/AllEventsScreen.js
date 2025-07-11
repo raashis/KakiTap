@@ -14,34 +14,34 @@ const CARD_SPACING = 30;
 const events = [
   {
     id: '1',
-    title: 'Science Centre',
-    date: '15 March 2025',
-    time: '10AM - 1PM',
-    price: '$8',
+    title: 'அறிவியல் மையம்', // Science Centre
+    date: '15 மார்ச் 2025',
+    time: 'காலை 10 - 1',
+    price: '₹8',
     image: require('../assets/posters/poster2.jpg'),
   },
   {
     id: '2',
-    title: 'Durian Fiesta',
-    date: '26 July 2025',
-    time: '5PM - 7PM',
-    price: '$15',
+    title: 'டூரியன் திருவிழா', // Durian Fiesta
+    date: '26 ஜூலை 2025',
+    time: 'மாலை 5 - 7',
+    price: '₹15',
     image: require('../assets/posters/poster5.jpg'),
   },
   {
     id: '3',
-    title: 'Spring Carnival',
-    date: '8 Feb 2025',
-    time: '11:30AM - 3PM',
-    price: 'FREE',
+    title: 'வசந்த திருவிழா', // Spring Carnival
+    date: '8 பிப்ரவரி 2025',
+    time: 'மாலை 11:30 - 3',
+    price: 'இலவசம்',
     image: require('../assets/posters/poster3.jpg'),
   },
   {
     id: '4',
-    title: 'Movie Night',
-    date: '14 Jun 2025',
-    time: '4PM onwards',
-    price: '$5',
+    title: 'திரைப்பட இரவு', // Movie Night
+    date: '14 ஜூன் 2025',
+    time: 'மாலை 4 மணி முதல்',
+    price: '₹5',
     image: require('../assets/posters/poster1.jpg'),
   },
 ];
@@ -72,7 +72,7 @@ export default function AllEventsScreen() {
   const seeMoreBtnRefs = useRef({});
 
   const handleLogout = () => {
-  router.replace('/KakiTapScreen');
+    router.replace('/KakiTapScreen');
   };
 
   const scrollToIndex = (direction) => {
@@ -138,7 +138,7 @@ export default function AllEventsScreen() {
               })
             }
           >
-            <Text style={styles.moreButtonText}>See More</Text>
+            <Text style={styles.moreButtonText}>மேலும் பார்க்க</Text>
           </TouchableOpacity>
           {/* Chatbox for See More button - pointer above the chatbox, minimal gap */}
           {showHelp && (
@@ -153,7 +153,7 @@ export default function AllEventsScreen() {
               }}
             >
               <RedChatBox pointerDirection="up" style={{ width: 220, minHeight: 32 }}>
-                Press here for event details
+                நிகழ்வின் விவரங்களைப் பார்க்க இங்கே அழுத்தவும்
               </RedChatBox>
             </View>
           )}
@@ -173,7 +173,7 @@ export default function AllEventsScreen() {
           onPress={handleLogout}
           activeOpacity={0.8}
         >
-          <Text style={styles.logoutButtonText}>Logout</Text>
+          <Text style={styles.logoutButtonText}>வெளியேறு</Text>
         </TouchableOpacity>
 
         <View style={styles.carouselContainer}>

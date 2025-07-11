@@ -1,4 +1,3 @@
-// app/HelpScreen.js
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -26,10 +25,10 @@ export default function HelpScreen() {
           onPress={handleLogout}
           activeOpacity={0.8}
         >
-          <Text style={styles.logoutButtonText}>Logout</Text>
+          <Text style={styles.logoutButtonText}>வெளியேறு</Text>
         </TouchableOpacity>
 
-        <Text style={styles.header}>What Do You Need Help With?</Text>
+        <Text style={styles.header}>உங்களுக்கு என்ன உதவி வேண்டும்?</Text>
         <View style={styles.divider} />
 
         {/* Options */}
@@ -39,14 +38,14 @@ export default function HelpScreen() {
             onPress={() => router.push('/HelpRequestScreen')}
           >
             <Text style={styles.optionText}>
-              Submit a request for{'\n'}a call from Pek Kio CC
+              பெக் கியோ CC-இல் இருந்து{'\n'}ஒரு அழைப்புக்காக கோரிக்கை அனுப்பவும்
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.optionBox, styles.optionBoxYellow]}
             onPress={() => router.push('/HelpAIBotScreen')}
           >
-            <Text style={styles.optionText}>Talk To Our{'\n'}AI Friend!</Text>
+            <Text style={styles.optionText}>எங்கள்{'\n'}AI நண்பரிடம் பேசவும்!</Text>
           </TouchableOpacity>
         </View>
         
@@ -55,7 +54,7 @@ export default function HelpScreen() {
           style={styles.backBtn}
           onPress={handleGoBackToHomepage}
         >
-          <Text style={styles.backBtnText}>Go Back to Homepage</Text>
+          <Text style={styles.backBtnText}>முகப்பு பக்கத்திற்கு திரும்பவும்</Text>
         </TouchableOpacity>
 
         {/* Red Floating Help Button */}
@@ -76,7 +75,7 @@ export default function HelpScreen() {
             <View style={styles.redChatBoxContainer}>
               <View style={styles.redChatBox}>
                 <Text style={styles.redChatBoxText}>
-                  Press one of these to get help!
+                  உதவிக்கு இந்த விருப்பங்களில் ஒன்றை அழுத்தவும்!
                 </Text>
                 <View style={styles.arrowRow}>
                   <View style={styles.arrowDownLeft} />
@@ -195,28 +194,28 @@ const styles = StyleSheet.create({
   },
   // --- Red Help Button (Floating) ---
   helpIconContainer: {
-  position: 'absolute',
-  bottom: 24,
-  right: 24,
-  backgroundColor: '#e53935',
-  width: 52,
-  height: 52,
-  borderRadius: 26,
-  alignItems: 'center',
-  justifyContent: 'center',
-  zIndex: 100,
-  elevation: 10,
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 3 },
-  shadowOpacity: 0.15,
-  shadowRadius: 6,
-},
-helpIcon: {
-  color: '#fff',
-  fontWeight: 'bold',
-  fontSize: 28,
-  marginBottom: 2,
-},
+    position: 'absolute',
+    bottom: 24,
+    right: 24,
+    backgroundColor: '#e53935',
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 100,
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+  },
+  helpIcon: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 28,
+    marginBottom: 2,
+  },
   // --- Chatbox styles ---
   helpOverlay: {
     position: 'absolute',

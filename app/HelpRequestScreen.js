@@ -6,7 +6,7 @@ export default function HelpRequestScreen() {
   const router = useRouter();
 
   const handleLogout = () => {
-  router.replace('/KakiTapScreen');
+    router.replace('/KakiTapScreen');
   };
 
   return (
@@ -19,23 +19,23 @@ export default function HelpRequestScreen() {
           onPress={handleLogout}
           activeOpacity={0.8}
         >
-          <Text style={styles.logoutButtonText}>Logout</Text>
+          <Text style={styles.logoutButtonText}>வெளியேறு</Text>
         </TouchableOpacity>
 
         <View style={styles.card}>
-          <Text style={styles.question}>We Want to Help You!</Text>
+          <Text style={styles.question}>உங்களுக்கு உதவ விரும்புகிறோம்!</Text>
           <View style={styles.divider} />
           <Text style={styles.info}>
-            Pek Kio CC will call you{'\n'}
-            shortly during our working hours.{'\n'}
-            Thank you for your patience <Text style={styles.heart}>♥</Text>
+            பெக் கியோ CC விரைவில் உங்களை அழைக்கும்.{'\n'}
+            எங்கள் பணிநேரங்களில் தொடர்பு கொள்ளப்படும்.{'\n'}
+            உங்கள் பொறுமைக்கு நன்றி <Text style={styles.heart}>♥</Text>
           </Text>
         </View>
         <TouchableOpacity
           style={styles.backBtn}
           onPress={() => router.push('/HelpScreen')}
         >
-          <Text style={styles.backBtnText}>Go Back to HELP page</Text>
+          <Text style={styles.backBtnText}>மீண்டும் உதவி பக்கம் செல்லவும்</Text>
         </TouchableOpacity>
         {/* <Text style={styles.helpIcon}>?</Text> */}
       </View>

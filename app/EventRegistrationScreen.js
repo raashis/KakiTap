@@ -6,38 +6,38 @@ import Sidebar from './Sidebar';
 const events = [
   {
     id: '1',
-    title: 'Science Centre',
-    date: '15 March 2025',
-    time: '10AM - 1PM',
-    price: '$8',
-    description: 'Explore interactive science exhibits and live demonstrations at Singapore\'s premier science museum. Perfect for families and science enthusiasts!',
+    title: 'அறிவியல் மையம்',
+    date: '15 மார்ச் 2025',
+    time: 'காலை 10 - 1',
+    price: '₹8',
+    description: 'சிங்கப்பூரின் தலை சிறந்த அறிவியல் அருங்காட்சியகத்தில் இடைமுக அறிவியல் கண்காட்சிகள் மற்றும் நேரடி நிகழ்ச்சிகளை அனுபவிக்கவும். குடும்பங்களுக்கும் அறிவியல் ஆர்வலர்களுக்கும் சிறந்தது!',
     image: require('../assets/posters/poster2.jpg'),
   },
   {
     id: '2',
-    title: 'Durian Fiesta',
-    date: '26 July 2025',
-    time: '5PM - 7PM',
-    price: '$15',
-    description: 'Join us for an exclusive durian tasting event featuring premium Mao Shan Wang and D24 varieties. Learn about durian cultivation from experts.',
+    title: 'டூரியன் திருவிழா',
+    date: '26 ஜூலை 2025',
+    time: 'மாலை 5 - 7',
+    price: '₹15',
+    description: 'மிக சிறந்த மாஓ ஷான் வாங் மற்றும் D24 வகைகளை கொண்ட பிரத்யேக டூரியன் சுவை நிகழ்வில் பங்கேற்கவும். நிபுணர்களிடம் இருந்து டூரியன் வளர்ப்பு குறித்தும் அறியவும்.',
     image: require('../assets/posters/poster5.jpg'),
   },
   {
     id: '3',
-    title: 'Spring Carnival',
-    date: '8 Feb 2025',
-    time: '11:30AM - 3PM',
-    price: 'FREE',
-    description: 'Celebrate the arrival of spring with games, food stalls, and live performances at our annual carnival. Fun for all ages!',
+    title: 'வசந்த திருவிழா',
+    date: '8 பிப்ரவரி 2025',
+    time: 'மாலை 11:30 - 3',
+    price: 'இலவசம்',
+    description: 'நம்முடைய வருடாந்திர திருவிழாவில் விளையாட்டுகள், உணவு கடைகள் மற்றும் நேரடி நிகழ்ச்சிகளுடன் வசந்தத்தின் வருகையை கொண்டாடுங்கள். அனைத்து வயதினருக்கும் மகிழ்ச்சி!',
     image: require('../assets/posters/poster3.jpg'),
   },
   {
     id: '4',
-    title: 'Movie Night',
-    date: '14 Jun 2025',
-    time: '4PM onwards',
-    price: '$5',
-    description: 'Enjoy classic films under the stars at our outdoor cinema. Bring your own blanket or rent chairs on site.',
+    title: 'திரைப்பட இரவு',
+    date: '14 ஜூன் 2025',
+    time: 'மாலை 4 மணி முதல்',
+    price: '₹5',
+    description: 'வானில் நட்சத்திரங்களின் கீழ் கிளாசிக் திரைப்படங்களை வெளிப்புற திரையில் அனுபவிக்கவும். உங்கள் சொந்த போர்வையை கொண்டு வாருங்கள் அல்லது இடத்தில் நாற்காலிகள் வாடகைக்கு கிடைக்கும்.',
     image: require('../assets/posters/poster1.jpg'),
   },
 ];
@@ -53,7 +53,7 @@ export default function EventRegistrationScreen() {
   if (!event) {
     return (
       <View style={styles.container}>
-        <Text style={styles.errorText}>Event not found!</Text>
+        <Text style={styles.errorText}>நிகழ்வு கிடைக்கவில்லை!</Text>
       </View>
     );
   }
@@ -76,24 +76,24 @@ export default function EventRegistrationScreen() {
 
         <View style={styles.content}>
           <View style={styles.detailsContainer}>
-            <Text style={styles.sectionTitle}>Event Details</Text>
+            <Text style={styles.sectionTitle}>நிகழ்வு விவரங்கள்</Text>
 
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Date:</Text>
+              <Text style={styles.detailLabel}>தேதி:</Text>
               <Text style={styles.detailValue}>{event.date}</Text>
             </View>
 
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Time:</Text>
+              <Text style={styles.detailLabel}>நேரம்:</Text>
               <Text style={styles.detailValue}>{event.time}</Text>
             </View>
 
             <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Price:</Text>
+              <Text style={styles.detailLabel}>விலை:</Text>
               <Text style={styles.detailValue}>{event.price}</Text>
             </View>
 
-            <Text style={styles.sectionTitle}>Description</Text>
+            <Text style={styles.sectionTitle}>விளக்கம்</Text>
             <Text style={styles.description}>{event.description}</Text>
           </View>
 
@@ -106,7 +106,7 @@ export default function EventRegistrationScreen() {
           style={styles.joinButton}
           onPress={handleConfirmJoin}
         >
-          <Text style={styles.joinButtonText}>Confirm Join</Text>
+          <Text style={styles.joinButtonText}>பங்கேற்க உறுதிப்படுத்தவும்</Text>
         </TouchableOpacity>
       </ScrollView>
 
@@ -123,7 +123,7 @@ export default function EventRegistrationScreen() {
           <Pressable style={styles.overlay} onPress={() => setShowHelp(false)}>
             <View style={styles.helpBoxContainer} pointerEvents="box-none">
               <View style={styles.helpBox}>
-                <Text style={styles.helpText}>Press here to join the event!</Text>
+                <Text style={styles.helpText}>நிகழ்வில் பங்கேற்க இங்கே அழுத்தவும்!</Text>
                 <View style={styles.arrowDown} />
               </View>
             </View>
@@ -254,28 +254,28 @@ const styles = StyleSheet.create({
     pointerEvents: 'box-none',
   },
   fab: {
-  position: 'absolute',
-  bottom: 24,
-  right: 24,
-  backgroundColor: '#e53935',
-  width: 52,
-  height: 52,
-  borderRadius: 26,
-  alignItems: 'center',
-  justifyContent: 'center',
-  zIndex: 100,
-  elevation: 10,
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 3 },
-  shadowOpacity: 0.15,
-  shadowRadius: 6,
-},
-fabText: {
-  color: '#fff',
-  fontWeight: 'bold',
-  fontSize: 28,
-  marginBottom: 2,
-},
+    position: 'absolute',
+    bottom: 24,
+    right: 24,
+    backgroundColor: '#e53935',
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 100,
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+  },
+  fabText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 28,
+    marginBottom: 2,
+  },
   overlay: {
     position: 'absolute',
     top: 0, left: 0, right: 0, bottom: 0,
