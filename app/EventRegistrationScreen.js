@@ -106,7 +106,7 @@ export default function EventRegistrationScreen() {
           style={styles.joinButton}
           onPress={handleConfirmJoin}
         >
-          <Text style={styles.joinButtonText}>Sahkan Penyertaan</Text>
+          <Text style={styles.joinButtonText}>Daftar Sekarang</Text>
         </TouchableOpacity>
       </ScrollView>
 
