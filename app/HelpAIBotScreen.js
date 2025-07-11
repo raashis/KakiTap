@@ -24,7 +24,7 @@ export default function HelpAIBotScreen() {
         <View style={styles.card}>
           <Text style={styles.question}>Kami ingin mendengar suara anda!</Text>
           <View style={styles.divider} />
-          <Text style={styles.info}>Tekan di sini untuk bercakap dengan Ah Bot</Text>
+          <Text style={styles.info}>Tekan gambar mikrofon ini untuk bercakap denagn Ah bot</Text>
           <TouchableOpacity style={styles.micCircle} onPress={() => alert('Voicebot akan datang tidak lama lagi!')}>
             <Text style={styles.micIcon}>🎤</Text>
           </TouchableOpacity>
