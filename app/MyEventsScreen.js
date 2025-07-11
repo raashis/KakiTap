@@ -4,7 +4,9 @@ import { Alert, Dimensions, Platform, ScrollView, StyleSheet, Text, TouchableOpa
 import store, { removeRegisteredEvent } from './registeredEventsStore';
 import Sidebar from './Sidebar';
 
+// Responsive helpers
 const SCREEN_WIDTH = Dimensions.get('window').width;
+const isTablet = SCREEN_WIDTH <= 1024; // iPad Pro landscape width is 1024
 
 const RedChatBox = ({
   style,
@@ -100,11 +102,12 @@ export default function MyEventsScreen() {
     <View style={styles.container}>
       <Sidebar active="myevents" />
       <View style={styles.content}>
-        <View style={{ position: 'absolute', top: 20, right: 12, flexDirection: 'row', alignItems: 'center' }}>
+        {/* Logout Button with Red ChatBox pointing right */}
+        <View style={{ position: 'absolute', top: isTablet ? 12 : 20, right: isTablet ? 6 : 12, flexDirection: 'row', alignItems: 'center' }}>
           {showHelp && (
-            <View style={{ position: 'absolute', right: -230, top: 0, width: 210, alignItems: 'flex-end', zIndex: 100 }}>
+            <View style={{ position: 'absolute', right: isTablet ? -160 : -230, top: 0, width: isTablet ? 150 : 210, alignItems: 'flex-end', zIndex: 100 }}>
               <RedChatBox pointerDirection="left">
-                点击这里退出您的账号。
+                点击这里退出您的账户。
               </RedChatBox>
             </View>
           )}
@@ -117,19 +120,21 @@ export default function MyEventsScreen() {
           </TouchableOpacity>
         </View>
 
-        <View style={{ alignItems: 'center', marginBottom: 10, position: 'relative' }}>
+        {/* Header */}
+        <View style={{ alignItems: 'center', marginBottom: isTablet ? 4 : 10, position: 'relative' }}>
           <Text style={styles.header}>我的活动</Text>
         </View>
 
+        {/* Help ChatBox for all events, above the events card, stretched horizontally */}
         {showHelp && (
           <View style={{
             width: '100%',
             alignItems: 'center',
-            marginBottom: 25,
+            marginBottom: isTablet ? 12 : 25,
             zIndex: 100,
           }}>
-            <RedChatBox pointerDirection="down" style={{ maxWidth: 700, width: '90%' }}>
-              您报名的所有活动都可以在这里查看！
+            <RedChatBox pointerDirection="down" style={{ maxWidth: isTablet ? 400 : 700, width: isTablet ? '98%' : '90%' }}>
+              您报名的所有活动都可以在这里找到！
             </RedChatBox>
           </View>
         )}
@@ -157,22 +162,24 @@ export default function MyEventsScreen() {
                     onPress={() => handleWithdraw(event.id, event.title)}
                     onLayout={idx === 0 ? handleWithdrawBtnLayout : undefined}
                   >
-                    <Text style={styles.withdrawText}>退出活动</Text>
+                    <Text style={styles.withdrawText}>退出</Text>
                   </TouchableOpacity>
+                  {/* Withdraw Button Red ChatBox (first only, just below and pointing up, fits within the card and under the button) */}
                   {showHelp && idx === 0 && withdrawBtnX !== null && (
                     <View
                       style={{
                         position: 'absolute',
-                        left: withdrawBtnX - 110,
-                        top: 90,
-                        width: 220,
+                        left: withdrawBtnX - (isTablet ? 80 : 110),
+                        top: isTablet ? 60 : 90,
+                        width: isTablet ? 160 : 220,
                         alignItems: 'center',
                         zIndex: 100,
                       }}
                     >
-                      <RedChatBox pointerDirection="up" style={{ maxWidth: 220, width: 220 }}>
-                        如果您不想再参加某个活动，<br />
-                        请点击下方按钮退出。
+                      <RedChatBox pointerDirection="up" style={{ maxWidth: isTablet ? 160 : 220, width: isTablet ? 160 : 220 }}>
+                        点击下面的按钮{'\n'}
+                        如果您想退出{'\n'}
+                        不想参加的活动。
                       </RedChatBox>
                     </View>
                   )}
@@ -182,6 +189,7 @@ export default function MyEventsScreen() {
           )}
         </ScrollView>
 
+        {/* Pagination (NO bubble) */}
         <View style={styles.pagination}>
           <Text style={styles.disabledBtn}>上一页</Text>
           <Text style={styles.pageNum}>
@@ -191,12 +199,13 @@ export default function MyEventsScreen() {
         </View>
       </View>
 
+      {/* Floating Help Button */}
       <TouchableOpacity
         style={styles.helpButton}
         onPress={() => setShowHelp(!showHelp)}
         activeOpacity={0.8}
       >
-        <Text style={styles.helpButtonText}>？</Text>
+        <Text style={styles.helpButtonText}>?</Text>
       </TouchableOpacity>
     </View>
   );
@@ -204,41 +213,44 @@ export default function MyEventsScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, flexDirection: 'row', backgroundColor: '#f8f9fa' },
-  content: { flex: 1, padding: 32, position: 'relative' },
+  content: { flex: 1, padding: isTablet ? 16 : 40, position: 'relative' },
   logoutButton: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
     backgroundColor: '#e74c3c',
-    paddingHorizontal: 28,
-    paddingVertical: 14,
-    borderRadius: 18,
+    paddingHorizontal: isTablet ? 10 : 20,
+    paddingVertical: isTablet ? 6 : 10,
+    borderRadius: 16,
     zIndex: 10,
     elevation: 10,
   },
   logoutButtonText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: isTablet ? 12 : 14,
     letterSpacing: 1,
   },
   header: {
-    fontSize: 36,
+    fontSize: isTablet ? 24 : 36,
     fontWeight: 'bold',
     letterSpacing: 2,
     textAlign: 'center',
     color: '#2c3e50',
   },
-  eventsList: { paddingBottom: 40 },
-  eventBox: { marginBottom: 95, position: 'relative' },
+  eventsList: { paddingBottom: isTablet ? 20 : 40 },
+  eventBox: { marginBottom: isTablet ? 40 : 95, position: 'relative' },
   eventDate: {
-    fontSize: 28,
+    fontSize: isTablet ? 18 : 28,
     fontWeight: 'bold',
-    marginBottom: 15,
+    marginBottom: isTablet ? 8 : 15,
     letterSpacing: 1,
     color: '#2c3e50',
   },
   eventDetailsBox: {
     backgroundColor: '#ffe0b2',
     borderRadius: 18,
-    padding: 25,
+    padding: isTablet ? 12 : 25,
     borderWidth: 3,
     borderColor: '#ffb300',
     marginBottom: 12,
@@ -250,34 +262,34 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   eventTitle: {
-    fontSize: 26,
+    fontSize: isTablet ? 16 : 26,
     fontWeight: 'bold',
     color: '#008080',
-    marginBottom: 12,
+    marginBottom: isTablet ? 6 : 12,
   },
   eventDetails: {
-    fontSize: 22,
-    marginBottom: 15,
+    fontSize: isTablet ? 14 : 22,
+    marginBottom: isTablet ? 6 : 15,
     color: '#2c3e50',
     fontWeight: '500',
-    lineHeight: 30,
+    lineHeight: isTablet ? 18 : 30,
   },
   paymentStatus: {
-    fontSize: 22,
+    fontSize: isTablet ? 14 : 22,
     fontWeight: 'bold',
     color: '#2c3e50',
-    marginBottom: 15,
+    marginBottom: isTablet ? 8 : 15,
   },
   withdrawBtn: {
     position: 'absolute',
-    right: 20,
-    top: 20,
+    right: isTablet ? 10 : 20,
+    top: isTablet ? 10 : 20,
     backgroundColor: '#ff7043',
     borderWidth: 3,
     borderColor: '#d84315',
     borderRadius: 14,
-    paddingHorizontal: 30,
-    paddingVertical: 16,
+    paddingHorizontal: isTablet ? 12 : 30,
+    paddingVertical: isTablet ? 8 : 16,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.2,
@@ -286,84 +298,87 @@ const styles = StyleSheet.create({
   },
   withdrawText: {
     fontWeight: 'bold',
-    fontSize: 22,
+    fontSize: isTablet ? 14 : 22,
     color: '#fff',
     letterSpacing: 1,
   },
   noEvents: {
-    fontSize: 24,
+    fontSize: isTablet ? 16 : 24,
     color: '#888',
     textAlign: 'center',
-    marginTop: 50,
+    marginTop: isTablet ? 20 : 50,
   },
   pagination: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 20,
+    marginTop: isTablet ? 10 : 20,
     gap: 12,
     position: 'relative',
   },
   disabledBtn: {
     color: '#aaa',
     fontWeight: 'bold',
-    fontSize: 22,
-    paddingHorizontal: 20,
-    paddingVertical: 12,
+    fontSize: isTablet ? 14 : 22,
+    paddingHorizontal: isTablet ? 10 : 20,
+    paddingVertical: isTablet ? 6 : 12,
     backgroundColor: '#f5f5f5',
     borderRadius: 10,
   },
-  pageNum: { fontSize: 22, color: '#2c3e50', marginHorizontal: 12 },
-  currentPage: { color: '#008080', fontWeight: 'bold', fontSize: 24 },
+  pageNum: { fontSize: isTablet ? 14 : 22, color: '#2c3e50', marginHorizontal: 12 },
+  currentPage: { color: '#008080', fontWeight: 'bold', fontSize: isTablet ? 16 : 24 },
 
+  // Help Button Styles
   helpButton: {
     position: 'absolute',
-    bottom: 30,
-    right: 30,
+    bottom: isTablet ? 12 : 24,
+    right: isTablet ? 12 : 24,
     backgroundColor: '#e53935',
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: isTablet ? 36 : 52,
+    height: isTablet ? 36 : 52,
+    borderRadius: isTablet ? 18 : 26,
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 100,
     elevation: 10,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.18,
-    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
   },
   helpButtonText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 32,
+    fontSize: isTablet ? 18 : 28,
+    marginBottom: 2,
   },
 
+  // Red ChatBox Styles for help bubbles
   redChatBoxContainer: {
     alignItems: 'center',
     width: '100%',
-    maxWidth: 700,
+    maxWidth: isTablet ? 400 : 700,
   },
   redChatBox: {
     backgroundColor: '#e53935',
     borderColor: '#b71c1c',
     borderWidth: 3,
     borderRadius: 14,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
+    paddingVertical: isTablet ? 6 : 12,
+    paddingHorizontal: isTablet ? 10 : 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.15,
     shadowRadius: 6,
     elevation: 4,
     alignItems: 'center',
-    minWidth: 160,
-    maxWidth: 350,
+    minWidth: isTablet ? 100 : 160,
+    maxWidth: isTablet ? 200 : 350,
   },
   redChatBoxText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: isTablet ? 12 : 16,
     textAlign: 'center',
     letterSpacing: 0.5,
   },
@@ -374,6 +389,7 @@ const styles = StyleSheet.create({
     marginTop: -2,
     position: 'relative',
   },
+  // Downward pointer
   redChatBoxPointerBorder: {
     position: 'absolute',
     top: 0,
@@ -404,6 +420,7 @@ const styles = StyleSheet.create({
     borderTopColor: '#e53935',
     zIndex: 2,
   },
+  // Upward pointer for withdraw
   redChatBoxPointerBorderUp: {
     position: 'absolute',
     bottom: 0,
@@ -434,6 +451,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#e53935',
     zIndex: 2,
   },
+  // Leftward pointer for logout
   redChatBoxPointerBorderLeft: {
     position: 'absolute',
     left: 0,
@@ -462,6 +480,8 @@ const styles = StyleSheet.create({
     borderRightColor: '#e53935',
     zIndex: 2,
   },
+
+  // Chat Bubble Styles (for other bubbles)
   chatBubble: {
     backgroundColor: '#fff',
     borderRadius: 18,
