@@ -100,7 +100,7 @@ export default function Sidebar({ active }) {
           );
         })}
       </View>
-
+      {/*
       <View style={styles.footer}>
         <Text style={[
           styles.profileIcon,
@@ -109,6 +109,7 @@ export default function Sidebar({ active }) {
           👤
         </Text>
       </View>
+      */}
     </View>
   );
 }
