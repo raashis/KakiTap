@@ -1,5 +1,8 @@
+// app/Sidebar.js - Fixed version
 import { useRouter } from 'expo-router';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native';
+
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 export default function Sidebar({ active }) {
   const router = useRouter();
@@ -17,36 +20,52 @@ export default function Sidebar({ active }) {
       label: '📅 所有活动', 
       route: '/AllEventsScreen',
       color: '#469d8b',
-      activeColor: '#2d6b5f'
+      activeColor: '#3a8374'
     },
     { 
       key: 'myevents', 
       label: '⭐ 我的活动', 
       route: '/MyEventsScreen',
       color: '#73bad3',
-      activeColor: '#4a9fc1'
+      activeColor: '#5fa3c1'
     },
     { 
       key: 'rewards', 
       label: '🎁 奖励', 
       route: '/RewardsScreen',
       color: '#ea8933',
-      activeColor: '#c8702a'
+      activeColor: '#d4762a'
     },
     { 
       key: 'help', 
       label: '💬 帮助', 
       route: '/HelpScreen',
       color: '#e8ae3c',
-      activeColor: '#cc9429'
+      activeColor: '#d19a2f'
     }
   ];
 
+  // Responsive sizing
+  const isTablet = SCREEN_WIDTH >= 768 && SCREEN_WIDTH < 1024;
+
   return (
-    <View style={styles.sidebar}>
+    <View style={[
+      styles.sidebar,
+      isTablet && styles.sidebarTablet
+    ]}>
       <View style={styles.header}>
-        <Text style={styles.appTitle}>KakiTap</Text>
-        <Text style={styles.welcomeText}>欢迎，Tan！</Text>
+        <Text style={[
+          styles.appTitle,
+          isTablet && styles.appTitleTablet
+        ]}>
+          KakiTap
+        </Text>
+        <Text style={[
+          styles.welcomeText,
+          isTablet && styles.welcomeTextTablet
+        ]}>
+          欢迎，Tan！
+        </Text>
       </View>
       
       <View style={styles.menuContainer}>
@@ -57,18 +76,22 @@ export default function Sidebar({ active }) {
               key={item.key}
               style={[
                 styles.menuCard,
+                isTablet && styles.menuCardTablet,
                 { backgroundColor: isActive ? item.activeColor : item.color },
                 isActive && styles.activeMenuCard
               ]}
               onPress={() => {
+                // If it's the homepage and we're already on it, just stay
                 if (item.key === 'home' && active === 'home') {
-                  return;
+                  return; // Don't navigate, just stay on current page
                 }
                 router.push(item.route);
               }}
+              activeOpacity={0.8}
             >
               <Text style={[
                 styles.menuText,
+                isTablet && styles.menuTextTablet,
                 isActive && styles.activeMenuText
               ]}>
                 {item.label}
@@ -77,89 +100,138 @@ export default function Sidebar({ active }) {
           );
         })}
       </View>
-
+      {/*
       <View style={styles.footer}>
-        <Text style={styles.profileIcon}>👤</Text>
+        <Text style={[
+          styles.profileIcon,
+          isTablet && styles.profileIconTablet
+        ]}>
+          👤
+        </Text>
       </View>
+      */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   sidebar: {
-    width: 240,
-    padding: 24,
-    backgroundColor: '#f8f9fa',
-    borderRightWidth: 2,
-    borderRightColor: '#e0e0e0',
-    justifyContent: 'space-between',
+    width: 260,
+    padding: 20,
+    backgroundColor: '#f8fafc',
+    borderRightWidth: 1,
+    borderRightColor: '#e2e8f0',
     minHeight: '100vh',
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'relative',
+    justifyContent: 'space-between',
+  },
+  sidebarTablet: {
+    width: 220,
+    padding: 16,
   },
   header: {
-    marginBottom: 40,
-    paddingBottom: 24,
-    borderBottomWidth: 2,
-    borderBottomColor: '#e0e0e0',
-    alignItems: 'center',
+    marginBottom: 32,
+    paddingBottom: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e2e8f0',
+    alignItems: 'flex-start',
   },
   appTitle: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 'bold',
-    color: '#2c3e50',
+    color: '#1e293b',
     marginBottom: 8,
-    letterSpacing: 1,
+    letterSpacing: 0.5,
+  },
+  appTitleTablet: {
+    fontSize: 28,
   },
   welcomeText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#34495e',
-    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#64748b',
+    lineHeight: 20,
+  },
+  welcomeTextTablet: {
+    fontSize: 14,
   },
   menuContainer: {
     flex: 1,
-    paddingTop: 20,
-    gap: 20,
+    paddingTop: 8,
+    gap: 12,
   },
   menuCard: {
-    paddingVertical: 20,
+    paddingVertical: 16,
     paddingHorizontal: 20,
-    borderRadius: 16,
+    borderRadius: 24,
     shadowColor: '#000',
-    shadowOpacity: 0.15,
-    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowOffset: { width: 0, height: 2 },
     shadowRadius: 8,
-    elevation: 6,
+    elevation: 4,
     alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 64,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
+    position: 'relative',
+  },
+  menuCardTablet: {
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 20,
+    minHeight: 56,
   },
   activeMenuCard: {
-    shadowOpacity: 0.25,
-    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 4 },
     shadowRadius: 12,
-    elevation: 10,
-    transform: [{ scale: 1.05 }],
+    elevation: 8,
+    transform: [{ scale: 1.02 }],
+    borderColor: 'rgba(255, 255, 255, 0.3)',
   },
   menuText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600',
     color: '#ffffff',
     textAlign: 'center',
-    lineHeight: 22,
+    lineHeight: 20,
+    textShadowColor: 'rgba(0, 0, 0, 0.1)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
+    zIndex: 10,
+  },
+  menuTextTablet: {
+    fontSize: 14,
+    lineHeight: 18,
   },
   activeMenuText: {
-    fontSize: 20,
+    fontSize: 17,
     fontWeight: 'bold',
-    textShadowColor: 'rgba(0, 0, 0, 0.3)',
-    textShadowOffset: { width: 1, height: 1 },
+    textShadowColor: 'rgba(0, 0, 0, 0.2)',
+    textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 3,
   },
   footer: {
-    paddingTop: 24,
-    borderTopWidth: 2,
-    borderTopColor: '#e0e0e0',
+    marginTop: 'auto',
+    paddingTop: 20,
+    paddingBottom: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#e2e8f0',
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#f8fafc',
+    width: '100%',
+    position: 'relative',
   },
   profileIcon: {
     fontSize: 32,
-    color: '#34495e',
+    color: '#64748b',
+  },
+  profileIconTablet: {
+    fontSize: 28,
   },
 });
