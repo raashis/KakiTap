@@ -8,12 +8,13 @@ export default function MainScreen() {
   const [showHelp, setShowHelp] = useState(false);
 
   const handleLogout = () => {
-    router.replace('/KakiTapScreen');
+    router.replace('/KakiTapScreen'); 
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.sidebarContainer}>
+      {/* Sidebar with chatbox below, shown only when showHelp is true */}
+      <View style={{ position: 'relative' }}>
         <Sidebar active="home" />
         {showHelp && (
           <View style={styles.sidebarChatboxWrapper}>
@@ -30,6 +31,7 @@ export default function MainScreen() {
       </View>
 
       <View style={styles.mainContent}>
+        {/* Logout Button */}
         <TouchableOpacity
           style={styles.logoutButton}
           onPress={handleLogout}
@@ -43,6 +45,7 @@ export default function MainScreen() {
           <Text style={styles.subtitle}>Apa yang anda ingin lakukan hari ini?</Text>
         </View>
 
+        {/* Chatbox above the event grid, arrow points down toward buttons */}
         {showHelp && (
           <View style={styles.topChatboxWrapper}>
             <View style={styles.topChatbox}>
@@ -77,7 +80,7 @@ export default function MainScreen() {
               <Text style={styles.iconText}>⭐</Text>
             </View>
             <Text style={styles.buttonText}>Lihat Acara Saya</Text>
-            <Text style={styles.buttonSubtext}>Semua acara yang saya telah dafte</Text>
+            <Text style={styles.buttonSubtext}>Akan Datang Tidak Lama Lagi</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -87,8 +90,8 @@ export default function MainScreen() {
             <View style={styles.buttonIcon}>
               <Text style={styles.iconText}>🎁</Text>
             </View>
-            <Text style={styles.buttonText}>Menebus HadiaH</Text>
-            <Text style={styles.buttonSubtext}>Sila lihat bagaimana anda boleh memenangi hadiah</Text>
+            <Text style={styles.buttonText}>Mata & Ganjaran</Text>
+            <Text style={styles.buttonSubtext}>Tebus Ganjaran Anda</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -99,10 +102,11 @@ export default function MainScreen() {
               <Text style={styles.iconText}>💬</Text>
             </View>
             <Text style={styles.buttonText}>Bantuan & Sokongan</Text>
-            <Text style={styles.buttonSubtext}>“Ambil tahu tentang bantuan & sokongan kam</Text>
+            <Text style={styles.buttonSubtext}>Minta Bantuan & Sokongan kami</Text>
           </TouchableOpacity>
         </View>
 
+        {/* Floating Help Button */}
         <TouchableOpacity
           style={styles.helpFab}
           onPress={() => setShowHelp((prev) => !prev)}
@@ -119,62 +123,47 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#fff',
-  },
-  sidebarContainer: {
-    width: 270,
-    backgroundColor: '#f8f8f8',
-    paddingVertical: 32,
-    paddingHorizontal: 16,
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
+    backgroundColor: '#ffffff',
+    minHeight: '100vh',
   },
   mainContent: {
     flex: 1,
-    paddingVertical: 48,
-    paddingHorizontal: 36,
+    padding: 40,
     justifyContent: 'flex-start',
     position: 'relative',
-    backgroundColor: '#fcfcfc',
-    borderLeftWidth: 1,
-    borderLeftColor: '#ececec',
   },
   logoutButton: {
     position: 'absolute',
     top: 20,
-    right: 24,
+    right: 12,
     backgroundColor: '#e74c3c',
-    paddingHorizontal: 24,
-    paddingVertical: 12,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     borderRadius: 16,
     zIndex: 10,
     elevation: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.12,
-    shadowRadius: 4,
   },
   logoutButtonText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 15,
+    fontSize: 14,
     letterSpacing: 1,
   },
   headerSection: {
-    marginBottom: 48,
-    paddingBottom: 24,
+    marginBottom: 60,
+    paddingBottom: 30,
     borderBottomWidth: 2,
     borderBottomColor: '#f0f0f0',
   },
   welcome: {
-    fontSize: 40,
+    fontSize: 42,
     fontWeight: 'bold',
     color: '#2c3e50',
-    marginBottom: 12,
+    marginBottom: 16,
     letterSpacing: 0.5,
   },
   subtitle: {
-    fontSize: 24,
+    fontSize: 26,
     color: '#34495e',
     fontWeight: '500',
     lineHeight: 32,
@@ -184,25 +173,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    alignContent: 'flex-start',
-    gap: 20,
-    paddingVertical: 16,
+    alignContent: 'space-between',
+    paddingVertical: 20,
   },
   bigButton: {
-    width: '47%',
-    minHeight: 160,
-    backgroundColor: '#fff',
+    width: '48%',
+    height: '45%',
+    backgroundColor: '#ffffff',
     borderRadius: 24,
-    padding: 28,
-    marginBottom: 20,
+    padding: 32,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOpacity: 0.13,
-    shadowOffset: { width: 0, height: 4 },
-    shadowRadius: 8,
-    elevation: 8,
-    borderWidth: 2,
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 6 },
+    shadowRadius: 12,
+    elevation: 12,
+    borderWidth: 3,
     borderColor: '#e0e0e0',
   },
   eventsButton: {
@@ -222,86 +209,90 @@ const styles = StyleSheet.create({
     borderColor: '#d19a2f',
   },
   buttonIcon: {
-    marginBottom: 14,
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    backgroundColor: 'rgba(255,255,255,0.22)',
+    marginBottom: 16,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: 'rgba(255, 255, 255, 0.25)',
     justifyContent: 'center',
     alignItems: 'center',
   },
   iconText: {
-    fontSize: 36,
+    fontSize: 40,
   },
   buttonText: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#fff',
-    marginBottom: 6,
-    lineHeight: 26,
+    color: '#ffffff',
+    marginBottom: 8,
+    lineHeight: 28,
   },
   buttonSubtext: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: '500',
     textAlign: 'center',
-    color: 'rgba(255,255,255,0.92)',
-    lineHeight: 22,
+    color: 'rgba(255, 255, 255, 0.9)',
+    lineHeight: 24,
   },
+
+  // Floating Help Button
   helpFab: {
-    position: 'absolute',
-    bottom: 32,
-    right: 32,
-    backgroundColor: '#e53935',
-    width: 54,
-    height: 54,
-    borderRadius: 27,
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 100,
-    elevation: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 5,
-  },
-  helpFabText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 30,
-    marginBottom: 2,
-  },
+  position: 'absolute',
+  bottom: 24,
+  right: 24,
+  backgroundColor: '#e53935',
+  width: 52,
+  height: 52,
+  borderRadius: 26,
+  alignItems: 'center',
+  justifyContent: 'center',
+  zIndex: 100,
+  elevation: 10,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 3 },
+  shadowOpacity: 0.15,
+  shadowRadius: 6,
+},
+helpFabText: {
+  color: '#fff',
+  fontWeight: 'bold',
+  fontSize: 28,
+  marginBottom: 2,
+},
+
+  // Chatbox above event grid, arrow points down
   topChatboxWrapper: {
     position: 'absolute',
     left: 0,
     right: 0,
-    top: 160,
+    top: 180,
     alignItems: 'center',
     zIndex: 101,
   },
   topChatbox: {
     backgroundColor: '#e53935',
     borderColor: '#b71c1c',
-    borderWidth: 2,
+    borderWidth: 3,
     borderRadius: 14,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    paddingVertical: 14,
+    paddingHorizontal: 18,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.13,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 4,
     alignItems: 'flex-start',
-    minWidth: 210,
-    maxWidth: 300,
+    minWidth: 230,
+    maxWidth: 320,
   },
   topChatboxText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: 15,
     textAlign: 'left',
     letterSpacing: 0.5,
-    lineHeight: 20,
+    lineHeight: 22,
   },
   topPointerWrapper: {
     width: '100%',
@@ -313,26 +304,28 @@ const styles = StyleSheet.create({
   topPointer: {
     width: 0,
     height: 0,
-    borderLeftWidth: 14,
-    borderRightWidth: 14,
-    borderTopWidth: 16,
+    borderLeftWidth: 16,
+    borderRightWidth: 16,
+    borderTopWidth: 18,
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
     borderTopColor: '#e53935',
   },
+
+  // Sidebar Chatbox below sidebar, arrow above and points up
   sidebarChatboxWrapper: {
     position: 'absolute',
     left: 0,
-    bottom: 24,
+    top: 575, // Adjust for your sidebar height
     flexDirection: 'column',
     alignItems: 'center',
     zIndex: 200,
-    width: 238,
+    width: 270,
   },
   sidebarPointerWrapper: {
     width: '100%',
     alignItems: 'flex-start',
-    marginLeft: 24,
+    marginLeft: 32, // Adjust to align arrow with sidebar edge
     marginBottom: -2,
     height: 0,
     zIndex: 2,
@@ -340,9 +333,9 @@ const styles = StyleSheet.create({
   sidebarPointer: {
     width: 0,
     height: 0,
-    borderLeftWidth: 10,
-    borderRightWidth: 10,
-    borderBottomWidth: 12,
+    borderLeftWidth: 12,
+    borderRightWidth: 12,
+    borderBottomWidth: 14, // Arrow points UP
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
     borderBottomColor: '#e53935',
@@ -350,23 +343,23 @@ const styles = StyleSheet.create({
   sidebarChatbox: {
     backgroundColor: '#e53935',
     borderColor: '#b71c1c',
-    borderWidth: 2,
-    borderRadius: 12,
-    paddingVertical: 8,
-    paddingHorizontal: 14,
+    borderWidth: 3,
+    borderRadius: 14,
+    paddingVertical: 10,
+    paddingHorizontal: 18,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.13,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 4,
     alignItems: 'center',
-    minWidth: 140,
-    maxWidth: 200,
+    minWidth: 180,
+    maxWidth: 260,
   },
   sidebarChatboxText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 13,
+    fontSize: 14,
     textAlign: 'center',
     letterSpacing: 0.5,
   },
