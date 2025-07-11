@@ -3,11 +3,11 @@ import { useRef, useState } from 'react';
 import { Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Sidebar from './Sidebar';
 
+// Responsive helpers
 const screenWidth = Dimensions.get('window').width;
 const SIDEBAR_WIDTH = 250;
-const MAIN_CONTENT_WIDTH = screenWidth - SIDEBAR_WIDTH;
-
-const CARD_WIDTH = MAIN_CONTENT_WIDTH * 0.3;
+const MAIN_CONTENT_WIDTH = Math.max(screenWidth - SIDEBAR_WIDTH, 320);
+const CARD_WIDTH = Math.min(Math.max(MAIN_CONTENT_WIDTH * 0.3, 220), 350); // min 220, max 350
 const CARD_HEIGHT = CARD_WIDTH * 1.4;
 const CARD_SPACING = 30;
 
@@ -429,4 +429,3 @@ const styles = StyleSheet.create({
     borderBottomColor: '#e53935',
   },
 });
-
