@@ -95,7 +95,7 @@ export default function RewardsScreen() {
         </View>
 
         <View style={{ alignItems: 'center', position: 'relative' }}>
-          <Text style={styles.pointsLabel}>KakiPoints Saya</Text>
+          <Text style={styles.pointsLabel}>Mata Terkumpul Setakat Ini</Text>
           <Text style={styles.points}>{userPoints} ✧</Text>
         </View>
 
