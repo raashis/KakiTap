@@ -17,6 +17,7 @@ export default function MainScreen() {
       {/* Sidebar with chatbox below, shown only when showHelp is true */}
       <View style={{ position: 'relative' }}>
         <Sidebar active="home" />
+        {/* REMOVED DUPLICATE PROFILE ICON - it's already in the Sidebar component */}
         {showHelp && (
           <View style={styles.sidebarChatboxWrapper}>
             <View style={styles.sidebarPointerWrapper}>
@@ -237,30 +238,32 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
 
+  // REMOVED profileIconContainer and profileIcon styles - they're duplicates
+
   // Floating Help Button
   helpFab: {
-  position: 'absolute',
-  bottom: 24,
-  right: 24,
-  backgroundColor: '#e53935',
-  width: 52,
-  height: 52,
-  borderRadius: 26,
-  alignItems: 'center',
-  justifyContent: 'center',
-  zIndex: 100,
-  elevation: 10,
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 3 },
-  shadowOpacity: 0.15,
-  shadowRadius: 6,
-},
-helpFabText: {
-  color: '#fff',
-  fontWeight: 'bold',
-  fontSize: 28,
-  marginBottom: 2,
-},
+    position: 'absolute',
+    bottom: 24,
+    right: 24,
+    backgroundColor: '#e53935',
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 100,
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+  },
+  helpFabText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 28,
+    marginBottom: 2,
+  },
 
   // Chatbox above event grid, arrow points down
   topChatboxWrapper: {

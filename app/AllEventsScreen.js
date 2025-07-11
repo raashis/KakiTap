@@ -7,9 +7,20 @@ const screenWidth = Dimensions.get('window').width;
 const SIDEBAR_WIDTH = 250;
 const MAIN_CONTENT_WIDTH = screenWidth - SIDEBAR_WIDTH;
 
-const CARD_WIDTH = MAIN_CONTENT_WIDTH * 0.3;
-const CARD_HEIGHT = CARD_WIDTH * 1.4;
-const CARD_SPACING = 30;
+// Responsive card sizing based on screen width
+const getCardWidth = () => {
+  if (screenWidth >= 1200) {
+    return MAIN_CONTENT_WIDTH * 0.28; // Laptop - smaller percentage for bigger screens
+  } else if (screenWidth >= 768) {
+    return MAIN_CONTENT_WIDTH * 0.35; // iPad - larger percentage for smaller screens
+  } else {
+    return MAIN_CONTENT_WIDTH * 0.4; // Small screens
+  }
+};
+
+const CARD_WIDTH = getCardWidth();
+const CARD_HEIGHT = CARD_WIDTH * 1.2; // Keep A4 ratio
+const CARD_SPACING = 40;
 
 const events = [
   {
@@ -127,7 +138,9 @@ export default function AllEventsScreen() {
         <Text style={styles.eventDetails}>
           {item.time} | {item.price}
         </Text>
-        <View style={{ width: '100%', alignItems: 'flex-end', position: 'relative' }}>
+        
+        {/* Centered See More Button Container */}
+        <View style={styles.buttonContainer}>
           <TouchableOpacity
             ref={ref => (seeMoreBtnRefs.current[index] = ref)}
             style={styles.moreButton}
@@ -140,18 +153,10 @@ export default function AllEventsScreen() {
           >
             <Text style={styles.moreButtonText}>See More</Text>
           </TouchableOpacity>
-          {/* Chatbox for See More button - pointer above the chatbox, minimal gap */}
+          
+          {/* Chatbox for See More button - positioned relative to centered button */}
           {showHelp && (
-            <View
-              style={{
-                position: 'absolute',
-                right: 0,
-                top: 38, // Just below the button (adjust as needed)
-                width: 220,
-                alignItems: 'flex-end',
-                zIndex: 10,
-              }}
-            >
+            <View style={styles.chatboxContainer}>
               <RedChatBox pointerDirection="up" style={{ width: 220, minHeight: 32 }}>
                 Press here for event details
               </RedChatBox>
@@ -309,8 +314,8 @@ const styles = StyleSheet.create({
     width: CARD_WIDTH,
     height: CARD_HEIGHT,
     backgroundColor: '#fff',
-    borderRadius: 8,
-    padding: 8,
+    borderRadius: 12, // Slightly larger border radius for bigger cards
+    padding: 12, // Increased padding from 8
     shadowColor: '#000',
     shadowOpacity: 0.15,
     shadowOffset: { width: 0, height: 4 },
@@ -321,36 +326,54 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: '70%',
+    height: '65%', // Reduced from 70% to give more space for text
     borderRadius: 6,
     resizeMode: 'cover',
   },
   eventTitle: {
-    fontSize: 16,
+    fontSize: 16, // Increased back from 14 for bigger cards
     fontWeight: 'bold',
     color: '#2c3e50',
     textAlign: 'center',
-    marginBottom: 2,
+    marginBottom: 4, // Increased from 2
   },
   eventDetails: {
-    fontSize: 12,
+    fontSize: 13, // Increased from 11
     color: '#555',
     textAlign: 'center',
-    lineHeight: 14,
+    lineHeight: 16, // Increased from 13
+  },
+  
+  // Centered button container
+  buttonContainer: {
+    width: '100%',
+    alignItems: 'center',
+    position: 'relative',
+    marginTop: 12, // Increased from 8
   },
   moreButton: {
-    marginTop: 4,
-    paddingHorizontal: 24,
-    paddingVertical: 12,
+    paddingHorizontal: 28, // Increased from 20
+    paddingVertical: 14, // Increased from 10
     backgroundColor: '#469d8b',
-    borderRadius: 8,
-    marginRight: 110,
+    borderRadius: 10, // Slightly larger radius
   },
   moreButtonText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 17,
+    fontSize: 16, // Increased from 15
+    textAlign: 'center',
   },
+  
+  // Chatbox positioned relative to centered button
+  chatboxContainer: {
+    position: 'absolute',
+    top: 50, // Below the button
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    zIndex: 10,
+  },
+  
   indicators: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -420,10 +443,9 @@ const styles = StyleSheet.create({
   },
   redPointerWrapperUp: {
     width: '100%',
-    alignItems: 'flex-end', 
+    alignItems: 'center',
     marginBottom: 15,
     height: 0,
-    paddingRight: 28, 
   },
   redChatBoxPointerFillUp: {
     width: 0,
