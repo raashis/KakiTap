@@ -77,7 +77,7 @@ export default function MainScreen() {
               <Text style={styles.iconText}>⭐</Text>
             </View>
             <Text style={styles.buttonText}>Lihat Acara Saya</Text>
-            <Text style={styles.buttonSubtext}>Akan berlangsung tidak lama lagi</Text>
+            <Text style={styles.buttonSubtext}>Semua acara yang saya telah dafte</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -87,8 +87,8 @@ export default function MainScreen() {
             <View style={styles.buttonIcon}>
               <Text style={styles.iconText}>🎁</Text>
             </View>
-            <Text style={styles.buttonText}>Mata & Ganjaran</Text>
-            <Text style={styles.buttonSubtext}>Tebus ganjaran anda</Text>
+            <Text style={styles.buttonText}>Menebus HadiaH</Text>
+            <Text style={styles.buttonSubtext}>Sila lihat bagaimana anda boleh memenangi hadiah</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -99,7 +99,7 @@ export default function MainScreen() {
               <Text style={styles.iconText}>💬</Text>
             </View>
             <Text style={styles.buttonText}>Bantuan & Sokongan</Text>
-            <Text style={styles.buttonSubtext}>Mohon bantuan & sokongan kami</Text>
+            <Text style={styles.buttonSubtext}>“Ambil tahu tentang bantuan & sokongan kam</Text>
           </TouchableOpacity>
         </View>
 
