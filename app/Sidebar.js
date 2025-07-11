@@ -1,4 +1,4 @@
-// app/Sidebar.js - Updated to match screenshot
+// app/Sidebar.js - Fixed version
 import { useRouter } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native';
 
@@ -121,10 +121,11 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
     borderRightColor: '#e2e8f0',
     minHeight: '100vh',
+    height: '100vh',
     display: 'flex',
     flexDirection: 'column',
-    zIndex: 300,
     position: 'relative',
+    justifyContent: 'space-between',
   },
   sidebarTablet: {
     width: 220,
@@ -160,7 +161,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 8,
     gap: 12,
-    zIndex: 5, // Lower z-index but still above background
   },
   menuCard: {
     paddingVertical: 16,
@@ -176,7 +176,6 @@ const styles = StyleSheet.create({
     minHeight: 64,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.2)',
-    zIndex: 301, // Even higher to ensure buttons stay on top
     position: 'relative',
   },
   menuCardTablet: {
@@ -202,6 +201,7 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.1)',
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 2,
+    zIndex: 10,
   },
   menuTextTablet: {
     fontSize: 14,
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
   },
   footer: {
-    marginTop: 'auto', // This pushes the footer to the bottom
+    marginTop: 'auto',
     paddingTop: 20,
     paddingBottom: 20,
     borderTopWidth: 1,
@@ -223,6 +223,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#f8fafc',
+    width: '100%',
+    position: 'relative',
   },
   profileIcon: {
     fontSize: 32,
