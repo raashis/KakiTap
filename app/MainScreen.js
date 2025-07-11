@@ -17,6 +17,10 @@ export default function MainScreen() {
       {/* Sidebar with chatbox below, shown only when showHelp is true */}
       <View style={{ position: 'relative' }}>
         <Sidebar active="home" />
+        {/* Profile icon positioned at bottom of sidebar */}
+        <View style={styles.profileIconContainer}>
+          <Text style={styles.profileIcon}>👤</Text>
+        </View>
         {showHelp && (
           <View style={styles.sidebarChatboxWrapper}>
             <View style={styles.sidebarPointerWrapper}>
@@ -235,6 +239,25 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'rgba(255, 255, 255, 0.9)',
     lineHeight: 24,
+  },
+
+  // Profile icon positioned at bottom of sidebar
+  profileIconContainer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 0,
+    width: 260,
+    alignItems: 'center',
+    paddingTop: 20,
+    paddingBottom: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#e2e8f0',
+    backgroundColor: '#f8fafc',
+    zIndex: 400, // Higher than any chatbox
+  },
+  profileIcon: {
+    fontSize: 32,
+    color: '#64748b',
   },
 
   // Floating Help Button
