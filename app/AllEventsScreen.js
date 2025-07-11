@@ -1,15 +1,21 @@
 import { useRouter } from 'expo-router';
-import { useRef, useState } from 'react';
-import { Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Dimensions, FlatList, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Sidebar from './Sidebar';
 
-const screenWidth = Dimensions.get('window').width;
-const SIDEBAR_WIDTH = 250;
-const MAIN_CONTENT_WIDTH = screenWidth - SIDEBAR_WIDTH;
+// Responsive helpers
+function getResponsiveCardWidth(screenWidth, sidebarWidth) {
+  const mainWidth = screenWidth - sidebarWidth;
+  if (screenWidth >= 1200) {
+    return Math.min(mainWidth * 0.28, 350);
+  } else if (screenWidth >= 768) {
+    return Math.max(Math.min(mainWidth * 0.35, 350), 220);
+  } else {
+    return Math.max(mainWidth * 0.4, 180);
+  }
+}
 
-const CARD_WIDTH = MAIN_CONTENT_WIDTH * 0.3;
-const CARD_HEIGHT = CARD_WIDTH * 1.4;
-const CARD_SPACING = 30;
+const SIDEBAR_WIDTH = 250;
 
 const events = [
   {
@@ -69,7 +75,20 @@ export default function AllEventsScreen() {
   const flatListRef = useRef(null);
   const [scrollX, setScrollX] = useState(0);
   const [showHelp, setShowHelp] = useState(false);
+  const [dimensions, setDimensions] = useState(Dimensions.get('window'));
   const seeMoreBtnRefs = useRef({});
+
+  // Update layout on orientation change
+  useEffect(() => {
+    const onChange = ({ window }) => setDimensions(window);
+    Dimensions.addEventListener('change', onChange);
+    return () => Dimensions.removeEventListener('change', onChange);
+  }, []);
+
+  const MAIN_CONTENT_WIDTH = dimensions.width - SIDEBAR_WIDTH;
+  const CARD_WIDTH = getResponsiveCardWidth(dimensions.width, SIDEBAR_WIDTH);
+  const CARD_HEIGHT = CARD_WIDTH * 1.2;
+  const CARD_SPACING = 30;
 
   const handleLogout = () => {
     router.replace('/KakiTapScreen');
@@ -115,6 +134,8 @@ export default function AllEventsScreen() {
         style={[
           styles.card,
           {
+            width: CARD_WIDTH,
+            height: CARD_HEIGHT,
             transform: [{ scale }],
             opacity,
             marginHorizontal: CARD_SPACING / 2,
@@ -163,97 +184,103 @@ export default function AllEventsScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Sidebar active="events" />
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <Sidebar active="events" />
 
-      <View style={styles.main}>
-        {/* 退出登录按钮 */}
-        <TouchableOpacity
-          style={styles.logoutButton}
-          onPress={handleLogout}
-          activeOpacity={0.8}
-        >
-          <Text style={styles.logoutButtonText}>退出登录</Text>
-        </TouchableOpacity>
-
-        <View style={styles.carouselContainer}>
+        <View style={styles.main}>
+          {/* 退出登录按钮 */}
           <TouchableOpacity
-            onPress={() => scrollToIndex('left')}
-            style={styles.arrow}
+            style={styles.logoutButton}
+            onPress={handleLogout}
+            activeOpacity={0.8}
           >
-            <Text style={styles.arrowText}>◀</Text>
+            <Text style={styles.logoutButtonText}>退出登录</Text>
           </TouchableOpacity>
 
-          <View style={styles.flatListContainer}>
-            <FlatList
-              ref={flatListRef}
-              data={events}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.id}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{
-                paddingLeft: 8,
-                paddingRight: (MAIN_CONTENT_WIDTH - CARD_WIDTH) / 2,
-                paddingVertical: 20,
-              }}
-              onScroll={onScroll}
-              scrollEventThrottle={16}
-              decelerationRate="fast"
-              snapToInterval={CARD_WIDTH + CARD_SPACING}
-              snapToAlignment="center"
-              getItemLayout={getItemLayout}
-              initialScrollIndex={0}
-            />
+          <View style={styles.carouselContainer}>
+            <TouchableOpacity
+              onPress={() => scrollToIndex('left')}
+              style={styles.arrow}
+            >
+              <Text style={styles.arrowText}>◀</Text>
+            </TouchableOpacity>
+
+            <View style={styles.flatListContainer}>
+              <FlatList
+                ref={flatListRef}
+                data={events}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{
+                  paddingLeft: 8,
+                  paddingRight: (MAIN_CONTENT_WIDTH - CARD_WIDTH) / 2,
+                  paddingVertical: 20,
+                }}
+                onScroll={onScroll}
+                scrollEventThrottle={16}
+                decelerationRate="fast"
+                snapToInterval={CARD_WIDTH + CARD_SPACING}
+                snapToAlignment="center"
+                getItemLayout={getItemLayout}
+                initialScrollIndex={0}
+              />
+            </View>
+
+            <TouchableOpacity
+              onPress={() => scrollToIndex('right')}
+              style={styles.arrow}
+            >
+              <Text style={styles.arrowText}>▶</Text>
+            </TouchableOpacity>
           </View>
 
+          {/* 页面指示器 */}
+          <View style={styles.indicators}>
+            {events.map((_, index) => {
+              const centerIndex = Math.round(scrollX / (CARD_WIDTH + CARD_SPACING));
+              return (
+                <TouchableOpacity
+                  key={index}
+                  style={[
+                    styles.indicator,
+                    {
+                      backgroundColor:
+                        index === centerIndex ? '#2c3e50' : '#bdc3c7',
+                    },
+                  ]}
+                  onPress={() => {
+                    const targetOffset = index * (CARD_WIDTH + CARD_SPACING);
+                    flatListRef.current?.scrollToOffset({
+                      offset: targetOffset,
+                      animated: true,
+                    });
+                  }}
+                />
+              );
+            })}
+          </View>
+
+          {/* 帮助按钮 */}
           <TouchableOpacity
-            onPress={() => scrollToIndex('right')}
-            style={styles.arrow}
+            style={styles.helpFab}
+            onPress={() => setShowHelp((prev) => !prev)}
           >
-            <Text style={styles.arrowText}>▶</Text>
+            <Text style={styles.helpFabText}>？</Text>
           </TouchableOpacity>
         </View>
-
-        {/* 页面指示器 */}
-        <View style={styles.indicators}>
-          {events.map((_, index) => {
-            const centerIndex = Math.round(scrollX / (CARD_WIDTH + CARD_SPACING));
-            return (
-              <TouchableOpacity
-                key={index}
-                style={[
-                  styles.indicator,
-                  {
-                    backgroundColor:
-                      index === centerIndex ? '#2c3e50' : '#bdc3c7',
-                  },
-                ]}
-                onPress={() => {
-                  const targetOffset = index * (CARD_WIDTH + CARD_SPACING);
-                  flatListRef.current?.scrollToOffset({
-                    offset: targetOffset,
-                    animated: true,
-                  });
-                }}
-              />
-            );
-          })}
-        </View>
-
-        {/* 帮助按钮 */}
-        <TouchableOpacity
-          style={styles.helpFab}
-          onPress={() => setShowHelp((prev) => !prev)}
-        >
-          <Text style={styles.helpFabText}>？</Text>
-        </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#f8f9fa',
+  },
   container: {
     flex: 1,
     flexDirection: 'row',
@@ -289,7 +316,7 @@ const styles = StyleSheet.create({
   },
   flatListContainer: {
     flex: 1,
-    height: CARD_HEIGHT + 80,
+    // height is set dynamically in renderItem
   },
   arrow: {
     width: 40,
@@ -306,8 +333,6 @@ const styles = StyleSheet.create({
     color: '#2c3e50',
   },
   card: {
-    width: CARD_WIDTH,
-    height: CARD_HEIGHT,
     backgroundColor: '#fff',
     borderRadius: 8,
     padding: 8,
