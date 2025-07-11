@@ -340,15 +340,16 @@ const styles = StyleSheet.create({
   },
   moreButton: {
     marginTop: 4,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    backgroundColor: '#2c3e50',
-    borderRadius: 4,
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    backgroundColor: '#469d8b',
+    borderRadius: 8,
+    marginRight: 110,
   },
   moreButtonText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 12,
+    fontSize: 17,
   },
   indicators: {
     flexDirection: 'row',
