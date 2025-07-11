@@ -157,7 +157,7 @@ export default function MyEventsScreen() {
                     onPress={() => handleWithdraw(event.id, event.title)}
                     onLayout={idx === 0 ? handleWithdrawBtnLayout : undefined}
                   >
-                    <Text style={styles.withdrawText}>Tarik Diri</Text>
+                    <Text style={styles.withdrawText}>Batalkan</Text>
                   </TouchableOpacity>
                   {showHelp && idx === 0 && withdrawBtnX !== null && (
                     <View
