@@ -36,7 +36,7 @@ export default function HelpScreen() {
             onPress={() => router.push('/HelpRequestScreen')}
           >
             <Text style={styles.optionText}>
-              Hantar permintaan panggilan{'\n'}(Pek Kio CC)
+              Hantar Permintaan Bantuan{'\n'}(Pek Kio CC)
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
