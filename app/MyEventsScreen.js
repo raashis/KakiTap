@@ -4,9 +4,10 @@ import { Alert, Dimensions, Platform, ScrollView, StyleSheet, Text, TouchableOpa
 import store, { removeRegisteredEvent } from './registeredEventsStore';
 import Sidebar from './Sidebar';
 
+// Responsive helpers
 const SCREEN_WIDTH = Dimensions.get('window').width;
+const isTablet = SCREEN_WIDTH <= 1024; // iPad Pro landscape width is 1024
 
-// Red ChatBox with outlined pointer (customizable direction)
 const RedChatBox = ({
   style,
   pointerDirection = 'down',
@@ -60,7 +61,6 @@ export default function MyEventsScreen() {
     }
   }, [registeredEvents, justWithdrew]);
 
-  // Find the X position of the withdraw button for precise alignment
   const handleWithdrawBtnLayout = (event) => {
     const { x, width } = event.nativeEvent.layout;
     setWithdrawBtnX(x + width / 2);
@@ -68,7 +68,7 @@ export default function MyEventsScreen() {
 
   const handleWithdraw = (id, title) => {
     if (Platform.OS === 'web') {
-      if (!window.confirm('நீங்கள் இந்த நிகழ்விலிருந்து விலக விரும்புகிறீர்களா?')) return;
+      if (!window.confirm('இந்த நிகழ்விலிருந்து விலக விரும்புகிறீர்களா?')) return;
       removeRegisteredEvent(id);
       setRegisteredEvents([...store.registeredEventsGlobal]);
       setLastWithdrawnTitle(title);
@@ -76,7 +76,7 @@ export default function MyEventsScreen() {
     } else {
       Alert.alert(
         'நிகழ்விலிருந்து விலகு',
-        'நீங்கள் இந்த நிகழ்விலிருந்து விலக விரும்புகிறீர்களா?',
+        'இந்த நிகழ்விலிருந்து விலக விரும்புகிறீர்களா?',
         [
           { text: 'ரத்து செய்', style: 'cancel' },
           {
@@ -103,9 +103,9 @@ export default function MyEventsScreen() {
       <Sidebar active="myevents" />
       <View style={styles.content}>
         {/* Logout Button with Red ChatBox pointing right */}
-        <View style={{ position: 'absolute', top: 20, right: 12, flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{ position: 'absolute', top: isTablet ? 12 : 20, right: isTablet ? 6 : 12, flexDirection: 'row', alignItems: 'center' }}>
           {showHelp && (
-            <View style={{ position: 'absolute', right: -230, top: 0, width: 210, alignItems: 'flex-end', zIndex: 100 }}>
+            <View style={{ position: 'absolute', right: isTablet ? -160 : -230, top: 0, width: isTablet ? 150 : 210, alignItems: 'flex-end', zIndex: 100 }}>
               <RedChatBox pointerDirection="left">
                 உங்கள் கணக்கிலிருந்து வெளியேற இங்கே அழுத்தவும்.
               </RedChatBox>
@@ -121,7 +121,7 @@ export default function MyEventsScreen() {
         </View>
 
         {/* Header */}
-        <View style={{ alignItems: 'center', marginBottom: 10, position: 'relative' }}>
+        <View style={{ alignItems: 'center', marginBottom: isTablet ? 4 : 10, position: 'relative' }}>
           <Text style={styles.header}>என் நிகழ்வுகள்</Text>
         </View>
 
@@ -130,10 +130,10 @@ export default function MyEventsScreen() {
           <View style={{
             width: '100%',
             alignItems: 'center',
-            marginBottom: 25,
+            marginBottom: isTablet ? 12 : 25,
             zIndex: 100,
           }}>
-            <RedChatBox pointerDirection="down" style={{ maxWidth: 700, width: '90%' }}>
+            <RedChatBox pointerDirection="down" style={{ maxWidth: isTablet ? 400 : 700, width: isTablet ? '98%' : '90%' }}>
               நீங்கள் பதிவு செய்த அனைத்து நிகழ்வுகளும் இங்கே காணலாம்!
             </RedChatBox>
           </View>
@@ -169,14 +169,14 @@ export default function MyEventsScreen() {
                     <View
                       style={{
                         position: 'absolute',
-                        left: withdrawBtnX - 110, // Centered under the withdraw button, 110 is half the chatbox width (220)
-                        top: 90,
-                        width: 220,
+                        left: withdrawBtnX - (isTablet ? 80 : 110),
+                        top: isTablet ? 60 : 90,
+                        width: isTablet ? 160 : 220,
                         alignItems: 'center',
                         zIndex: 100,
                       }}
                     >
-                      <RedChatBox pointerDirection="up" style={{ maxWidth: 220, width: 220 }}>
+                      <RedChatBox pointerDirection="up" style={{ maxWidth: isTablet ? 160 : 220, width: isTablet ? 160 : 220 }}>
                         கீழே உள்ள இந்த பொத்தானை அழுத்தவும்{'\n'}
                         நீங்கள் விரும்பாத நிகழ்விலிருந்து{'\n'}
                         விலக விரும்பினால்.
@@ -210,7 +210,6 @@ export default function MyEventsScreen() {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: { flex: 1, flexDirection: 'row', backgroundColor: '#f8f9fa' },
   content: { flex: 1, padding: 40, position: 'relative' },
