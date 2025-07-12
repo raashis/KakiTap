@@ -7,7 +7,6 @@ const SIDEBAR_WIDTH = 250;
 
 function getCardWidth(screenWidth) {
   const mainWidth = screenWidth - SIDEBAR_WIDTH;
-  // Clamp between 220 and 350 for best iPad experience
   if (screenWidth >= 1200) return Math.min(mainWidth * 0.28, 350);
   if (screenWidth >= 768) return Math.max(Math.min(mainWidth * 0.35, 350), 220);
   return Math.max(mainWidth * 0.4, 180);
@@ -280,6 +279,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     position: 'relative',
+    paddingTop: 60, // <-- This brings the carousel/cards further down
   },
   logoutButton: {
     position: 'absolute',
