@@ -1,26 +1,17 @@
 import { useRouter } from 'expo-router';
-import { useRef, useState } from 'react';
-import { Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Dimensions, FlatList, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Sidebar from './Sidebar';
 
-const screenWidth = Dimensions.get('window').width;
 const SIDEBAR_WIDTH = 250;
-const MAIN_CONTENT_WIDTH = screenWidth - SIDEBAR_WIDTH;
 
-// Responsive card sizing based on screen width
-const getCardWidth = () => {
-  if (screenWidth >= 1200) {
-    return MAIN_CONTENT_WIDTH * 0.28; // Laptop - smaller percentage for bigger screens
-  } else if (screenWidth >= 768) {
-    return MAIN_CONTENT_WIDTH * 0.35; // iPad - larger percentage for smaller screens
-  } else {
-    return MAIN_CONTENT_WIDTH * 0.4; // Small screens
-  }
-};
-
-const CARD_WIDTH = getCardWidth();
-const CARD_HEIGHT = CARD_WIDTH * 1.2; // Keep A4 ratio
-const CARD_SPACING = 40;
+function getCardWidth(screenWidth) {
+  const mainWidth = screenWidth - SIDEBAR_WIDTH;
+  // Clamp between 220 and 350 for best iPad experience
+  if (screenWidth >= 1200) return Math.min(mainWidth * 0.28, 350);
+  if (screenWidth >= 768) return Math.max(Math.min(mainWidth * 0.35, 350), 220);
+  return Math.max(mainWidth * 0.4, 180);
+}
 
 const events = [
   {
@@ -57,7 +48,6 @@ const events = [
   },
 ];
 
-// Red ChatBox with pointer above the chatbox, shifted right and pointing up
 const RedChatBox = ({
   style,
   pointerDirection = 'up',
@@ -78,12 +68,25 @@ const RedChatBox = ({
 export default function AllEventsScreen() {
   const router = useRouter();
   const flatListRef = useRef(null);
+  const [dimensions, setDimensions] = useState(Dimensions.get('window'));
   const [scrollX, setScrollX] = useState(0);
   const [showHelp, setShowHelp] = useState(false);
   const seeMoreBtnRefs = useRef({});
 
+  // Update on orientation change
+  useEffect(() => {
+    const onChange = ({ window }) => setDimensions(window);
+    Dimensions.addEventListener('change', onChange);
+    return () => Dimensions.removeEventListener('change', onChange);
+  }, []);
+
+  const MAIN_CONTENT_WIDTH = dimensions.width - SIDEBAR_WIDTH;
+  const CARD_WIDTH = getCardWidth(dimensions.width);
+  const CARD_HEIGHT = CARD_WIDTH * 1.2;
+  const CARD_SPACING = 40;
+
   const handleLogout = () => {
-  router.replace('/KakiTapScreen');
+    router.replace('/KakiTapScreen');
   };
 
   const scrollToIndex = (direction) => {
@@ -99,8 +102,7 @@ export default function AllEventsScreen() {
   };
 
   const onScroll = (event) => {
-    const newScrollX = event.nativeEvent.contentOffset.x;
-    setScrollX(newScrollX);
+    setScrollX(event.nativeEvent.contentOffset.x);
   };
 
   const getItemLayout = (data, index) => ({
@@ -126,6 +128,8 @@ export default function AllEventsScreen() {
         style={[
           styles.card,
           {
+            width: CARD_WIDTH,
+            height: CARD_HEIGHT,
             transform: [{ scale }],
             opacity,
             marginHorizontal: CARD_SPACING / 2,
@@ -138,9 +142,7 @@ export default function AllEventsScreen() {
         <Text style={styles.eventDetails}>
           {item.time} | {item.price}
         </Text>
-        
-        {/* Centered See More Button Container */}
-        <View style={styles.buttonContainer}>
+        <View style={{ width: '100%', alignItems: 'flex-end', position: 'relative' }}>
           <TouchableOpacity
             ref={ref => (seeMoreBtnRefs.current[index] = ref)}
             style={styles.moreButton}
@@ -153,10 +155,18 @@ export default function AllEventsScreen() {
           >
             <Text style={styles.moreButtonText}>See More</Text>
           </TouchableOpacity>
-          
-          {/* Chatbox for See More button - positioned relative to centered button */}
+          {/* Chatbox for See More button */}
           {showHelp && (
-            <View style={styles.chatboxContainer}>
+            <View
+              style={{
+                position: 'absolute',
+                right: 0,
+                top: 38,
+                width: 220,
+                alignItems: 'flex-end',
+                zIndex: 10,
+              }}
+            >
               <RedChatBox pointerDirection="up" style={{ width: 220, minHeight: 32 }}>
                 Press here for event details
               </RedChatBox>
@@ -168,93 +178,95 @@ export default function AllEventsScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Sidebar active="events" />
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#f8f9fa' }}>
+      <View style={styles.container}>
+        <Sidebar active="events" />
 
-      <View style={styles.main}>
-        {/* Logout Button */}
-        <TouchableOpacity
-          style={styles.logoutButton}
-          onPress={handleLogout}
-          activeOpacity={0.8}
-        >
-          <Text style={styles.logoutButtonText}>Logout</Text>
-        </TouchableOpacity>
-
-        <View style={styles.carouselContainer}>
+        <View style={styles.main}>
+          {/* Logout Button */}
           <TouchableOpacity
-            onPress={() => scrollToIndex('left')}
-            style={styles.arrow}
+            style={styles.logoutButton}
+            onPress={handleLogout}
+            activeOpacity={0.8}
           >
-            <Text style={styles.arrowText}>◀</Text>
+            <Text style={styles.logoutButtonText}>Logout</Text>
           </TouchableOpacity>
 
-          <View style={styles.flatListContainer}>
-            <FlatList
-              ref={flatListRef}
-              data={events}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.id}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{
-                paddingLeft: 8,
-                paddingRight: (MAIN_CONTENT_WIDTH - CARD_WIDTH) / 2,
-                paddingVertical: 20,
-              }}
-              onScroll={onScroll}
-              scrollEventThrottle={16}
-              decelerationRate="fast"
-              snapToInterval={CARD_WIDTH + CARD_SPACING}
-              snapToAlignment="center"
-              getItemLayout={getItemLayout}
-              initialScrollIndex={0}
-            />
+          <View style={styles.carouselContainer}>
+            <TouchableOpacity
+              onPress={() => scrollToIndex('left')}
+              style={styles.arrow}
+            >
+              <Text style={styles.arrowText}>◀</Text>
+            </TouchableOpacity>
+
+            <View style={styles.flatListContainer}>
+              <FlatList
+                ref={flatListRef}
+                data={events}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{
+                  paddingLeft: 8,
+                  paddingRight: (MAIN_CONTENT_WIDTH - CARD_WIDTH) / 2,
+                  paddingVertical: 20,
+                }}
+                onScroll={onScroll}
+                scrollEventThrottle={16}
+                decelerationRate="fast"
+                snapToInterval={CARD_WIDTH + CARD_SPACING}
+                snapToAlignment="center"
+                getItemLayout={getItemLayout}
+                initialScrollIndex={0}
+              />
+            </View>
+
+            <TouchableOpacity
+              onPress={() => scrollToIndex('right')}
+              style={styles.arrow}
+            >
+              <Text style={styles.arrowText}>▶</Text>
+            </TouchableOpacity>
           </View>
 
+          {/* Page indicators */}
+          <View style={styles.indicators}>
+            {events.map((_, index) => {
+              const centerIndex = Math.round(scrollX / (CARD_WIDTH + CARD_SPACING));
+              return (
+                <TouchableOpacity
+                  key={index}
+                  style={[
+                    styles.indicator,
+                    {
+                      backgroundColor:
+                        index === centerIndex ? '#2c3e50' : '#bdc3c7',
+                    },
+                  ]}
+                  onPress={() => {
+                    const targetOffset = index * (CARD_WIDTH + CARD_SPACING);
+                    flatListRef.current?.scrollToOffset({
+                      offset: targetOffset,
+                      animated: true,
+                    });
+                  }}
+                />
+              );
+            })}
+          </View>
+
+          {/* Help Button to toggle chatboxes */}
           <TouchableOpacity
-            onPress={() => scrollToIndex('right')}
-            style={styles.arrow}
+            style={styles.helpFab}
+            onPress={() => setShowHelp((prev) => !prev)}
           >
-            <Text style={styles.arrowText}>▶</Text>
+            <Text style={styles.helpFabText}>?</Text>
           </TouchableOpacity>
         </View>
-
-        {/* Page indicators */}
-        <View style={styles.indicators}>
-          {events.map((_, index) => {
-            const centerIndex = Math.round(scrollX / (CARD_WIDTH + CARD_SPACING));
-            return (
-              <TouchableOpacity
-                key={index}
-                style={[
-                  styles.indicator,
-                  {
-                    backgroundColor:
-                      index === centerIndex ? '#2c3e50' : '#bdc3c7',
-                  },
-                ]}
-                onPress={() => {
-                  const targetOffset = index * (CARD_WIDTH + CARD_SPACING);
-                  flatListRef.current?.scrollToOffset({
-                    offset: targetOffset,
-                    animated: true,
-                  });
-                }}
-              />
-            );
-          })}
-        </View>
-
-        {/* Help Button to toggle chatboxes */}
-        <TouchableOpacity
-          style={styles.helpFab}
-          onPress={() => setShowHelp((prev) => !prev)}
-        >
-          <Text style={styles.helpFabText}>?</Text>
-        </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -294,7 +306,6 @@ const styles = StyleSheet.create({
   },
   flatListContainer: {
     flex: 1,
-    height: CARD_HEIGHT + 80,
   },
   arrow: {
     width: 40,
@@ -311,11 +322,9 @@ const styles = StyleSheet.create({
     color: '#2c3e50',
   },
   card: {
-    width: CARD_WIDTH,
-    height: CARD_HEIGHT,
     backgroundColor: '#fff',
-    borderRadius: 12, // Slightly larger border radius for bigger cards
-    padding: 12, // Increased padding from 8
+    borderRadius: 12,
+    padding: 12,
     shadowColor: '#000',
     shadowOpacity: 0.15,
     shadowOffset: { width: 0, height: 4 },
@@ -326,54 +335,49 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: '65%', // Reduced from 70% to give more space for text
+    height: '65%',
     borderRadius: 6,
     resizeMode: 'cover',
   },
   eventTitle: {
-    fontSize: 16, // Increased back from 14 for bigger cards
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#2c3e50',
     textAlign: 'center',
-    marginBottom: 4, // Increased from 2
+    marginBottom: 4,
   },
   eventDetails: {
-    fontSize: 13, // Increased from 11
+    fontSize: 13,
     color: '#555',
     textAlign: 'center',
-    lineHeight: 16, // Increased from 13
+    lineHeight: 16,
   },
-  
-  // Centered button container
   buttonContainer: {
     width: '100%',
     alignItems: 'center',
     position: 'relative',
-    marginTop: 12, // Increased from 8
+    marginTop: 12,
   },
   moreButton: {
-    paddingHorizontal: 28, // Increased from 20
-    paddingVertical: 14, // Increased from 10
+    paddingHorizontal: 28,
+    paddingVertical: 14,
     backgroundColor: '#469d8b',
-    borderRadius: 10, // Slightly larger radius
+    borderRadius: 10,
   },
   moreButtonText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 16, // Increased from 15
+    fontSize: 16,
     textAlign: 'center',
   },
-  
-  // Chatbox positioned relative to centered button
   chatboxContainer: {
     position: 'absolute',
-    top: 50, // Below the button
+    top: 50,
     left: 0,
     right: 0,
     alignItems: 'center',
     zIndex: 10,
   },
-  
   indicators: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -409,8 +413,6 @@ const styles = StyleSheet.create({
     fontSize: 28,
     marginBottom: 2,
   },
-
-  
   redChatBoxContainer: {
     alignItems: 'center',
     width: '100%',
